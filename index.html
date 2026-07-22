@@ -1,0 +1,1415 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>AI足球赛事研判指挥舱 HTML授权版</title>
+  <style>
+    :root {
+      --bg: #070a0f;
+      --bg2: #0b1119;
+      --panel: rgba(13, 20, 30, .86);
+      --panel2: rgba(17, 26, 38, .94);
+      --line: rgba(140, 162, 190, .2);
+      --line2: rgba(255, 255, 255, .08);
+      --text: #eef5ff;
+      --muted: #91a2b7;
+      --cyan: #32d5ff;
+      --green: #33e6a6;
+      --amber: #ffc857;
+      --red: #ff637d;
+      --violet: #a78bfa;
+      --steel: #6ea8fe;
+      --shadow: 0 20px 60px rgba(0, 0, 0, .38);
+      font-family: Inter, "SF Pro Display", "Microsoft YaHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; margin: 0; background: var(--bg); color: var(--text); }
+    body {
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 16% 0%, rgba(50, 213, 255, .16), transparent 30%),
+        radial-gradient(circle at 84% 8%, rgba(51, 230, 166, .1), transparent 28%),
+        linear-gradient(180deg, #08111c 0%, #070a0f 48%, #090d14 100%);
+    }
+    button, input, select { font: inherit; color: inherit; }
+    button { border: 0; cursor: pointer; }
+    .mono { font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace; font-variant-numeric: tabular-nums; }
+    .hidden { display: none !important; }
+
+    .shell { min-height: 100dvh; padding: 16px; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(7, 12, 20, .88);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .brand > div { min-width: 0; }
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      border: 1px solid rgba(50, 213, 255, .5);
+      background: linear-gradient(145deg, rgba(50,213,255,.18), rgba(51,230,166,.1));
+      color: var(--cyan);
+      box-shadow: inset 0 0 20px rgba(50,213,255,.16);
+      font-weight: 900;
+    }
+    .brand h1 { margin: 0; font-size: clamp(20px, 3vw, 34px); line-height: 1.05; letter-spacing: 0; }
+    .brand h1, .brand p { overflow-wrap: anywhere; }
+    .brand p { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .badge {
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 10px;
+      border-radius: 5px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: #d8e6f6;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px currentColor; color: var(--green); }
+    .dot.warn { background: var(--amber); color: var(--amber); }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(250px, 300px) minmax(0, 1.35fr) minmax(300px, .9fr);
+      gap: 14px;
+      margin-top: 14px;
+      align-items: start;
+    }
+    aside, section, article, .center-col, .right-col { min-width: 0; }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .panel-head {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px;
+      border-bottom: 1px solid var(--line2);
+      background: linear-gradient(180deg, rgba(255,255,255,.045), transparent);
+    }
+    .panel-head > * { min-width: 0; }
+    .panel-title { margin: 0; font-size: 14px; letter-spacing: 0; }
+    .panel-sub { min-width: 0; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .panel-body { padding: 12px; }
+
+    .controls { display: grid; gap: 8px; }
+    .control-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .input, .select {
+      width: 100%;
+      height: 38px;
+      border-radius: 5px;
+      border: 1px solid var(--line);
+      background: rgba(5, 10, 16, .86);
+      outline: none;
+      padding: 0 10px;
+      color: var(--text);
+    }
+    .btn {
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border-radius: 5px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.055);
+      color: #e8f2ff;
+      transition: transform .15s, border-color .15s, background .15s;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: rgba(50,213,255,.55); background: rgba(50,213,255,.1); }
+    .btn.primary { background: linear-gradient(135deg, rgba(50,213,255,.26), rgba(51,230,166,.16)); border-color: rgba(50,213,255,.58); }
+    .btn.danger { border-color: rgba(255,99,125,.42); background: rgba(255,99,125,.1); }
+    .icon {
+      width: 18px;
+      height: 18px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,.16);
+      font-size: 10px;
+      color: var(--cyan);
+    }
+    #fileInput { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; pointer-events: none; }
+
+    .match-list { display: grid; gap: 8px; max-height: calc(100dvh - 260px); overflow: auto; padding-right: 2px; }
+    .match-card {
+      width: 100%;
+      min-height: 86px;
+      text-align: left;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--line2);
+      background: rgba(255,255,255,.035);
+      transition: border-color .15s, background .15s, transform .15s;
+    }
+    .match-card:hover { transform: translateY(-1px); border-color: rgba(50,213,255,.38); }
+    .match-card.active { border-color: rgba(50,213,255,.72); background: rgba(50,213,255,.1); }
+    .match-meta { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
+    .match-name { margin-top: 8px; font-size: 14px; font-weight: 800; line-height: 1.35; }
+    .match-tags { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      min-height: 22px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 7px;
+      border-radius: 4px;
+      background: rgba(255,255,255,.06);
+      color: #cfe0f4;
+      font-size: 11px;
+    }
+    .tag.hot { color: #0b1b18; background: var(--green); }
+    .tag.warn { color: #211702; background: var(--amber); }
+    .tag.red { color: #fff; background: rgba(255,99,125,.84); }
+
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(230px, .7fr); gap: 12px; }
+    .final-card {
+      min-height: 240px;
+      position: relative;
+      overflow: hidden;
+      padding: 16px;
+      border: 1px solid rgba(50,213,255,.28);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(50,213,255,.14), rgba(51,230,166,.05) 45%, rgba(255,200,87,.08)),
+        rgba(10, 17, 26, .92);
+    }
+    .final-card:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+      opacity: .28;
+      pointer-events: none;
+    }
+    .final-content { position: relative; z-index: 1; }
+    .kicker { color: var(--cyan); font-size: 12px; font-weight: 800; letter-spacing: 0; }
+    .match-title { margin: 10px 0 6px; font-size: clamp(24px, 4vw, 46px); line-height: 1.06; letter-spacing: 0; }
+    .league-line { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+    .decision-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+    .decision-box {
+      min-height: 78px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--line2);
+      background: rgba(5,10,16,.62);
+    }
+    .decision-label { color: var(--muted); font-size: 11px; }
+    .decision-value { margin-top: 6px; font-size: 18px; font-weight: 900; line-height: 1.2; }
+    .decision-value.green { color: var(--green); }
+    .decision-value.amber { color: var(--amber); }
+    .decision-value.red { color: var(--red); }
+    .final-text { margin: 14px 0 0; color: #d8e7f9; line-height: 1.68; font-size: 14px; overflow-wrap: anywhere; }
+
+    .radar-card {
+      min-height: 240px;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+    }
+    .gauge-wrap { display: grid; place-items: center; margin-top: 8px; }
+    .gauge { width: min(210px, 100%); aspect-ratio: 1; }
+    .gauge text { font-family: inherit; fill: var(--text); }
+    .mini-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+    .mini-stat { padding: 8px; border-radius: 6px; background: rgba(255,255,255,.045); text-align: center; }
+    .mini-stat b { display: block; font-size: 16px; }
+    .mini-stat span { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; }
+
+    .data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+    .metric {
+      min-height: 120px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+    }
+    .metric h3 { margin: 0; font-size: 13px; color: #dceaff; }
+    .metric-main { margin-top: 10px; font-size: 26px; font-weight: 900; }
+    .metric-note { margin-top: 8px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .bar-list { display: grid; gap: 10px; margin-top: 12px; }
+    .bar-row { display: grid; grid-template-columns: 52px minmax(0,1fr) 48px; gap: 8px; align-items: center; font-size: 12px; color: #dbe8f8; }
+    .bar-track { height: 9px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .bar-fill { height: 100%; width: 0%; border-radius: 99px; background: var(--cyan); transition: width .4s ease; }
+    .bar-fill.draw { background: var(--amber); }
+    .bar-fill.away { background: var(--violet); }
+
+    .score-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin-top: 12px; }
+    .score-card {
+      min-height: 118px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.025));
+    }
+    .score-card strong { display: block; font-size: 38px; line-height: 1; }
+    .score-card span { display: block; margin-top: 9px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+
+    .report-section { margin-top: 12px; display: grid; gap: 12px; }
+    .report-card {
+      padding: 13px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+    }
+    .report-card h3 { margin: 0 0 8px; font-size: 14px; }
+    .report-card p { margin: 0; color: #d6e3f4; line-height: 1.7; font-size: 13px; overflow-wrap: anywhere; }
+    .odds-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
+    .odds-table { table-layout: fixed; }
+    .odds-table th, .odds-table td { padding: 8px 6px; border-bottom: 1px solid var(--line2); text-align: left; }
+    .odds-table td { word-break: break-word; }
+    .odds-table th { color: var(--muted); font-weight: 500; }
+
+    .agent-list { display: grid; gap: 8px; }
+    .agent-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--line2);
+      background: rgba(255,255,255,.035);
+    }
+    .agent-name { font-weight: 800; font-size: 13px; }
+    .agent-view { grid-column: 1 / -1; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .agent-score {
+      min-width: 46px;
+      height: 26px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 4px;
+      border: 1px solid rgba(50,213,255,.35);
+      color: var(--cyan);
+      background: rgba(50,213,255,.08);
+      font-weight: 900;
+      font-size: 12px;
+    }
+    .agent-signal { margin-top: 4px; color: var(--green); font-size: 11px; }
+
+    .league-bars { display: grid; gap: 10px; }
+    .portfolio-list { display: grid; gap: 8px; max-height: 260px; overflow: auto; }
+    .portfolio-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      padding: 9px;
+      border-radius: 7px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--line2);
+      font-size: 12px;
+    }
+    .portfolio-row b { display: block; font-size: 13px; margin-bottom: 4px; }
+    .portfolio-row span { color: var(--muted); }
+
+    .footer {
+      margin: 14px 0 0;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,200,87,.26);
+      color: #ffdca0;
+      background: rgba(255,200,87,.08);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .license-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background:
+        radial-gradient(circle at 25% 0%, rgba(50,213,255,.2), transparent 36%),
+        radial-gradient(circle at 80% 100%, rgba(255,200,87,.14), transparent 34%),
+        rgba(2, 6, 11, .9);
+      backdrop-filter: blur(10px);
+    }
+    .license-box {
+      width: min(760px, 100%);
+      border-radius: 8px;
+      border: 1px solid rgba(50,213,255,.36);
+      background: rgba(9, 16, 25, .96);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .license-box header { padding: 18px; border-bottom: 1px solid var(--line2); }
+    .license-box h2 { margin: 0; font-size: 24px; letter-spacing: 0; }
+    .license-box p { margin: 8px 0 0; color: var(--muted); line-height: 1.6; }
+    .license-body { padding: 18px; display: grid; gap: 12px; }
+    .code-box {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px dashed rgba(50,213,255,.45);
+      background: rgba(50,213,255,.07);
+      word-break: break-all;
+    }
+    .license-actions { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; }
+    .message { min-height: 22px; color: var(--amber); font-size: 13px; }
+    .manual-form { display: grid; gap: 12px; }
+    .manual-form label { display: grid; gap: 7px; color: #d9e7f8; font-size: 13px; }
+    .manual-note {
+      padding: 11px 12px;
+      border-radius: 7px;
+      border: 1px solid rgba(255,200,87,.26);
+      color: #ffdca0;
+      background: rgba(255,200,87,.07);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .manual-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .watermark {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 30;
+      padding: 9px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,200,87,.36);
+      background: rgba(16, 12, 3, .82);
+      color: var(--amber);
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    @media (max-width: 1180px) {
+      .layout { grid-template-columns: minmax(230px, 280px) minmax(0, 1fr); }
+      .right-col { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    }
+    @media (max-width: 760px) {
+      .shell { padding: 10px; }
+      .topbar { grid-template-columns: 1fr; }
+      .badges { justify-content: flex-start; }
+      .layout, .hero-grid, .data-grid, .right-col { grid-template-columns: 1fr; }
+      .decision-strip { grid-template-columns: 1fr; }
+      .score-grid { grid-template-columns: 1fr; }
+      .match-list { max-height: 360px; }
+      .license-actions { grid-template-columns: 1fr; }
+      .manual-actions { grid-template-columns: 1fr; }
+      .brand { align-items: flex-start; }
+      .brand p { max-width: min(280px, calc(100vw - 96px)); line-height: 1.35; word-break: break-word; }
+      .panel-head { flex-wrap: wrap; }
+      .panel-sub, .final-text, .report-card p, .league-line, .match-meta { word-break: break-all; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">AI</div>
+        <div>
+          <h1>AI足球赛事研判指挥舱</h1>
+          <p>Local AI 5.5 | 多Agent圆桌 | Interwetten冷门防线 | 授权码激活</p>
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge"><span class="dot" id="authDot"></span><span id="authText">授权校验中</span></span>
+        <span class="badge"><span class="dot" id="updateDot"></span><span id="updateText">500数据检查中</span></span>
+        <span class="badge">历史样本 <b class="mono" id="historySample">--</b></span>
+        <span class="badge">赛事 <b class="mono" id="matchCount">--</b></span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title">赛事雷达</h2>
+          <span class="panel-sub" id="dataTime">--</span>
+        </div>
+        <div class="panel-body">
+          <div class="controls">
+            <input class="input" id="searchInput" placeholder="搜索球队 / 联赛 / 场次">
+            <div class="control-row">
+              <select class="select" id="leagueFilter"><option value="">全部联赛</option></select>
+              <select class="select" id="riskFilter">
+                <option value="">全部风险</option>
+                <option value="高">高冷门</option>
+                <option value="中">中风险</option>
+                <option value="低">低风险</option>
+              </select>
+            </div>
+            <button class="btn primary" id="analyzeAllBtn"><span class="icon">ALL</span>生成全部研判</button>
+            <button class="btn" id="manualBtn"><span class="icon">+</span>手动录入赛事</button>
+            <button class="btn danger hidden" id="deleteManualBtn"><span class="icon">×</span>删除当前手动赛事</button>
+            <button class="btn" id="importBtn"><span class="icon">IN</span>导入数据 JSON</button>
+            <input type="file" id="fileInput" accept=".json,application/json">
+          </div>
+          <div class="match-list" id="matchList" style="margin-top:12px"></div>
+        </div>
+      </aside>
+
+      <section class="center-col">
+        <div class="hero-grid">
+          <article class="final-card">
+            <div class="final-content">
+              <div class="kicker" id="matchKicker">统一研判结论</div>
+              <h2 class="match-title" id="matchTitle">等待载入赛事</h2>
+              <div class="league-line" id="matchInfo">--</div>
+              <div class="decision-strip">
+                <div class="decision-box">
+                  <div class="decision-label">系统动作</div>
+                  <div class="decision-value green" id="systemAction">--</div>
+                </div>
+                <div class="decision-box">
+                  <div class="decision-label">胜平负主方向</div>
+                  <div class="decision-value" id="primaryPick">--</div>
+                </div>
+                <div class="decision-box">
+                  <div class="decision-label">防冷建议</div>
+                  <div class="decision-value amber" id="coverPick">--</div>
+                </div>
+              </div>
+              <p class="final-text" id="finalText">数据加载后自动生成。</p>
+            </div>
+          </article>
+
+          <article class="radar-card">
+            <div class="panel-head" style="padding:0 0 10px;border-bottom:0;background:transparent">
+              <h2 class="panel-title">爆冷可能性</h2>
+              <span class="panel-sub" id="riskLevel">--</span>
+            </div>
+            <div class="gauge-wrap">
+              <svg class="gauge" viewBox="0 0 220 220" aria-label="爆冷风险仪表">
+                <circle cx="110" cy="110" r="86" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="18"></circle>
+                <circle id="riskArc" cx="110" cy="110" r="86" fill="none" stroke="url(#riskGradient)" stroke-width="18" stroke-linecap="round" stroke-dasharray="540" stroke-dashoffset="540" transform="rotate(-90 110 110)"></circle>
+                <defs>
+                  <linearGradient id="riskGradient" x1="0" x2="1">
+                    <stop offset="0%" stop-color="#33e6a6"></stop>
+                    <stop offset="55%" stop-color="#ffc857"></stop>
+                    <stop offset="100%" stop-color="#ff637d"></stop>
+                  </linearGradient>
+                </defs>
+                <text x="110" y="102" text-anchor="middle" font-size="38" font-weight="900" id="riskPct">--</text>
+                <text x="110" y="130" text-anchor="middle" font-size="13" fill="#91a2b7">Interwetten Cold</text>
+              </svg>
+            </div>
+            <div class="mini-stats">
+              <div class="mini-stat"><b id="confidence">--</b><span>信心</span></div>
+              <div class="mini-stat"><b id="antiDraw">--</b><span>反防平</span></div>
+              <div class="mini-stat"><b id="valueGateMini">--</b><span>价值门</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="data-grid">
+          <article class="metric">
+            <h3>胜平负概率</h3>
+            <div class="bar-list" id="probBars"></div>
+          </article>
+          <article class="metric">
+            <h3>两个最得意比分</h3>
+            <div class="score-grid" id="scoreGrid"></div>
+          </article>
+          <article class="metric">
+            <h3>执行底线</h3>
+            <div class="metric-main" id="gateMain">--</div>
+            <div class="metric-note" id="gateNote">--</div>
+          </article>
+        </div>
+
+        <div class="report-section">
+          <article class="report-card">
+            <h3>第二章 · 严格仲裁最终态</h3>
+            <p id="strictReport">--</p>
+          </article>
+          <article class="report-card">
+            <h3>Interwetten赔率画像</h3>
+            <table class="odds-table">
+              <thead><tr><th>项目</th><th>当前</th><th>初赔</th><th>信号</th></tr></thead>
+              <tbody id="oddsTable"></tbody>
+            </table>
+          </article>
+        </div>
+      </section>
+
+      <aside class="right-col">
+        <section class="panel">
+          <div class="panel-head">
+            <h2 class="panel-title">多Agent圆桌</h2>
+            <span class="panel-sub">全员执行</span>
+          </div>
+          <div class="panel-body">
+            <div class="agent-list" id="agentList"></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2 class="panel-title">联赛 / 联盟画像</h2>
+            <span class="panel-sub" id="leagueSample">--</span>
+          </div>
+          <div class="panel-body">
+            <div class="league-bars" id="leagueBars"></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2 class="panel-title">全场次研判池</h2>
+            <span class="panel-sub" id="portfolioMeta">未生成</span>
+          </div>
+          <div class="panel-body">
+            <div class="portfolio-list" id="portfolioList"></div>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <div class="footer" id="complianceText">仅提供体育数据分析、赛前研究与内容创作参考；不涉及赌博，不提供下注服务，不承诺结果。</div>
+  </div>
+
+  <div class="license-layer hidden" id="licenseLayer">
+    <section class="license-box">
+      <header>
+        <h2>授权码激活</h2>
+        <p>本页面为本地静态 HTML 授权版。把设备码发给卖家，输入授权码后会在本浏览器保存激活状态。</p>
+      </header>
+      <div class="license-body">
+        <div>
+          <div class="panel-sub">当前设备码</div>
+          <div class="code-box mono" id="deviceCode">生成中</div>
+        </div>
+        <div class="license-actions">
+          <input class="input mono" id="licenseInput" placeholder="输入授权码，例如 FCL-30D-XXXX-...">
+          <button class="btn primary" id="activateBtn">激活</button>
+          <button class="btn" id="demoBtn">演示模式</button>
+        </div>
+        <div class="message" id="licenseMessage"></div>
+        <button class="btn" id="copyDeviceBtn">复制设备码</button>
+      </div>
+    </section>
+  </div>
+  <div class="license-layer hidden" id="manualLayer">
+    <section class="license-box">
+      <header>
+        <h2>手动录入赛事</h2>
+        <p>客户只需填写主队、客队和比赛时间。系统自动匹配已维护的球队与联赛历史画像。</p>
+      </header>
+      <div class="license-body">
+        <form class="manual-form" id="manualForm">
+          <label>主队<input class="input" id="manualHome" autocomplete="off" placeholder="输入主队名称" required></label>
+          <label>客队<input class="input" id="manualAway" autocomplete="off" placeholder="输入客队名称" required></label>
+          <label>比赛时间<input class="input" id="manualTime" type="datetime-local" required></label>
+          <div class="manual-note">未提供实时赔率的手动赛事会使用历史球队画像和联赛基线，系统自动降低信心，并在报告中明确标注“资料有限”。</div>
+          <div class="manual-actions">
+            <button class="btn primary" type="submit">生成本地研判</button>
+            <button class="btn" id="manualCancelBtn" type="button">取消</button>
+          </div>
+          <div class="message" id="manualMessage"></div>
+        </form>
+      </div>
+    </section>
+  </div>
+  <div class="watermark hidden" id="demoWatermark">演示模式</div>
+
+  <script>
+    const PRODUCT_NAME = "AI足球赛事研判指挥舱 HTML授权版";
+    const SECRET = "football-ai-html-command-center-license-2026-v1";
+    const STORAGE_KEY = "football_ai_html_license_v1";
+    const MANUAL_STORAGE_KEY = "football_ai_manual_matches_v1";
+    const FALLBACK_DATA = {
+      meta: {
+        product: PRODUCT_NAME,
+        modelName: "Local AI 5.5",
+        generatedAt: new Date().toISOString(),
+        source: "内置演示样例",
+        matchCount: 2,
+        historySample: 21138,
+        finishedSample: 21032,
+        historyRange: "2021-07-02 至 2026-06-30",
+        compliance: "仅提供体育数据分析、赛前研究与内容创作参考；不涉及赌博，不提供下注服务，不承诺结果。"
+      },
+      leagueProfiles: [],
+      matches: [
+        {
+          id: "demo-001",
+          date: "2026-07-01",
+          round: "演示001",
+          league: "世界杯",
+          home: "英格兰",
+          away: "刚果(金)",
+          odds: { current: {home: 1.33, draw: 5.0, away: 11.0}, initial: {home: 1.3, draw: 5.3, away: 10.0}, movement: "主不变 平降 客升", movementCombo: "主不变 平降0.16-0.30 客升>0.30", favorite: "主胜", favoriteOdds: 1.33, favoriteChange: "不变", gapLabel: "差距明显>2.00", mode: "平局降赔", dropSide: "平局", dropBucket: "大降0.16-0.30" },
+          probabilities: {home: .615, draw: .244, away: .141},
+          leagueProfile: {league: "世界杯", sample: 143, homeRate: .455, drawRate: .259, awayRate: .287, topOutcome: "主胜", favoriteHitRate: .608, kellyHitRate: .224, reliable: true},
+          grid: {signal: "主胜价值", roi: .015, sample: 1162, bucket: "SuperFav/Stable"},
+          upset: {score: .472, level: "低中", direction: "平局", trap: "主胜超强热门<1.40；平局降赔抢信号", reasons: ["热门赔率档19.9%", "非热门方向降赔"]},
+          antiDraw: {score: 55, verdict: "保留平局风险", action: "主方向 + 平局复核", reasons: ["主方向与平局概率拉开", "平局降赔"]},
+          conclusion: {action: "重点候选", primary: "主胜", cover: "主胜", confidence: 82, valueGate: "通过：进入候选观察池", bestScores: [{score: "2-0", probability: .132, script: "主方向脚本"}, {score: "3-0", probability: .089, script: "主方向脚本"}], overUnder: "2/3球临界", defendCold: "轻度观察：平局", finalText: "圆桌统一倾向为主胜，信心指数82/100，通过：进入候选观察池；两个最得意比分为2-0、3-0，2/3球临界。", riskNotice: "冷门压力可控，主方向仍需等待临场赔率确认。"},
+          agents: []
+        },
+        {
+          id: "demo-002",
+          date: "2026-07-01",
+          round: "演示002",
+          league: "世界杯",
+          home: "澳大利亚",
+          away: "埃及",
+          odds: { current: {home: 3.3, draw: 2.85, away: 2.5}, initial: {home: 3.8, draw: 2.9, away: 2.3}, movement: "主降 平不变 客升", movementCombo: "主降>0.30 平不变 客升0.16-0.30", favorite: "客胜", favoriteOdds: 2.5, favoriteChange: "升0.16-0.30", gapLabel: "小差距0.51-1.00", mode: "主胜降赔", dropSide: "主胜", dropBucket: "深降>0.30" },
+          probabilities: {home: .330, draw: .312, away: .358},
+          leagueProfile: {league: "世界杯", sample: 143, homeRate: .455, drawRate: .259, awayRate: .287, topOutcome: "主胜", favoriteHitRate: .608, kellyHitRate: .224, reliable: true},
+          grid: {signal: "Pass", roi: null, sample: null, bucket: "Weak/Deep_Drop"},
+          upset: {score: .789, level: "高", direction: "平局", trap: "客胜弱热门≥2.50；热门升赔不稳", reasons: ["综合非热门概率64.2%", "主胜降赔抢信号"]},
+          antiDraw: {score: 20, verdict: "必须防平", action: "平局进入防冷层", reasons: ["均势盘平局摩擦偏高", "冷门方向指向平局"]},
+          conclusion: {action: "防冷优先：客胜，防平局", primary: "客胜", cover: "客胜，防平局", confidence: 50, valueGate: "高风险：只做防冷复盘", bestScores: [{score: "0-1", probability: .106, script: "主方向脚本"}, {score: "1-1", probability: .104, script: "防冷脚本"}], overUnder: "小2.5球倾向", defendCold: "强制提示：防平局", finalText: "圆桌统一倾向为客胜，但Interwetten冷门评分达到78.9%，需要重点防平局；两个最得意比分为0-1、1-1，小2.5球倾向。", riskNotice: "爆冷可能性高，防冷方向锁定平局，不要只看热门方向。"},
+          agents: []
+        }
+      ]
+    };
+
+    const state = { data: FALLBACK_DATA, matches: [], manualMatches: [], activeId: "", authorized: false, demo: false, deviceCode: "" };
+
+    const $ = (id) => document.getElementById(id);
+    const pct = (value) => `${Math.round((Number(value) || 0) * 1000) / 10}%`;
+    const shortPct = (value) => `${Math.round((Number(value) || 0) * 100)}%`;
+    const outcomeKey = { "主胜": "home", "平局": "draw", "客胜": "away" };
+
+    init();
+
+    async function init() {
+      bindEvents();
+      state.deviceCode = await getDeviceCode();
+      $("deviceCode").textContent = state.deviceCode;
+      const forcedDemo = new URLSearchParams(location.search).get("demo") === "1";
+      const auth = forcedDemo ? { ok: false, demo: true, message: "演示模式" } : await readActivation();
+      state.authorized = auth.ok;
+      state.demo = Boolean(auth.demo);
+      renderAuth(auth);
+      if (!auth.ok && !auth.demo) $("licenseLayer").classList.remove("hidden");
+      await loadData();
+      if (state.demo) {
+        state.data = FALLBACK_DATA;
+        state.matches = FALLBACK_DATA.matches;
+        state.activeId = String(state.matches[0]?.id || "");
+      }
+      renderAll();
+    }
+
+    function bindEvents() {
+      $("searchInput").addEventListener("input", renderMatchList);
+      $("leagueFilter").addEventListener("change", renderMatchList);
+      $("riskFilter").addEventListener("change", renderMatchList);
+      $("importBtn").addEventListener("click", () => $("fileInput").click());
+      $("fileInput").addEventListener("change", importJson);
+      $("analyzeAllBtn").addEventListener("click", renderPortfolio);
+      $("manualBtn").addEventListener("click", openManualLayer);
+      $("manualCancelBtn").addEventListener("click", closeManualLayer);
+      $("manualForm").addEventListener("submit", createManualMatch);
+      $("deleteManualBtn").addEventListener("click", deleteActiveManualMatch);
+      $("activateBtn").addEventListener("click", activate);
+      $("demoBtn").addEventListener("click", enterDemo);
+      $("copyDeviceBtn").addEventListener("click", async () => {
+        const ok = await copyText(state.deviceCode);
+        $("licenseMessage").textContent = ok ? "设备码已复制。" : "复制失败，请手动复制设备码。";
+      });
+    }
+
+    async function loadData() {
+      try {
+        const response = await fetch("./data/matches.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("data fetch failed");
+        state.data = await response.json();
+      } catch (error) {
+        state.data = FALLBACK_DATA;
+      }
+      state.matches = Array.isArray(state.data.matches) ? state.data.matches : [];
+      if (!state.demo) {
+        state.manualMatches = readManualMatches();
+        const remoteIds = new Set(state.matches.map(item => String(item.id)));
+        state.matches = [...state.manualMatches.filter(item => !remoteIds.has(String(item.id))), ...state.matches];
+      }
+      if (!state.activeId && state.matches[0]) state.activeId = String(state.matches[0].id);
+      hydrateFallbackAgents();
+    }
+
+    function hydrateFallbackAgents() {
+      for (const match of state.matches) {
+        if (match.agents && match.agents.length) continue;
+        match.agents = [
+          {name: "数据底座Agent", signal: "样本校验", score: 86, view: "当前赔率、升降方向、网格桶已入场。"},
+          {name: "基本面Agent", signal: "主客强弱", score: match.conclusion.confidence || 70, view: "以赛前结构和历史近似样本做基本面替代。"},
+          {name: "联赛画像Agent", signal: match.leagueProfile.topOutcome || "联赛基准", score: 82, view: `${match.league}样本${match.leagueProfile.sample || 0}场。`},
+          {name: "Interwetten赔率Agent", signal: match.grid.signal || "Pass", score: 68, view: match.odds.movementCombo || "赔率变化待复核。"},
+          {name: "爆冷防线Agent", signal: match.upset.level || "低", score: Math.round((match.upset.score || 0) * 100), view: match.conclusion.riskNotice || "冷门压力可控。"},
+          {name: "反防平Agent", signal: match.antiDraw.verdict || "保留平局风险", score: match.antiDraw.score || 50, view: (match.antiDraw.reasons || []).join("；") || "平局风险已校验。"},
+          {name: "比分脚本Agent", signal: match.conclusion.bestScores.map(s => s.score).join(" / "), score: match.conclusion.confidence || 70, view: "两个最得意比分已和大小球口径统一。"},
+          {name: "圆桌仲裁Agent", signal: match.conclusion.cover, score: match.conclusion.confidence || 70, view: "多Agent输出主方向、防冷层和最终结论。"}
+        ];
+      }
+    }
+
+    function renderAll() {
+      const meta = state.data.meta || {};
+      $("historySample").textContent = Number(meta.historySample || 0).toLocaleString("zh-CN");
+      $("matchCount").textContent = state.matches.length;
+      $("dataTime").textContent = meta.historyRange || formatDate(meta.generatedAt);
+      const updateStatus = meta.dailyUpdate?.status || (meta.source?.includes("500") ? "success" : "static");
+      $("updateText").textContent = updateStatus === "failed-preserved" ? "500更新失败·保留旧版" : (updateStatus === "success-no-current-matches" ? "500已更新·当前无竞彩" : (updateStatus === "success" ? "500数据已更新" : "静态数据包"));
+      $("updateDot").classList.toggle("warn", updateStatus === "failed-preserved");
+      $("complianceText").textContent = meta.compliance || "仅提供体育数据分析、赛前研究与内容创作参考；不涉及赌博，不提供下注服务，不承诺结果。";
+      renderLeagueFilter();
+      renderMatchList();
+      renderActiveMatch();
+      renderPortfolio();
+    }
+
+    function renderLeagueFilter() {
+      const select = $("leagueFilter");
+      const current = select.value;
+      const leagues = [...new Set(state.matches.map(item => item.league).filter(Boolean))].sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
+      select.innerHTML = `<option value="">全部联赛</option>` + leagues.map(league => `<option value="${escapeHtml(league)}">${escapeHtml(league)}</option>`).join("");
+      select.value = current;
+    }
+
+    function filteredMatches() {
+      const q = $("searchInput").value.trim().toLowerCase();
+      const league = $("leagueFilter").value;
+      const risk = $("riskFilter").value;
+      return state.matches.filter(match => {
+        const haystack = `${match.league} ${match.round} ${match.home} ${match.away}`.toLowerCase();
+        const riskLevel = match.upset?.level || "";
+        const riskOk = !risk || riskLevel.includes(risk) || (risk === "低" && riskLevel.includes("低"));
+        return (!q || haystack.includes(q)) && (!league || match.league === league) && riskOk;
+      });
+    }
+
+    function renderMatchList() {
+      const list = $("matchList");
+      const rows = filteredMatches();
+      if (!rows.length) {
+        list.innerHTML = `<div class="panel-sub">没有匹配赛事。</div>`;
+        return;
+      }
+      list.innerHTML = rows.map(match => {
+        const active = String(match.id) === state.activeId ? " active" : "";
+        const riskClass = (match.upset?.score || 0) >= .65 ? "red" : ((match.upset?.score || 0) >= .5 ? "warn" : "");
+        return `
+          <button class="match-card${active}" data-id="${escapeHtml(match.id)}">
+            <div class="match-meta"><span>${escapeHtml(match.league)} · ${escapeHtml(match.round || "")}</span><span>${escapeHtml(match.date || "")}</span></div>
+            <div class="match-name">${escapeHtml(match.home)} vs ${escapeHtml(match.away)}</div>
+            <div class="match-tags">
+              <span class="tag hot">${escapeHtml(match.conclusion?.primary || "--")}</span>
+              <span class="tag ${riskClass}">冷门 ${pct(match.upset?.score || 0)}</span>
+              <span class="tag">${escapeHtml(match.sourceType === "manual" ? "手动" : (match.grid?.signal || "Pass"))}</span>
+            </div>
+          </button>
+        `;
+      }).join("");
+      list.querySelectorAll(".match-card").forEach(btn => {
+        btn.addEventListener("click", () => {
+          state.activeId = btn.dataset.id;
+          renderMatchList();
+          renderActiveMatch();
+        });
+      });
+    }
+
+    function activeMatch() {
+      return state.matches.find(match => String(match.id) === state.activeId) || state.matches[0];
+    }
+
+    function renderActiveMatch() {
+      const match = activeMatch();
+      if (!match) return;
+      const conclusion = match.conclusion || {};
+      const risk = match.upset || {};
+      const profile = match.leagueProfile || {};
+      $("matchKicker").textContent = `${match.league} · ${match.round || "赛前研判"}`;
+      $("matchTitle").textContent = `${match.home} vs ${match.away}`;
+      $("matchInfo").textContent = `${match.date || "--"} | ${state.data.meta?.modelName || "Local AI 5.5"} | ${state.data.meta?.source || ""}`;
+      if (match.sourceType === "manual") $("matchInfo").textContent = `${match.date || "--"} | Local AI 5.5 | 手动录入 · 历史画像研判`;
+      $("deleteManualBtn").classList.toggle("hidden", match.sourceType !== "manual");
+      $("systemAction").textContent = conclusion.action || "--";
+      $("primaryPick").textContent = conclusion.primary || "--";
+      $("coverPick").textContent = conclusion.cover || "--";
+      $("finalText").textContent = conclusion.finalText || "--";
+      $("confidence").textContent = conclusion.confidence ? `${conclusion.confidence}` : "--";
+      $("antiDraw").textContent = match.antiDraw?.score ?? "--";
+      $("valueGateMini").textContent = gateShort(conclusion.valueGate);
+      $("gateMain").textContent = gateShort(conclusion.valueGate);
+      $("gateNote").textContent = `${conclusion.defendCold || "--"}。${conclusion.riskNotice || ""}`;
+      $("riskLevel").textContent = `风险 ${risk.level || "--"}`;
+      $("riskPct").textContent = pct(risk.score || 0);
+      $("riskArc").style.strokeDashoffset = String(540 - 540 * clamp(Number(risk.score || 0), 0, 1));
+      renderProbabilityBars(match.probabilities || {});
+      renderScores(conclusion.bestScores || []);
+      renderStrictReport(match);
+      renderOdds(match);
+      renderAgents(match.agents || []);
+      renderLeague(profile);
+    }
+
+    function renderProbabilityBars(probs) {
+      const rows = [
+        ["主胜", probs.home || 0, ""],
+        ["平局", probs.draw || 0, "draw"],
+        ["客胜", probs.away || 0, "away"]
+      ];
+      $("probBars").innerHTML = rows.map(([label, value, cls]) => `
+        <div class="bar-row">
+          <span>${label}</span>
+          <div class="bar-track"><div class="bar-fill ${cls}" style="width:${clamp(value, 0, 1) * 100}%"></div></div>
+          <span class="mono">${pct(value)}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderScores(scores) {
+      $("scoreGrid").innerHTML = scores.slice(0, 2).map((score, index) => `
+        <div class="score-card">
+          <div class="panel-sub">第${index + 1}比分</div>
+          <strong class="mono">${escapeHtml(score.score || "--")}</strong>
+          <span>${escapeHtml(score.script || "比分脚本")} · 权重 ${pct(score.probability || 0)}</span>
+        </div>
+      `).join("") || `<div class="panel-sub">暂无比分脚本。</div>`;
+    }
+
+    function renderStrictReport(match) {
+      const c = match.conclusion || {};
+      const a = match.antiDraw || {};
+      const o = match.odds || {};
+      $("strictReport").textContent =
+        `生产状态：${c.action || "--"}。系统选择：${c.cover || "--"}。` +
+        `反防平评分 ${a.score ?? "--"}，结论为${a.verdict || "--"}。` +
+        `赔率形态：${o.movementCombo || o.movement || "--"}。` +
+        `比分口径：${(c.bestScores || []).map(item => item.score).join(" / ") || "--"}，${c.overUnder || "--"}。`;
+    }
+
+    function renderOdds(match) {
+      const o = match.odds || {};
+      const current = o.current || {};
+      const initial = o.initial || {};
+      const rows = [
+        ["胜平负欧赔", `${current.home || "-"} / ${current.draw || "-"} / ${current.away || "-"}`, `${initial.home || "-"} / ${initial.draw || "-"} / ${initial.away || "-"}`, o.movement || "--"],
+        ["热门方向", o.favorite || "--", o.favoriteOdds || "--", o.favoriteChange || "--"],
+        ["降赔方向", o.dropSide || "--", o.dropBucket || "--", o.mode || "--"],
+        ["网格模型", match.grid?.bucket || "--", match.grid?.sample || "--", `${match.grid?.signal || "Pass"} ${match.grid?.roi == null ? "" : "ROI " + pct(match.grid.roi)}`],
+        ["盘口猫腻", match.upset?.trap || "--", o.gapLabel || "--", match.conclusion?.defendCold || "--"]
+      ];
+      $("oddsTable").innerHTML = rows.map(row => `<tr>${row.map(cell => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`).join("");
+    }
+
+    function renderAgents(agents) {
+      $("agentList").innerHTML = agents.map(agent => `
+        <div class="agent-row">
+          <div>
+            <div class="agent-name">${escapeHtml(agent.name || "Agent")}</div>
+            <div class="agent-signal">${escapeHtml(agent.status || "已执行")} · ${escapeHtml(agent.signal || "--")}</div>
+          </div>
+          <div class="agent-score mono">${escapeHtml(agent.score ?? "--")}</div>
+          <div class="agent-view">${escapeHtml(agent.view || "--")}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderLeague(profile) {
+      $("leagueSample").textContent = `${profile.league || "--"} · ${Number(profile.sample || 0).toLocaleString("zh-CN")}场`;
+      const rows = [
+        ["主胜率", profile.homeRate || 0, "var(--cyan)"],
+        ["平局率", profile.drawRate || 0, "var(--amber)"],
+        ["客胜率", profile.awayRate || 0, "var(--violet)"],
+        ["热门命中", profile.favoriteHitRate || 0, "var(--green)"],
+        ["最低凯利", profile.kellyHitRate || 0, "var(--red)"]
+      ];
+      $("leagueBars").innerHTML = rows.map(([label, value, color]) => `
+        <div class="bar-row">
+          <span>${label}</span>
+          <div class="bar-track"><div class="bar-fill" style="width:${clamp(value,0,1) * 100}%;background:${color}"></div></div>
+          <span class="mono">${pct(value)}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderPortfolio() {
+      const rows = [...state.matches].sort((a, b) => {
+        const av = (a.conclusion?.confidence || 0) - (a.upset?.score || 0) * 22;
+        const bv = (b.conclusion?.confidence || 0) - (b.upset?.score || 0) * 22;
+        return bv - av;
+      });
+      const highCold = state.matches.filter(m => (m.upset?.score || 0) >= .65).length;
+      $("portfolioMeta").textContent = `${rows.length}场 · 高冷${highCold}场`;
+      $("portfolioList").innerHTML = rows.map((match, index) => `
+        <button class="portfolio-row" data-id="${escapeHtml(match.id)}">
+          <span><b>${index + 1}. ${escapeHtml(match.home)} vs ${escapeHtml(match.away)}</b><span>${escapeHtml(match.conclusion?.cover || "--")} · ${escapeHtml(match.conclusion?.bestScores?.map(s => s.score).join(" / ") || "--")}</span></span>
+          <span class="mono">${match.conclusion?.confidence || "--"}</span>
+        </button>
+      `).join("");
+      $("portfolioList").querySelectorAll(".portfolio-row").forEach(row => {
+        row.addEventListener("click", () => {
+          state.activeId = row.dataset.id;
+          renderMatchList();
+          renderActiveMatch();
+        });
+      });
+    }
+
+    function openManualLayer() {
+      $("manualMessage").textContent = "";
+      if (!$("manualTime").value) {
+        const later = new Date(Date.now() + 3 * 3600000);
+        const local = new Date(later.getTime() - later.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+        $("manualTime").value = local;
+      }
+      $("manualLayer").classList.remove("hidden");
+    }
+
+    function closeManualLayer() {
+      $("manualLayer").classList.add("hidden");
+    }
+
+    function readManualMatches() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(MANUAL_STORAGE_KEY) || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveManualMatches() {
+      localStorage.setItem(MANUAL_STORAGE_KEY, JSON.stringify(state.manualMatches));
+    }
+
+    function createManualMatch(event) {
+      event.preventDefault();
+      const home = $("manualHome").value.trim();
+      const away = $("manualAway").value.trim();
+      const kickoff = $("manualTime").value;
+      if (!home || !away || !kickoff) {
+        $("manualMessage").textContent = "请填写主队、客队和比赛时间。";
+        return;
+      }
+      if (normalizeTeamName(home) === normalizeTeamName(away)) {
+        $("manualMessage").textContent = "主队和客队不能相同。";
+        return;
+      }
+      const match = buildManualMatch(home, away, kickoff);
+      state.manualMatches = [match, ...state.manualMatches.filter(item => String(item.id) !== String(match.id))];
+      saveManualMatches();
+      state.matches = [match, ...state.matches.filter(item => String(item.id) !== String(match.id))];
+      state.activeId = String(match.id);
+      hydrateFallbackAgents();
+      renderAll();
+      $("manualForm").reset();
+      closeManualLayer();
+    }
+
+    function deleteActiveManualMatch() {
+      const match = activeMatch();
+      if (!match || match.sourceType !== "manual") return;
+      if (!window.confirm(`删除手动赛事“${match.home} vs ${match.away}”？`)) return;
+      state.manualMatches = state.manualMatches.filter(item => String(item.id) !== String(match.id));
+      state.matches = state.matches.filter(item => String(item.id) !== String(match.id));
+      saveManualMatches();
+      state.activeId = String(state.matches[0]?.id || "");
+      renderAll();
+    }
+
+    function buildManualMatch(home, away, kickoff) {
+      const teams = state.data.teamProfiles || {};
+      const homeForm = teams[normalizeTeamName(home)] || null;
+      const awayForm = teams[normalizeTeamName(away)] || null;
+      const inferredLeague = (homeForm?.league && homeForm.league === awayForm?.league) ? homeForm.league : (homeForm?.league || awayForm?.league || "手动赛事");
+      const profile = findLeagueProfile(inferredLeague);
+      const knownSample = Number(homeForm?.sample || 0) + Number(awayForm?.sample || 0);
+      let raw;
+      if (homeForm && awayForm) {
+        raw = {
+          home: (Number(homeForm.homeWinRate || homeForm.winRate || .38) + Number(awayForm.awayLossRate || awayForm.lossRate || .34)) / 2 + .025,
+          draw: (Number(homeForm.homeDrawRate || homeForm.drawRate || .28) + Number(awayForm.awayDrawRate || awayForm.drawRate || .28)) / 2,
+          away: (Number(homeForm.homeLossRate || homeForm.lossRate || .34) + Number(awayForm.awayWinRate || awayForm.winRate || .34)) / 2 - .025
+        };
+      } else if (homeForm || awayForm) {
+        const one = homeForm || awayForm;
+        raw = homeForm
+          ? {home: Number(one.homeWinRate || one.winRate || .40) + .02, draw: Number(one.homeDrawRate || one.drawRate || .28), away: Number(one.homeLossRate || one.lossRate || .32) - .02}
+          : {home: Number(one.awayLossRate || one.lossRate || .34) + .02, draw: Number(one.awayDrawRate || one.drawRate || .28), away: Number(one.awayWinRate || one.winRate || .38) - .02};
+      } else {
+        raw = {home: Number(profile.homeRate || .42) + .025, draw: Number(profile.drawRate || .28), away: Number(profile.awayRate || .30) - .025};
+      }
+      const teamWeight = knownSample >= 20 ? .72 : (knownSample >= 8 ? .55 : .30);
+      const probs = normalizeManualProbabilities({
+        home: raw.home * teamWeight + Number(profile.homeRate || .42) * (1 - teamWeight),
+        draw: raw.draw * teamWeight + Number(profile.drawRate || .28) * (1 - teamWeight),
+        away: raw.away * teamWeight + Number(profile.awayRate || .30) * (1 - teamWeight)
+      });
+      const ranked = Object.keys(probs).sort((a, b) => probs[b] - probs[a]);
+      const labels = {home: "主胜", draw: "平局", away: "客胜"};
+      const primaryKey = ranked[0];
+      const coverKey = ranked[1];
+      const primary = labels[primaryKey];
+      const coverSide = labels[coverKey];
+      const gap = probs[primaryKey] - probs[coverKey];
+      const dataPenalty = knownSample >= 20 ? 0 : (knownSample >= 8 ? .07 : .14);
+      const coldRisk = clamp((1 - probs[primaryKey]) * .72 + probs[coverKey] * .22 + .09 + dataPenalty, .34, .82);
+      const riskLevel = coldRisk >= .66 ? "高" : (coldRisk >= .52 ? "中" : "低中");
+      const antiDrawScore = Math.round(clamp(52 + (.27 - probs.draw) * 135 + gap * 70 - coldRisk * 16 - (coverKey === "draw" ? 10 : 0), 0, 100));
+      const antiVerdict = antiDrawScore >= 62 ? "不机械防平" : (antiDrawScore >= 42 ? "保留平局风险" : "必须防平");
+      const scoreResult = buildManualScores(probs, profile, homeForm, awayForm, primaryKey, coverKey, coldRisk);
+      const confidence = Math.round(clamp(42 + gap * 80 + Math.min(knownSample, 30) * .45 - dataPenalty * 45, 38, 70));
+      const cover = coldRisk >= .55 ? `${primary}，防${coverSide}` : primary;
+      const scoreTotals = scoreResult.scores.map(item => item.score.split("-").reduce((sum, part) => sum + Number(part || 0), 0));
+      const overUnder = scoreTotals.every(total => total >= 3) ? "大2.5球倾向" : (scoreTotals.every(total => total <= 2) ? "小2.5球倾向" : "2/3球临界");
+      const id = `manual-${normalizeTeamName(home)}-${normalizeTeamName(away)}-${kickoff}`;
+      const scoreText = scoreResult.scores.map(item => item.score).join("、");
+      const sourceQuality = knownSample >= 20 ? `已匹配球队历史${knownSample}场` : (knownSample ? `球队样本仅${knownSample}场` : "未匹配到球队历史");
+      return {
+        id, date: kickoff.replace("T", " "), round: "手动录入", league: inferredLeague, home, away, sourceType: "manual",
+        odds: {
+          current: {}, initial: {}, shape: "未提供", movement: "无实时赔率", movementCombo: "手动赛事仅使用球队与联赛历史画像",
+          favorite: primary, favoriteOdds: null, favoriteChange: "资料有限", gap: gap, gapLabel: "历史强弱画像", mode: "本地历史基线", dropSide: "无", dropBucket: "无赔率"
+        },
+        probabilities: probs,
+        leagueProfile: profile,
+        grid: {signal: "历史基线", roi: null, sample: knownSample, bucket: "Manual/NoOdds"},
+        upset: {
+          score: coldRisk, level: riskLevel, direction: coverSide,
+          trap: `无实时赔率；${sourceQuality}；主方向仅领先${pct(gap)}`,
+          reasons: [`主方向${primary}${pct(probs[primaryKey])}`, `第二方向${coverSide}${pct(probs[coverKey])}`, sourceQuality]
+        },
+        antiDraw: {
+          score: antiDrawScore, verdict: antiVerdict,
+          action: antiDrawScore >= 62 ? "单方向优先" : (antiDrawScore >= 42 ? "平局进入复核层" : "平局进入防冷层"),
+          reasons: [`模型平局概率${pct(probs.draw)}`, `联赛平局基准${pct(profile.drawRate || .28)}`, sourceQuality]
+        },
+        conclusion: {
+          action: "资料有限：低置信观察", primary, cover, confidence, valueGate: "资料有限：等待赔率确认",
+          bestScores: scoreResult.scores, overUnder,
+          defendCold: coldRisk >= .66 ? `强制提示：防${coverSide}` : `建议保留：防${coverSide}`,
+          finalText: `历史球队画像与联赛基线暂时倾向${primary}，信心指数${confidence}/100；${sourceQuality}，需等待实时赔率确认。两个最得意比分为${scoreText}，${overUnder}。`,
+          riskNotice: `手动赛事无实时赔率，爆冷评分${pct(coldRisk)}仅作为历史画像参考。`
+        },
+        agents: buildManualAgents(profile, probs, coldRisk, riskLevel, antiDrawScore, antiVerdict, scoreResult.scores, confidence, cover, sourceQuality)
+      };
+    }
+
+    function findLeagueProfile(league) {
+      const profiles = Array.isArray(state.data.leagueProfiles) ? state.data.leagueProfiles : [];
+      return profiles.find(item => item.league === league) || averageLeagueProfile(profiles);
+    }
+
+    function averageLeagueProfile(profiles) {
+      if (!profiles.length) return {league: "综合联赛", sample: 0, homeRate: .42, drawRate: .28, awayRate: .30, favoriteHitRate: .55, over25Rate: .50, reliable: false};
+      const total = profiles.reduce((sum, item) => sum + Math.max(Number(item.sample || 0), 1), 0);
+      const avg = key => profiles.reduce((sum, item) => sum + Number(item[key] || 0) * Math.max(Number(item.sample || 0), 1), 0) / total;
+      return {league: "综合联赛", sample: total, homeRate: avg("homeRate") || .42, drawRate: avg("drawRate") || .28, awayRate: avg("awayRate") || .30, favoriteHitRate: avg("favoriteHitRate") || .55, over25Rate: avg("over25Rate") || .50, reliable: true};
+    }
+
+    function normalizeManualProbabilities(values) {
+      const safe = {home: Math.max(Number(values.home || 0), .01), draw: Math.max(Number(values.draw || 0), .01), away: Math.max(Number(values.away || 0), .01)};
+      const total = safe.home + safe.draw + safe.away;
+      return {home: safe.home / total, draw: safe.draw / total, away: safe.away / total};
+    }
+
+    function buildManualScores(probs, profile, homeForm, awayForm, primaryKey, coverKey, coldRisk) {
+      let total = 2.35 + (Number(profile.over25Rate || .50) - .50) * 1.35;
+      if (homeForm && awayForm) {
+        const observed = (Number(homeForm.goalsFor || 1.2) + Number(homeForm.goalsAgainst || 1.2) + Number(awayForm.goalsFor || 1.2) + Number(awayForm.goalsAgainst || 1.2)) / 2;
+        total = total * .62 + clamp(observed, 1.6, 3.8) * .38;
+      }
+      const edge = clamp((probs.home - probs.away) * 1.35, -.85, .85);
+      const homeLambda = clamp(total / 2 + .16 + edge, .25, 3.6);
+      const awayLambda = clamp(total - homeLambda, .20, 3.2);
+      const rows = [];
+      for (let h = 0; h <= 5; h++) {
+        for (let a = 0; a <= 5; a++) {
+          const outcome = h > a ? "home" : (h < a ? "away" : "draw");
+          rows.push({score: `${h}-${a}`, probability: poissonProbability(h, homeLambda) * poissonProbability(a, awayLambda), outcome});
+        }
+      }
+      const overRate = Number(profile.over25Rate || .50);
+      const primaryRows = rows.filter(item => item.outcome === primaryKey).sort((a, b) => b.probability - a.probability);
+      const secondKey = coldRisk >= .55 ? coverKey : primaryKey;
+      const secondRows = rows.filter(item => item.outcome === secondKey).sort((a, b) => b.probability - a.probability);
+      const first = overRate >= .60 && probs[primaryKey] >= .52
+        ? (primaryRows.find(item => item.score.split("-").reduce((sum, part) => sum + Number(part), 0) >= 2) || primaryRows[0])
+        : primaryRows[0];
+      const openSecond = coldRisk < .55 && overRate >= .56
+        ? primaryRows.find(item => item.score !== first.score && item.score.split("-").reduce((sum, part) => sum + Number(part), 0) >= 3)
+        : null;
+      const second = openSecond || secondRows.find(item => item.score !== first.score) || primaryRows[1];
+      return {total: homeLambda + awayLambda, scores: [first, second].map(item => {
+        const goals = item.score.split("-").reduce((sum, part) => sum + Number(part), 0);
+        return {score: item.score, probability: item.probability, script: item.outcome !== primaryKey ? "防冷脚本" : (goals >= 3 ? "开放局脚本" : "主方向脚本")};
+      })};
+    }
+
+    function buildManualAgents(profile, probs, coldRisk, riskLevel, antiScore, antiVerdict, scores, confidence, cover, sourceQuality) {
+      const primary = {home: "主胜", draw: "平局", away: "客胜"}[Object.keys(probs).sort((a, b) => probs[b] - probs[a])[0]];
+      return [
+        {name: "数据底座Agent", status: "已执行", signal: "手动录入", score: 58, view: "主队、客队和比赛时间已校验；未检测到实时赔率。"},
+        {name: "基本面Agent", status: "已执行", signal: "球队近期画像", score: confidence, view: `${sourceQuality}，已按样本量自动降权。`},
+        {name: "联赛画像Agent", status: "已执行", signal: profile.topOutcome || "综合基线", score: profile.reliable ? 76 : 52, view: `${profile.league || "综合联赛"}画像${Number(profile.sample || 0)}场。`},
+        {name: "Interwetten赔率Agent", status: "资料不足", signal: "等待赔率", score: 35, view: "手动赛事未提供500或Interwetten实时赔率，本席不伪造盘口信号。"},
+        {name: "爆冷防线Agent", status: "已执行", signal: riskLevel, score: Math.round(coldRisk * 100), view: `基于历史结构的爆冷评分${pct(coldRisk)}。`},
+        {name: "反防平Agent", status: "已执行", signal: antiVerdict, score: antiScore, view: `平局概率${pct(probs.draw)}，已与联赛基准比较。`},
+        {name: "比分脚本Agent", status: "已执行", signal: scores.map(item => item.score).join(" / "), score: confidence, view: "两个比分由历史进球均值与方向矩阵联合筛选。"},
+        {name: "圆桌仲裁Agent", status: "已执行", signal: cover, score: confidence, view: `低置信仲裁完成，暂定主方向${primary}，等待赔率后再升级。`}
+      ];
+    }
+
+    function normalizeTeamName(value) {
+      return String(value || "").toLowerCase().replace(/[\s·.\-（）()\[\]]+/g, "");
+    }
+
+    function poissonProbability(k, lambda) {
+      let factorial = 1;
+      for (let i = 2; i <= k; i++) factorial *= i;
+      return Math.exp(-lambda) * Math.pow(lambda, k) / factorial;
+    }
+
+    async function importJson(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const parsed = JSON.parse(text);
+        if (!Array.isArray(parsed.matches)) throw new Error("缺少 matches 数组");
+        state.data = parsed;
+        state.matches = parsed.matches;
+        state.activeId = String(state.matches[0]?.id || "");
+        hydrateFallbackAgents();
+        renderAll();
+      } catch (error) {
+        alert(`导入失败：${error.message || error}`);
+      } finally {
+        event.target.value = "";
+      }
+    }
+
+    async function activate() {
+      const code = $("licenseInput").value.trim();
+      const result = await validateLicense(code, state.deviceCode);
+      if (!result.ok) {
+        $("licenseMessage").textContent = result.message;
+        return;
+      }
+      const activatedAt = new Date();
+      const expiresAt = result.days ? new Date(activatedAt.getTime() + result.days * 86400000).toISOString() : "";
+      const payload = { license: result.normalized, machineCode: state.deviceCode, activatedAt: activatedAt.toISOString(), expiresAt, days: result.days || null };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      state.authorized = true;
+      state.demo = false;
+      renderAuth({ ok: true, message: result.days ? `${result.days}天授权` : "永久授权" });
+      $("licenseLayer").classList.add("hidden");
+    }
+
+    function enterDemo() {
+      state.demo = true;
+      state.data = FALLBACK_DATA;
+      state.matches = FALLBACK_DATA.matches;
+      state.activeId = String(state.matches[0]?.id || "");
+      renderAuth({ ok: false, demo: true, message: "演示模式" });
+      $("licenseLayer").classList.add("hidden");
+      renderAll();
+    }
+
+    async function readActivation() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return { ok: false, message: "未激活" };
+      try {
+        const payload = JSON.parse(raw);
+        if (payload.machineCode !== state.deviceCode) return { ok: false, message: "设备码变化，需要重新激活" };
+        const result = await validateLicense(payload.license, state.deviceCode);
+        if (!result.ok) return result;
+        if (payload.expiresAt && new Date() >= new Date(payload.expiresAt)) return { ok: false, message: "授权已到期" };
+        return { ok: true, message: payload.expiresAt ? `有效至 ${formatDate(payload.expiresAt)}` : "永久授权" };
+      } catch (error) {
+        return { ok: false, message: "激活信息损坏" };
+      }
+    }
+
+    function renderAuth(auth) {
+      $("authText").textContent = auth.ok ? auth.message : (auth.demo ? "演示模式" : "未激活");
+      $("authDot").classList.toggle("warn", !auth.ok);
+      $("demoWatermark").classList.toggle("hidden", !auth.demo);
+    }
+
+    async function validateLicense(value, machineCode) {
+      const info = parseLicense(value);
+      if (!info.normalized) return { ok: false, message: "授权码格式不正确。" };
+      const expected = await generateLicense(machineCode, info.days);
+      if (expected !== info.normalized) return { ok: false, message: "授权码不匹配，请确认设备码和授权期限。" };
+      return { ok: true, normalized: info.normalized, days: info.days };
+    }
+
+    function parseLicense(value) {
+      let cleaned = String(value || "").replace(/[^A-Za-z0-9]/g, "").toUpperCase();
+      if (cleaned.startsWith("FCL")) cleaned = cleaned.slice(3);
+      const timed = cleaned.match(/^(\d{1,4})D([A-F0-9]{28})$/);
+      if (timed) {
+        const days = Number(timed[1]);
+        const body = timed[2];
+        return { days, normalized: `FCL-${days}D-${chunk(body)}` };
+      }
+      if (/^[A-F0-9]{28}$/.test(cleaned)) return { days: null, normalized: `FCL-${chunk(cleaned)}` };
+      return { days: null, normalized: "" };
+    }
+
+    async function generateLicense(machineCode, days) {
+      const normalized = normalizeMachine(machineCode);
+      const payload = days ? `${PRODUCT_NAME}|timed|${days}|${normalized}` : `${PRODUCT_NAME}|permanent|${normalized}`;
+      const digest = hmacSha256Hex(SECRET, payload).toUpperCase().slice(0, 28);
+      return days ? `FCL-${days}D-${chunk(digest)}` : `FCL-${chunk(digest)}`;
+    }
+
+    async function getDeviceCode() {
+      const raw = [
+        navigator.userAgent,
+        navigator.language,
+        screen.width,
+        screen.height,
+        screen.colorDepth,
+        Intl.DateTimeFormat().resolvedOptions().timeZone || ""
+      ].join("|");
+      const digest = sha256Hex(utf8Bytes(raw)).toUpperCase().slice(0, 20);
+      return `FAI-${chunk(digest, 4)}`;
+    }
+
+    function normalizeMachine(value) {
+      let cleaned = String(value || "").replace(/[^A-Za-z0-9]/g, "").toUpperCase();
+      if (cleaned.startsWith("FAI")) cleaned = cleaned.slice(3);
+      const body = cleaned.slice(0, 20);
+      return body.length === 20 ? `FAI-${chunk(body, 4)}` : "";
+    }
+
+    function chunk(value, size = 4) {
+      return String(value).match(new RegExp(`.{1,${size}}`, "g")).join("-");
+    }
+
+    function hmacSha256Hex(key, message) {
+      const blockSize = 64;
+      let keyBytes = utf8Bytes(key);
+      if (keyBytes.length > blockSize) keyBytes = sha256Bytes(keyBytes);
+      if (keyBytes.length < blockSize) {
+        const padded = new Uint8Array(blockSize);
+        padded.set(keyBytes);
+        keyBytes = padded;
+      }
+      const oKey = new Uint8Array(blockSize);
+      const iKey = new Uint8Array(blockSize);
+      for (let i = 0; i < blockSize; i++) {
+        oKey[i] = keyBytes[i] ^ 0x5c;
+        iKey[i] = keyBytes[i] ^ 0x36;
+      }
+      const inner = concatBytes(iKey, utf8Bytes(message));
+      const outer = concatBytes(oKey, sha256Bytes(inner));
+      return bytesToHex(sha256Bytes(outer));
+    }
+
+    function sha256Hex(bytes) { return bytesToHex(sha256Bytes(bytes)); }
+    function utf8Bytes(text) { return new TextEncoder().encode(String(text)); }
+    function concatBytes(a, b) { const out = new Uint8Array(a.length + b.length); out.set(a); out.set(b, a.length); return out; }
+    function bytesToHex(bytes) { return Array.from(bytes).map(b => b.toString(16).padStart(2, "0")).join(""); }
+
+    function sha256Bytes(message) {
+      const K = [
+        0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+        0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+        0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+        0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+        0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+        0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+        0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+        0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+      ];
+      const H = new Uint32Array([0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]);
+      const l = message.length;
+      const bitLenHi = Math.floor((l * 8) / 0x100000000);
+      const bitLenLo = (l * 8) >>> 0;
+      const withOne = l + 1;
+      const zeroPad = (64 - ((withOne + 8) % 64)) % 64;
+      const bytes = new Uint8Array(withOne + zeroPad + 8);
+      bytes.set(message);
+      bytes[l] = 0x80;
+      const view = new DataView(bytes.buffer);
+      view.setUint32(bytes.length - 8, bitLenHi);
+      view.setUint32(bytes.length - 4, bitLenLo);
+      const W = new Uint32Array(64);
+      for (let offset = 0; offset < bytes.length; offset += 64) {
+        for (let i = 0; i < 16; i++) W[i] = view.getUint32(offset + i * 4);
+        for (let i = 16; i < 64; i++) {
+          const s0 = rotr(W[i - 15], 7) ^ rotr(W[i - 15], 18) ^ (W[i - 15] >>> 3);
+          const s1 = rotr(W[i - 2], 17) ^ rotr(W[i - 2], 19) ^ (W[i - 2] >>> 10);
+          W[i] = (W[i - 16] + s0 + W[i - 7] + s1) >>> 0;
+        }
+        let a = H[0], b = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+        for (let i = 0; i < 64; i++) {
+          const S1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25);
+          const ch = (e & f) ^ (~e & g);
+          const temp1 = (h + S1 + ch + K[i] + W[i]) >>> 0;
+          const S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
+          const maj = (a & b) ^ (a & c) ^ (b & c);
+          const temp2 = (S0 + maj) >>> 0;
+          h = g; g = f; f = e; e = (d + temp1) >>> 0; d = c; c = b; b = a; a = (temp1 + temp2) >>> 0;
+        }
+        H[0] = (H[0] + a) >>> 0; H[1] = (H[1] + b) >>> 0; H[2] = (H[2] + c) >>> 0; H[3] = (H[3] + d) >>> 0;
+        H[4] = (H[4] + e) >>> 0; H[5] = (H[5] + f) >>> 0; H[6] = (H[6] + g) >>> 0; H[7] = (H[7] + h) >>> 0;
+      }
+      const out = new Uint8Array(32);
+      const outView = new DataView(out.buffer);
+      H.forEach((value, index) => outView.setUint32(index * 4, value));
+      return out;
+    }
+
+    function rotr(value, bits) { return (value >>> bits) | (value << (32 - bits)); }
+    function formatDate(value) { return value ? String(value).slice(0, 10) : "--"; }
+    function gateShort(value) { return String(value || "--").split("：")[0]; }
+    function clamp(value, min, max) { return Math.max(min, Math.min(max, Number(value) || 0)); }
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+    }
+    async function copyText(value) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(value);
+          return true;
+        }
+        const area = document.createElement("textarea");
+        area.value = value;
+        area.style.position = "fixed";
+        area.style.left = "-9999px";
+        document.body.appendChild(area);
+        area.focus();
+        area.select();
+        const ok = document.execCommand("copy");
+        area.remove();
+        return ok;
+      } catch (error) {
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>
