@@ -247,7 +247,7 @@
     .summary-item { min-width: 0; padding: 9px 10px; border-left: 1px solid var(--line); background: rgba(5,10,16,.36); }
     .summary-item span { display: block; color: var(--muted); font-size: 11px; }
     .summary-item b { display: block; margin-top: 5px; font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
-    .summary-analysis { margin: 13px 0 0; color: #dce9f8; font-size: 14px; line-height: 1.75; overflow-wrap: anywhere; }
+    .summary-analysis { margin: 13px 0 0; color: #dce9f8; font-size: 14px; line-height: 1.75; overflow-wrap: anywhere; white-space: pre-line; }
 
     .radar-card {
       min-height: 240px;
@@ -767,9 +767,9 @@
           probabilities: {home: .615, draw: .244, away: .141},
           leagueProfile: {league: "世界杯", sample: 143, homeRate: .455, drawRate: .259, awayRate: .287, topOutcome: "主胜", favoriteHitRate: .608, kellyHitRate: .224, reliable: true},
           grid: {signal: "主胜价值", roi: .015, sample: 1162, bucket: "SuperFav/Stable"},
-          upset: {score: .472, level: "低中", direction: "平局", trap: "主胜超强热门<1.40；平局降赔抢信号", reasons: ["热门赔率档19.9%", "非热门方向降赔"]},
-          antiDraw: {score: 55, verdict: "建议防平", action: "主方向 + 平局保护", reasons: ["平局降赔", "平局已进入第二风险层"]},
-          conclusion: {action: "重点候选", primary: "主胜", cover: "主胜，防平局", confidence: 80, valueGate: "通过：进入候选观察池", bestScores: [{score: "2-0", probability: .132, script: "主方向脚本"}, {score: "1-1", probability: .104, script: "防冷脚本"}], overUnder: "小2.5球倾向", defendCold: "建议保留：防平局", finalText: "圆桌统一倾向为主胜，信心指数80/100；平局进入正式保护层，执行口径为主胜，防平局；两个最得意比分为2-0、1-1，小2.5球倾向。", riskNotice: "信心代表主方向优势，不代表排除平局。"},
+          upset: {score: .472, level: "低中", direction: "平局", trap: "主胜热度偏高；平赔变化只作参考", reasons: ["综合非主方向概率38.5%", "平局为第二概率方向"]},
+          antiDraw: {score: 61, verdict: "平局观察", action: "平局只进入风险提示", reasons: ["模型平局概率24.4%", "只有比分结构一席核心支持", "赔率参考票不能单独触发防平"], roundtable: {consensusScore: .74, coreSupports: 1, supportAgents: ["比分结构Agent", "赔率参考Agent"], opposeAgents: ["强弱差Agent"], bookmakerRole: "赔率公司仅作参考票，不能单独触发防平"}},
+          conclusion: {action: "重点候选", primary: "主胜", cover: "主胜", confidence: 80, valueGate: "通过：进入候选观察池", bestScores: [{score: "2-0", probability: .132, script: "主方向脚本"}, {score: "1-0", probability: .118, script: "主方向脚本"}], coldScores: [], overUnder: "小2.5球倾向", defendCold: "轻度观察：平局", finalText: "本地圆桌更信任主胜，平局只有一席核心支持，未进入正式保护。两个最得意比分为2-0、1-0，小2.5球倾向。", customerSummary: {headline: "主胜优势清楚，平局未获圆桌共识", primary: "主胜", secondary: "平局", cover: "主胜", confidence: 80, overUnder: "小2.5球倾向", mainScores: "2-0、1-0", coldScores: "", probabilityLine: "主胜61.5% · 平局24.4% · 客胜14.1%", analysis: "这场可以把态度说得明确一些：圆桌更信任主胜。优势已经形成，但仍要区分“更可能发生”和“不会出意外”。\n平局有讨论价值，不过本地核心席只有比分结构Agent支持，未达到正式防平门槛；平赔变化只是一张参考票，不会替系统作决定。\n联赛画像与比分矩阵把两个首选收敛到2-0、1-0，比赛更像主队控制节奏的小球脚本。最终执行主胜，信心80/100。\n演示数据不虚构球员伤停，正式分析仍需等待临场首发复核。"}, riskNotice: "平局保留观察，但没有足够独立证据进入正式防守层。"},
           agents: []
         },
         {
@@ -783,14 +783,16 @@
           probabilities: {home: .330, draw: .312, away: .358},
           leagueProfile: {league: "世界杯", sample: 143, homeRate: .455, drawRate: .259, awayRate: .287, topOutcome: "主胜", favoriteHitRate: .608, kellyHitRate: .224, reliable: true},
           grid: {signal: "Pass", roi: null, sample: null, bucket: "Weak/Deep_Drop"},
-          upset: {score: .789, level: "高", direction: "平局", trap: "客胜弱热门≥2.50；热门升赔不稳", reasons: ["综合非热门概率64.2%", "主胜降赔抢信号"]},
-          antiDraw: {score: 20, verdict: "必须防平", action: "平局进入防冷层", reasons: ["均势盘平局摩擦偏高", "冷门方向指向平局"]},
-          conclusion: {action: "防冷优先：客胜，防平局", primary: "客胜", cover: "客胜，防平局", confidence: 50, valueGate: "高风险：只做防冷复盘", bestScores: [{score: "0-1", probability: .106, script: "主方向脚本"}, {score: "1-1", probability: .104, script: "防冷脚本"}], overUnder: "小2.5球倾向", defendCold: "强制提示：防平局", finalText: "圆桌统一倾向为客胜，但Interwetten冷门评分达到78.9%，需要重点防平局；两个最得意比分为0-1、1-1，小2.5球倾向。", riskNotice: "爆冷可能性高，防冷方向锁定平局，不要只看热门方向。"},
+          upset: {score: .789, level: "高", direction: "主胜", trap: "客胜优势很薄；主队反向证据更强", reasons: ["综合非客胜概率64.2%", "主胜33.0%紧贴客胜35.8%"]},
+          antiDraw: {score: 42, verdict: "平局观察", action: "平局作为第三风险提示", reasons: ["模型平局概率31.2%", "第二方向主胜风险更高", "正式保护位优先交给主胜"], roundtable: {consensusScore: 2.35, coreSupports: 2, supportAgents: ["概率模型Agent", "比分结构Agent"], opposeAgents: [], bookmakerRole: "赔率公司仅作参考票，不能替代风险排序"}},
+          conclusion: {action: "防冷优先：客胜，防主胜", primary: "客胜", cover: "客胜，防主胜", confidence: 50, valueGate: "高风险：只做防冷复盘", bestScores: [{score: "1-2", probability: .106, script: "主方向脚本"}, {score: "2-1", probability: .098, script: "防冷脚本"}], coldScores: [{score: "3-1", probability: .042, script: "大球爆冷脚本"}], overUnder: "大2.5球倾向", defendCold: "强制提示：防主胜", finalText: "圆桌把客胜列为第一顺位，但领先幅度很小；第二风险由主胜承担，平局只作第三层观察。两个最得意比分为1-2、2-1，大2.5球倾向。", customerSummary: {headline: "客胜只占微弱先手，真正防线放在主胜", primary: "客胜", secondary: "主胜", cover: "客胜，防主胜", confidence: 50, overUnder: "大2.5球倾向", mainScores: "1-2、2-1", coldScores: "3-1", probabilityLine: "主胜33.0% · 平局31.2% · 客胜35.8%", analysis: "这不是赔率最低一方就能直接过关的比赛。圆桌给客胜第一顺位，但客胜、主胜和平局之间没有形成明显断层。\n平局虽然得到两个本地核心席讨论，第二风险排序却更明确地指向主胜，因此正式保护位留给主胜，平局只放在第三观察层。\n两个首选比分为1-2、2-1，说明比赛更可能通过转换和失误被打开；执行口径为客胜，防主胜，信心50/100。\n赔率公司的变化只提供背景，不替代本地Agent对强弱、节奏和比分结构的表决。"}, riskNotice: "爆冷压力高，真正的反向风险是主胜，不把所有冷门都解释成平局。"},
           agents: []
         }
       ]
     };
 
+    const DATA_CACHE_KEY = "football_ai_remote_data_cache_v3";
+    const ARCHIVE_CACHE_KEY = "football_ai_archive_cache_v2";
     const state = { data: FALLBACK_DATA, matches: [], manualMatches: [], activeId: "", authorized: false, demo: false, deviceCode: "", archive: [], archiveLoaded: false };
 
     const $ = (id) => document.getElementById(id);
@@ -802,6 +804,7 @@
 
     async function init() {
       bindEvents();
+      registerOfflineSupport();
       state.deviceCode = await getDeviceCode();
       $("deviceCode").textContent = state.deviceCode;
       const forcedDemo = new URLSearchParams(location.search).get("demo") === "1";
@@ -841,12 +844,15 @@
     }
 
     async function loadData() {
+      const cached = readCachedJson(DATA_CACHE_KEY);
       try {
-        const response = await fetch("./data/matches.json", { cache: "no-store" });
-        if (!response.ok) throw new Error("data fetch failed");
-        state.data = await response.json();
+        const payload = await fetchJsonWithTimeout("./data/matches.json", 7000);
+        if (!Array.isArray(payload?.matches)) throw new Error("invalid match payload");
+        state.data = payload;
+        writeCachedJson(DATA_CACHE_KEY, payload);
       } catch (error) {
-        state.data = FALLBACK_DATA;
+        state.data = cached || FALLBACK_DATA;
+        state.data.meta = {...(state.data.meta || {}), dailyUpdate: {...(state.data.meta?.dailyUpdate || {}), status: cached ? "offline-cache" : "offline-no-cache"}};
       }
       state.matches = Array.isArray(state.data.matches) ? state.data.matches : [];
       if (!state.demo) {
@@ -865,9 +871,9 @@
           {name: "数据底座Agent", signal: "样本校验", score: 86, view: "当前赔率、升降方向、网格桶已入场。"},
           {name: "基本面Agent", signal: "主客强弱", score: match.conclusion.confidence || 70, view: "以赛前结构和历史近似样本做基本面替代。"},
           {name: "联赛画像Agent", signal: match.leagueProfile.topOutcome || "联赛基准", score: 82, view: `${match.league}样本${match.leagueProfile.sample || 0}场。`},
-          {name: "Interwetten赔率Agent", signal: match.grid.signal || "Pass", score: 68, view: match.odds.movementCombo || "赔率变化待复核。"},
+          {name: "Interwetten赔率Agent", signal: "参考席", score: 64, view: `${match.odds.movementCombo || "赔率变化待复核。"} 该席只提供参考票，不单独决定方向。`},
           {name: "爆冷防线Agent", signal: match.upset.level || "低", score: Math.round((match.upset.score || 0) * 100), view: match.conclusion.riskNotice || "冷门压力可控。"},
-          {name: "反防平Agent", signal: match.antiDraw.verdict || "保留平局风险", score: match.antiDraw.score || 50, view: (match.antiDraw.reasons || []).join("；") || "平局风险已校验。"},
+          {name: "本地防平圆桌Agent", signal: match.antiDraw.verdict || "保留平局风险", score: Math.max(50, 82 - Number(match.antiDraw.score || 50) / 2), view: `核心支持${match.antiDraw.roundtable?.coreSupports ?? "--"}席；${(match.antiDraw.reasons || []).join("；") || "平局风险已校验。"}`},
           {name: "比分脚本Agent", signal: match.conclusion.bestScores.map(s => s.score).join(" / "), score: match.conclusion.confidence || 70, view: "两个最得意比分已和大小球口径统一。"},
           {name: "圆桌仲裁Agent", signal: match.conclusion.cover, score: match.conclusion.confidence || 70, view: "多Agent输出主方向、防冷层和最终结论。"}
         ];
@@ -880,8 +886,8 @@
       $("matchCount").textContent = state.matches.length;
       $("dataTime").textContent = meta.historyRange || formatDate(meta.generatedAt);
       const updateStatus = meta.dailyUpdate?.status || (meta.source?.includes("500") ? "success" : "static");
-      $("updateText").textContent = updateStatus === "failed-preserved" ? "500更新失败·保留旧版" : (updateStatus === "success-no-current-matches" ? "500已更新·当前无竞彩" : (updateStatus === "success" ? "500数据已更新" : "静态数据包"));
-      $("updateDot").classList.toggle("warn", updateStatus === "failed-preserved");
+      $("updateText").textContent = updateStatus === "offline-cache" ? "网络波动·使用本地缓存" : (updateStatus === "offline-no-cache" ? "网络不可用·演示数据" : (updateStatus === "failed-preserved" ? "500更新失败·保留旧版" : (updateStatus === "success-no-current-matches" ? "500已更新·当前无竞彩" : (updateStatus === "success" ? "500数据已更新" : "静态数据包"))));
+      $("updateDot").classList.toggle("warn", ["failed-preserved", "offline-cache", "offline-no-cache"].includes(updateStatus));
       $("complianceText").textContent = meta.compliance || "仅提供体育数据分析、赛前研究与内容创作参考；不涉及赌博，不提供下注服务，不承诺结果。";
       renderLeagueFilter();
       renderMatchList();
@@ -1158,13 +1164,13 @@
 
     async function loadHistoryArchive() {
       $("historyMeta").textContent = "历史记录载入中...";
+      const cached = readCachedJson(ARCHIVE_CACHE_KEY);
       try {
-        const response = await fetch("./data/analysis_archive.json", { cache: "no-store" });
-        if (!response.ok) throw new Error("archive fetch failed");
-        const payload = await response.json();
+        const payload = await fetchJsonWithTimeout("./data/analysis_archive.json", 7000);
         state.archive = Array.isArray(payload.matches) ? payload.matches : [];
+        writeCachedJson(ARCHIVE_CACHE_KEY, payload);
       } catch (error) {
-        state.archive = state.matches.map(match => ({
+        state.archive = Array.isArray(cached?.matches) ? cached.matches : state.matches.map(match => ({
           id: match.id, date: match.date, round: match.round, league: match.league, home: match.home, away: match.away,
           predictedPrimary: match.conclusion?.primary || "--", cover: match.conclusion?.cover || "--",
           confidence: match.conclusion?.confidence || 0, bestScores: match.conclusion?.bestScores || [],
@@ -1173,6 +1179,44 @@
         }));
       }
       state.archiveLoaded = true;
+    }
+
+    async function fetchJsonWithTimeout(url, timeoutMs) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const response = await fetch(url, {cache: "no-store", signal: controller.signal});
+        if (!response.ok) throw new Error(`fetch failed: ${response.status}`);
+        return await response.json();
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    function readCachedJson(key) {
+      try {
+        const value = JSON.parse(localStorage.getItem(key) || "null");
+        return value && typeof value === "object" ? value : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function writeCachedJson(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (error) {
+        // Storage quota or privacy mode: the live page still remains usable.
+      }
+    }
+
+    function registerOfflineSupport() {
+      if (!("serviceWorker" in navigator) || location.protocol !== "https:") return;
+      navigator.serviceWorker.register("./sw.js").catch(() => {});
+      window.addEventListener("offline", () => {
+        $("updateText").textContent = "网络已断开·继续使用本地数据";
+        $("updateDot").classList.add("warn");
+      });
     }
 
     function renderHistory() {
@@ -1300,14 +1344,15 @@
       const dataPenalty = knownSample >= 20 ? 0 : (knownSample >= 8 ? .07 : .14);
       const coldRisk = clamp((1 - probs[primaryKey]) * .72 + probs[coverKey] * .22 + .09 + dataPenalty, .34, .82);
       const riskLevel = coldRisk >= .66 ? "高" : (coldRisk >= .52 ? "中" : "低中");
-      const antiDrawScore = Math.round(clamp(48 + (.255 - probs.draw) * 120 + Math.max(0, gap - .20) * 55 - coldRisk * 14 + (.255 - Number(profile.drawRate || .255)) * 40 - (coverKey === "draw" ? 16 : 0), 0, 100));
-      let drawDefense = buildManualDrawDefense(probs, profile, primaryKey, coverKey, gap, coldRisk, antiDrawScore);
+      const scoreContext = buildManualScoreContext(probs, profile, homeForm, awayForm);
+      let drawDefense = buildManualDrawRoundtable(probs, profile, homeForm, awayForm, primaryKey, coverKey, gap, coldRisk, scoreContext);
+      const antiDrawScore = drawDefense.antiScore;
       const protectionKey = coldRisk >= .55 ? coverKey : (drawDefense.cover ? "draw" : primaryKey);
       if (drawDefense.cover && primaryKey !== "draw" && protectionKey !== "draw") {
         drawDefense = {...drawDefense, cover: false, level: "watch", label: "平局观察", verdict: "平局观察", action: "平局作为第三风险提示", reasons: [...drawDefense.reasons.slice(0, 4), "第二方向风险更高，正式保护位优先留给第二方向"]};
       }
       const protectionSide = labels[protectionKey];
-      const scoreResult = buildManualScores(probs, profile, homeForm, awayForm, primaryKey, coverKey, coldRisk, protectionKey);
+      const scoreResult = buildManualScores(probs, profile, homeForm, awayForm, primaryKey, coverKey, coldRisk, protectionKey, scoreContext);
       let confidence = Math.round(clamp(42 + gap * 80 + Math.min(knownSample, 30) * .45 - dataPenalty * 45, 38, 70));
       if (drawDefense.level === "must") confidence = Math.min(confidence - 4, 62);
       else if (drawDefense.cover) confidence = Math.min(confidence - 2, 66);
@@ -1317,8 +1362,7 @@
       const scoreText = scoreResult.scores.map(item => item.score).join("、");
       const coldScoreText = scoreResult.coldScores.map(item => item.score).join("、");
       const sourceQuality = knownSample >= 20 ? `已匹配球队历史${knownSample}场` : (knownSample ? `球队样本仅${knownSample}场` : "未匹配到球队历史");
-      const drawNote = drawDefense.cover ? `${drawDefense.label}，信心仅代表主方向优势，不代表排除平局。` : "";
-      const analysisText = `历史球队画像与联赛基线合并后，${primary}概率最高，信心${confidence}/100；次选为${protectionSide}，当前执行口径为${cover}。${drawNote}${sourceQuality}，且手动赛事暂无实时赔率、预计首发和伤停名单，结论需在临场数据补齐后复核。`;
+      const narrative = buildManualSummaryNarrative({home, away, kickoff, primary, protectionSide, cover, confidence, probs, gap, coldRisk, overUnder, scoreText, sourceQuality, profile, drawDefense, scoreContext});
       return {
         id, date: kickoff.replace("T", " "), round: "手动录入", league: inferredLeague, home, away, sourceType: "manual",
         odds: {
@@ -1336,7 +1380,14 @@
         antiDraw: {
           score: antiDrawScore, verdict: drawDefense.verdict,
           action: drawDefense.action,
-          reasons: drawDefense.reasons
+          reasons: drawDefense.reasons,
+          roundtable: {
+            consensusScore: drawDefense.consensusScore,
+            coreSupports: drawDefense.coreSupports,
+            supportAgents: drawDefense.supportAgents,
+            opposeAgents: drawDefense.opposeAgents,
+            bookmakerRole: drawDefense.bookmakerRole
+          }
         },
         intelligence: {
           status: "limited", lineupStatus: "暂无预计阵容", newsStatus: "实时新闻待补充", fetchedAt: new Date().toISOString(),
@@ -1347,16 +1398,16 @@
           action: "资料有限：低置信观察", primary, cover, confidence, valueGate: "资料有限：等待赔率确认",
           bestScores: scoreResult.scores, coldScores: scoreResult.coldScores, overUnder, openGame: scoreResult.openGame,
           defendCold: drawDefense.cover ? `${drawDefense.level === "must" ? "强制提示" : "建议保留"}：防平局` : (coldRisk >= .66 ? `强制提示：防${coverSide}` : `建议保留：防${coverSide}`),
-          finalText: `历史球队画像与联赛基线暂时倾向${primary}，信心指数${confidence}/100；${drawDefense.cover ? `${drawDefense.label}，执行口径为${cover}；` : ""}${sourceQuality}，需等待实时赔率确认。两个最得意比分为${scoreText}，${overUnder}${coldScoreText ? `；开放局冷门比分为${coldScoreText}` : ""}。`,
+          finalText: narrative.text.replace(/\n/g, " "),
           customerSummary: {
-            headline: `主看${primary}，次选${protectionSide}`, primary, secondary: protectionSide, cover, confidence, overUnder,
+            headline: narrative.headline, primary, secondary: protectionSide, cover, confidence, overUnder,
             mainScores: scoreText, coldScores: coldScoreText,
             probabilityLine: `主胜${pct(probs.home)} · 平局${pct(probs.draw)} · 客胜${pct(probs.away)}`,
-            analysis: analysisText
+            analysis: narrative.text
           },
           riskNotice: `手动赛事无实时赔率，爆冷评分${pct(coldRisk)}仅作为历史画像参考；${drawDefense.cover ? "平局已经进入保护层。" : "暂未达到正式防平门槛。"}`
         },
-        agents: buildManualAgents(profile, probs, coldRisk, riskLevel, antiDrawScore, drawDefense.verdict, scoreResult.scores, scoreResult.coldScores, confidence, cover, sourceQuality)
+        agents: buildManualAgents(profile, probs, coldRisk, riskLevel, drawDefense, scoreResult.scores, scoreResult.coldScores, confidence, cover, sourceQuality)
       };
     }
 
@@ -1378,23 +1429,109 @@
       return {home: safe.home / total, draw: safe.draw / total, away: safe.away / total};
     }
 
-    function buildManualDrawDefense(probs, profile, primaryKey, secondKey, gap, coldRisk, antiDrawScore) {
+    function buildManualDrawRoundtable(probs, profile, homeForm, awayForm, primaryKey, secondKey, gap, coldRisk, scoreContext) {
       const leagueDraw = Number(profile.drawRate || .255);
       const drawIsSecond = secondKey === "draw";
-      const mustCover = primaryKey !== "draw" && (
-        probs.draw >= .285 ||
-        (drawIsSecond && probs.draw >= .23 && leagueDraw >= .28) ||
-        (drawIsSecond && probs.draw >= .24 && gap <= .30) ||
-        (drawIsSecond && antiDrawScore <= 38)
-      );
-      const shouldCover = primaryKey !== "draw" && (mustCover || (drawIsSecond && probs.draw >= .215) || (leagueDraw >= .30 && probs.draw >= .205) || (probs.draw >= .255 && gap <= .34) || antiDrawScore <= 52);
+      let consensusScore = 0;
+      const coreSupports = [];
+      const supportAgents = [];
+      const opposeAgents = [];
       const reasons = [`模型平局概率${pct(probs.draw)}`, `联赛平局基准${pct(leagueDraw)}`, `主方向领先${pct(gap)}`];
-      if (mustCover) return {cover: true, level: "must", label: "必须防平", verdict: "必须防平", action: "平局进入正式防守层", reasons: [...reasons, "平局得到概率排序和联赛画像共同支持"]};
-      if (shouldCover) return {cover: true, level: "suggest", label: "建议防平", verdict: "建议防平", action: "主方向 + 平局保护", reasons: [...reasons, "平局已进入第二风险层"]};
-      return {cover: false, level: "none", label: "有依据不防平", verdict: "有依据不防平", action: "单方向成立", reasons: [...reasons, "当前证据不足以把平局列入正式保护"]};
+
+      if (probs.draw >= .285) {
+        consensusScore += 1.25; coreSupports.push("概率模型Agent"); supportAgents.push("概率模型Agent");
+      } else if (drawIsSecond && probs.draw >= .245) {
+        consensusScore += 1; coreSupports.push("概率模型Agent"); supportAgents.push("概率模型Agent");
+      } else if (drawIsSecond && probs.draw >= .225 && gap <= .22) {
+        consensusScore += .65; coreSupports.push("概率模型Agent"); supportAgents.push("概率模型Agent");
+      } else if (probs.draw < .22) {
+        consensusScore -= .8; opposeAgents.push("概率模型Agent");
+      }
+
+      if (Number(homeForm?.sample || 0) >= 6 && Number(awayForm?.sample || 0) >= 6) {
+        const homeDraw = Number(homeForm.homeDrawRate ?? homeForm.drawRate ?? 0);
+        const awayDraw = Number(awayForm.awayDrawRate ?? awayForm.drawRate ?? 0);
+        const teamDraw = (homeDraw + awayDraw) / 2;
+        if (teamDraw >= .29) {
+          consensusScore += 1.15; coreSupports.push("球队状态Agent"); supportAgents.push("球队状态Agent"); reasons.push(`主客场球队平局画像${pct(teamDraw)}`);
+        } else if (teamDraw <= .20) {
+          consensusScore -= .9; opposeAgents.push("球队状态Agent");
+        }
+      }
+
+      if (scoreContext.drawMass >= .285 && scoreContext.expectedTotal <= 2.55) {
+        consensusScore += 1.1; coreSupports.push("比分结构Agent"); supportAgents.push("比分结构Agent");
+      } else if (scoreContext.drawMass >= .225 && scoreContext.expectedTotal <= 2.55) {
+        consensusScore += .75; coreSupports.push("比分结构Agent"); supportAgents.push("比分结构Agent");
+      } else if (scoreContext.drawMass >= .215 && scoreContext.expectedTotal <= 2.45) {
+        consensusScore += .55; coreSupports.push("比分结构Agent"); supportAgents.push("比分结构Agent");
+      } else if (scoreContext.expectedTotal >= 2.80 && scoreContext.drawMass < .23) {
+        consensusScore -= .75; opposeAgents.push("比分结构Agent");
+      }
+
+      if (leagueDraw >= .30) {
+        consensusScore += .45; supportAgents.push("联赛画像Agent");
+      } else if (leagueDraw <= .23) {
+        consensusScore -= .45; opposeAgents.push("联赛画像Agent");
+      }
+      if (probs[primaryKey] >= .60 && gap >= .30) {
+        consensusScore -= 1.35; opposeAgents.push("强弱差Agent");
+      } else if (probs[primaryKey] >= .54 && gap >= .22) {
+        consensusScore -= .65; opposeAgents.push("强弱差Agent");
+      }
+
+      const coreCount = new Set(coreSupports).size;
+      const mustCover = primaryKey !== "draw" && coreCount >= 2 && consensusScore >= 2.70 && probs.draw >= .28;
+      const shouldCover = primaryKey !== "draw" && coreCount >= 2 && consensusScore >= 1.55;
+      const shouldWatch = primaryKey !== "draw" && !shouldCover && (consensusScore >= .55 || (drawIsSecond && probs.draw >= .235));
+      let level, label, verdict, action;
+      if (primaryKey === "draw") {
+        [level, label, verdict, action] = ["primary", "平局主方向", "平局为主方向", "平局进入主判断层"];
+      } else if (mustCover) {
+        [level, label, verdict, action] = ["must", "必须防平", "必须防平", "平局进入正式防守层"]; reasons.push(`本地核心Agent有${coreCount}席独立支持`);
+      } else if (shouldCover) {
+        [level, label, verdict, action] = ["suggest", "建议防平", "建议防平", "主方向 + 平局保护"]; reasons.push(`本地核心Agent有${coreCount}席独立支持`);
+      } else if (shouldWatch) {
+        [level, label, verdict, action] = ["watch", "平局观察", "平局观察", "平局只进入风险提示"]; reasons.push("尚未达到两席核心Agent共同支持的正式防平门槛");
+      } else {
+        [level, label, verdict, action] = ["none", "有依据不防平", "有依据不防平", "单方向成立"]; reasons.push("本地核心Agent未形成防平共识，缺失赔率参考票也不会被系统补造");
+      }
+      return {
+        cover: shouldCover || mustCover, level, label, verdict, action, reasons: reasons.slice(0, 5),
+        antiScore: Math.round(clamp(58 - consensusScore * 14 - coreCount * 4, 5, 92)),
+        consensusScore: Math.round(consensusScore * 100) / 100, coreSupports: coreCount,
+        supportAgents: [...new Set(supportAgents)], opposeAgents: [...new Set(opposeAgents)],
+        roundtableConfidence: Math.round(clamp(54 + Math.abs(consensusScore) * 9 + coreCount * 5, 50, 90)),
+        bookmakerRole: "手动赛事无实时赔率，参考席缺席且不会被伪造"
+      };
     }
 
-    function buildManualScores(probs, profile, homeForm, awayForm, primaryKey, coverKey, coldRisk, protectionKey = null) {
+    function buildManualSummaryNarrative({home, away, kickoff, primary, protectionSide, cover, confidence, probs, gap, coldRisk, overUnder, scoreText, sourceQuality, profile, drawDefense, scoreContext}) {
+      const variant = [...`${home}|${away}|${kickoff}`].reduce((sum, char) => sum + char.charCodeAt(0), 0) % 3;
+      const directionRead = primary === "主胜"
+        ? "主队在历史主场兑现率和进球结构上更占主动"
+        : (primary === "客胜" ? "客队在历史客场抗压和有效进攻上更完整" : "双方都缺少持续拉开差距的历史证据");
+      const openings = gap <= .08
+        ? [`${home}对${away}是一场典型拉扯局，方向差没有大到可以草率定性。`, `这场最难的不是选热门，而是判断谁更能把自己的比赛节奏坚持到最后。`, `先说态度：这场需要低置信处理，但低置信不等于没有主次。`]
+        : [`历史画像重新对齐后，${primary}排在第一顺位，${directionRead}。`, `这场的选择不是照着队名下结论，样本加权后更支持${primary}。`, `圆桌把主线放在${primary}，核心原因是${directionRead}。`];
+      const support = drawDefense.supportAgents.join("、") || "暂无明确支持席";
+      const oppose = drawDefense.opposeAgents.join("、") || "没有强反对席";
+      const drawText = drawDefense.cover
+        ? `平局经过本地圆桌表决后获得${drawDefense.coreSupports}个核心席位支持，支持方为${support}，反对方为${oppose}，因此才进入正式保护。`
+        : (drawDefense.level === "watch"
+          ? `平局有讨论价值，但只有${drawDefense.coreSupports}个核心席位支持，尚未过正式防平门槛，所以只留在观察层。`
+          : `平局没有形成两席本地核心共识，反对或保留意见来自${oppose}，系统不会为了显得稳妥而机械附加平局。`);
+      const evidenceText = `${sourceQuality}，联赛画像样本${Number(profile.sample || 0)}场；比分矩阵给出的两个首选是${scoreText}，预期总进球${scoreContext.expectedTotal.toFixed(2)}，对应${overUnder}。`;
+      const closeText = `最终执行口径为${cover}，主方向信心${confidence}/100，第二风险为${protectionSide}，爆冷压力${pct(coldRisk)}。手动赛事未提供500或Interwetten实时盘，也没有可靠首发伤停，系统没有补造这两类证据，临场数据补齐后应重新复核。`;
+      const headlines = drawDefense.cover
+        ? [`主线${primary}，平局经本地圆桌进入保护`, `${primary}居首，防平来自两席以上独立证据`, `方向选${primary}，平局保护不是赔率跟随`]
+        : (drawDefense.level === "watch"
+          ? [`主看${primary}，平局只在观察层`, `${primary}第一顺位，平局票数未过线`, `圆桌偏向${primary}，不机械附加平局`]
+          : [`历史画像更支持${primary}，平局未获共识`, `第一顺位是${primary}，风险线单独处理`, `圆桌选择${primary}，等待临场数据复核`]);
+      return {headline: headlines[variant], text: [openings[variant], drawText, evidenceText, closeText].join("\n")};
+    }
+
+    function buildManualScoreContext(probs, profile, homeForm, awayForm) {
       let total = 2.35 + (Number(profile.over25Rate || .50) - .50) * 1.35;
       if (homeForm && awayForm) {
         const observed = (Number(homeForm.goalsFor || 1.2) + Number(homeForm.goalsAgainst || 1.2) + Number(awayForm.goalsFor || 1.2) + Number(awayForm.goalsAgainst || 1.2)) / 2;
@@ -1403,8 +1540,15 @@
       const edge = clamp((probs.home - probs.away) * 1.35, -.85, .85);
       const homeLambda = clamp(total / 2 + .16 + edge, .25, 3.6);
       const awayLambda = clamp(total - homeLambda, .20, 3.2);
+      let drawMass = 0;
+      for (let goals = 0; goals <= 5; goals++) drawMass += poissonProbability(goals, homeLambda) * poissonProbability(goals, awayLambda);
       const expectedTotal = homeLambda + awayLambda;
-      const openGame = expectedTotal >= 2.72 || Number(profile.over25Rate || .50) >= .61;
+      return {homeLambda, awayLambda, expectedTotal, drawMass, openGame: expectedTotal >= 2.72 || Number(profile.over25Rate || .50) >= .61};
+    }
+
+    function buildManualScores(probs, profile, homeForm, awayForm, primaryKey, coverKey, coldRisk, protectionKey = null, scoreContext = null) {
+      const context = scoreContext || buildManualScoreContext(probs, profile, homeForm, awayForm);
+      const {homeLambda, awayLambda, expectedTotal, openGame} = context;
       const rows = [];
       for (let h = 0; h <= 5; h++) {
         for (let a = 0; a <= 5; a++) {
@@ -1441,16 +1585,16 @@
       return {total: expectedTotal, openGame, scores, coldScores};
     }
 
-    function buildManualAgents(profile, probs, coldRisk, riskLevel, antiScore, antiVerdict, scores, coldScores, confidence, cover, sourceQuality) {
+    function buildManualAgents(profile, probs, coldRisk, riskLevel, drawDefense, scores, coldScores, confidence, cover, sourceQuality) {
       const primary = {home: "主胜", draw: "平局", away: "客胜"}[Object.keys(probs).sort((a, b) => probs[b] - probs[a])[0]];
       const scoreSignal = `${scores.map(item => item.score).join(" / ")}${coldScores.length ? `；冷门 ${coldScores.map(item => item.score).join(" / ")}` : ""}`;
       return [
         {name: "数据底座Agent", status: "已执行", signal: "手动录入", score: 58, view: "主队、客队和比赛时间已校验；未检测到实时赔率。"},
         {name: "基本面Agent", status: "已执行", signal: "球队近期画像", score: confidence, view: `${sourceQuality}，已按样本量自动降权。`},
         {name: "联赛画像Agent", status: "已执行", signal: profile.topOutcome || "综合基线", score: profile.reliable ? 76 : 52, view: `${profile.league || "综合联赛"}画像${Number(profile.sample || 0)}场。`},
-        {name: "Interwetten赔率Agent", status: "资料不足", signal: "等待赔率", score: 35, view: "手动赛事未提供500或Interwetten实时赔率，本席不伪造盘口信号。"},
+        {name: "Interwetten赔率Agent", status: "参考席缺席", signal: "等待赔率", score: 35, view: "手动赛事未提供500或Interwetten实时赔率，本席不伪造盘口信号，也不参与最终投票。"},
         {name: "爆冷防线Agent", status: "已执行", signal: riskLevel, score: Math.round(coldRisk * 100), view: `基于历史结构的爆冷评分${pct(coldRisk)}。`},
-        {name: "反防平Agent", status: "已执行", signal: antiVerdict, score: antiScore, view: `平局概率${pct(probs.draw)}，已与联赛基准比较。`},
+        {name: "本地防平圆桌Agent", status: "已执行", signal: drawDefense.verdict, score: drawDefense.roundtableConfidence, view: `核心支持${drawDefense.coreSupports}席；支持：${drawDefense.supportAgents.join("、") || "无"}；反对：${drawDefense.opposeAgents.join("、") || "无"}。`},
         {name: "比分脚本Agent", status: "已执行", signal: scoreSignal, score: confidence, view: "主推比分和开放局冷门比分由历史进球均值、方向概率与Poisson矩阵联合筛选。"},
         {name: "圆桌仲裁Agent", status: "已执行", signal: cover, score: confidence, view: `低置信仲裁完成，暂定主方向${primary}，等待赔率后再升级。`}
       ];
