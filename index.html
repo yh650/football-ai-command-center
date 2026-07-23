@@ -30,8 +30,8 @@
     body {
       overflow-x: hidden;
       background:
-        radial-gradient(circle at 16% 0%, rgba(50, 213, 255, .16), transparent 30%),
-        radial-gradient(circle at 84% 8%, rgba(51, 230, 166, .1), transparent 28%),
+        linear-gradient(120deg, rgba(50, 213, 255, .08), transparent 34%),
+        linear-gradient(240deg, rgba(51, 230, 166, .055), transparent 36%),
         linear-gradient(180deg, #08111c 0%, #070a0f 48%, #090d14 100%);
     }
     button, input, select { font: inherit; color: inherit; }
@@ -86,6 +86,8 @@
       font-size: 12px;
       white-space: nowrap;
     }
+    .badge-button { cursor: pointer; }
+    .badge-button:hover { border-color: rgba(50,213,255,.55); background: rgba(50,213,255,.1); }
     .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px currentColor; color: var(--green); }
     .dot.warn { background: var(--amber); color: var(--amber); }
 
@@ -157,8 +159,6 @@
       font-size: 10px;
       color: var(--cyan);
     }
-    #fileInput { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; pointer-events: none; }
-
     .match-list { display: grid; gap: 8px; max-height: calc(100dvh - 260px); overflow: auto; padding-right: 2px; }
     .match-card {
       width: 100%;
@@ -232,6 +232,23 @@
     .decision-value.red { color: var(--red); }
     .final-text { margin: 14px 0 0; color: #d8e7f9; line-height: 1.68; font-size: 14px; overflow-wrap: anywhere; }
 
+    .summary-board {
+      margin-top: 12px;
+      padding: 15px;
+      border: 1px solid rgba(51,230,166,.34);
+      border-left: 4px solid var(--green);
+      border-radius: 8px;
+      background: linear-gradient(90deg, rgba(51,230,166,.1), rgba(50,213,255,.04) 58%, rgba(255,200,87,.055));
+    }
+    .summary-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .summary-headline { margin: 4px 0 0; font-size: 21px; line-height: 1.3; }
+    .summary-confidence { color: var(--green); font-size: 28px; font-weight: 900; white-space: nowrap; }
+    .summary-grid { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 8px; margin-top: 13px; }
+    .summary-item { min-width: 0; padding: 9px 10px; border-left: 1px solid var(--line); background: rgba(5,10,16,.36); }
+    .summary-item span { display: block; color: var(--muted); font-size: 11px; }
+    .summary-item b { display: block; margin-top: 5px; font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
+    .summary-analysis { margin: 13px 0 0; color: #dce9f8; font-size: 14px; line-height: 1.75; overflow-wrap: anywhere; }
+
     .radar-card {
       min-height: 240px;
       padding: 14px;
@@ -275,6 +292,12 @@
     }
     .score-card strong { display: block; font-size: 38px; line-height: 1; }
     .score-card span { display: block; margin-top: 9px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .score-card.cold { border-color: rgba(255,99,125,.35); background: rgba(255,99,125,.07); }
+    .score-card.cold strong { color: #ff9aad; }
+    .cold-score-block { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line2); }
+    .cold-score-title { display: flex; justify-content: space-between; gap: 8px; color: var(--red); font-size: 12px; font-weight: 800; }
+    .cold-score-list { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 8px; }
+    .cold-score-chip { min-height: 28px; display: inline-flex; align-items: center; padding: 0 9px; border: 1px solid rgba(255,99,125,.32); border-radius: 5px; background: rgba(255,99,125,.08); color: #ffd7de; font-size: 12px; }
 
     .report-section { margin-top: 12px; display: grid; gap: 12px; }
     .report-card {
@@ -285,6 +308,20 @@
     }
     .report-card h3 { margin: 0 0 8px; font-size: 14px; }
     .report-card p { margin: 0; color: #d6e3f4; line-height: 1.7; font-size: 13px; overflow-wrap: anywhere; }
+    .intel-meta { color: var(--muted); font-size: 11px; line-height: 1.6; }
+    .intel-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; margin-top: 12px; }
+    .intel-team { min-width: 0; padding: 0 12px; border-left: 2px solid rgba(50,213,255,.35); }
+    .intel-team.away { border-left-color: rgba(167,139,250,.45); }
+    .intel-team h4 { margin: 0; font-size: 14px; }
+    .intel-label { margin-top: 10px; color: var(--muted); font-size: 11px; }
+    .player-list { margin: 6px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 5px; }
+    .player-list li { max-width: 100%; padding: 4px 6px; border-radius: 4px; background: rgba(255,255,255,.05); color: #dce9f8; font-size: 11px; overflow-wrap: anywhere; }
+    .player-list.alert li { color: #ffd0d8; background: rgba(255,99,125,.09); }
+    .news-list { display: grid; gap: 8px; margin-top: 10px; }
+    .news-row { padding: 8px 0; border-top: 1px solid var(--line2); }
+    .news-row a { color: #dcecff; text-decoration: none; line-height: 1.5; font-size: 12px; }
+    .news-row a:hover { color: var(--cyan); }
+    .news-row span { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; }
     .odds-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
     .odds-table { table-layout: fixed; }
     .odds-table th, .odds-table td { padding: 8px 6px; border-bottom: 1px solid var(--line2); text-align: left; }
@@ -351,8 +388,8 @@
       place-items: center;
       padding: 18px;
       background:
-        radial-gradient(circle at 25% 0%, rgba(50,213,255,.2), transparent 36%),
-        radial-gradient(circle at 80% 100%, rgba(255,200,87,.14), transparent 34%),
+        linear-gradient(135deg, rgba(50,213,255,.12), transparent 38%),
+        linear-gradient(315deg, rgba(255,200,87,.08), transparent 36%),
         rgba(2, 6, 11, .9);
       backdrop-filter: blur(10px);
     }
@@ -389,6 +426,18 @@
       line-height: 1.55;
     }
     .manual-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .history-box { width: min(980px, 100%); max-height: calc(100dvh - 36px); }
+    .history-box header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .icon-btn { width: 36px; height: 36px; flex: 0 0 36px; border-radius: 5px; border: 1px solid var(--line); background: rgba(255,255,255,.05); color: var(--text); font-size: 22px; line-height: 1; }
+    .history-controls { display: grid; grid-template-columns: minmax(0,1fr) 180px; gap: 8px; }
+    .history-list { display: grid; gap: 7px; max-height: 58dvh; overflow: auto; padding-right: 3px; }
+    .history-row { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(180px,.7fr) auto; gap: 12px; align-items: center; padding: 10px; border: 1px solid var(--line2); border-radius: 7px; background: rgba(255,255,255,.035); }
+    .history-row b { display: block; font-size: 13px; }
+    .history-row small { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; }
+    .history-result { font-size: 12px; line-height: 1.55; color: #d9e6f5; }
+    .history-hit { min-width: 58px; text-align: center; color: var(--muted); font-size: 12px; }
+    .history-hit.yes { color: var(--green); }
+    .history-hit.no { color: var(--red); }
     .watermark {
       position: fixed;
       right: 18px;
@@ -413,7 +462,10 @@
       .badges { justify-content: flex-start; }
       .layout, .hero-grid, .data-grid, .right-col { grid-template-columns: 1fr; }
       .decision-strip { grid-template-columns: 1fr; }
+      .summary-top { display: grid; }
+      .summary-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
       .score-grid { grid-template-columns: 1fr; }
+      .intel-grid, .history-controls, .history-row { grid-template-columns: 1fr; }
       .match-list { max-height: 360px; }
       .license-actions { grid-template-columns: 1fr; }
       .manual-actions { grid-template-columns: 1fr; }
@@ -435,6 +487,7 @@
         </div>
       </div>
       <div class="badges">
+        <button class="badge badge-button" id="historyBtn" type="button"><span class="icon">↺</span>历史回看</button>
         <span class="badge"><span class="dot" id="authDot"></span><span id="authText">授权校验中</span></span>
         <span class="badge"><span class="dot" id="updateDot"></span><span id="updateText">500数据检查中</span></span>
         <span class="badge">历史样本 <b class="mono" id="historySample">--</b></span>
@@ -463,8 +516,6 @@
             <button class="btn primary" id="analyzeAllBtn"><span class="icon">ALL</span>生成全部研判</button>
             <button class="btn" id="manualBtn"><span class="icon">+</span>手动录入赛事</button>
             <button class="btn danger hidden" id="deleteManualBtn"><span class="icon">×</span>删除当前手动赛事</button>
-            <button class="btn" id="importBtn"><span class="icon">IN</span>导入数据 JSON</button>
-            <input type="file" id="fileInput" accept=".json,application/json">
           </div>
           <div class="match-list" id="matchList" style="margin-top:12px"></div>
         </div>
@@ -523,6 +574,24 @@
           </article>
         </div>
 
+        <article class="summary-board">
+          <div class="summary-top">
+            <div>
+              <div class="kicker">一眼看懂 · 圆桌统一结论</div>
+              <h3 class="summary-headline" id="summaryHeadline">等待载入赛事</h3>
+            </div>
+            <div class="summary-confidence mono" id="summaryConfidence">--</div>
+          </div>
+          <div class="summary-grid">
+            <div class="summary-item"><span>主方向</span><b id="summaryPrimary">--</b></div>
+            <div class="summary-item"><span>次方向</span><b id="summarySecondary">--</b></div>
+            <div class="summary-item"><span>执行口径</span><b id="summaryCover">--</b></div>
+            <div class="summary-item"><span>比分 / 大小球</span><b id="summaryScores">--</b></div>
+            <div class="summary-item"><span>阵容影响</span><b id="summaryLineup">--</b></div>
+          </div>
+          <p class="summary-analysis" id="summaryAnalysis">数据加载后自动生成文字结论。</p>
+        </article>
+
         <div class="data-grid">
           <article class="metric">
             <h3>胜平负概率</h3>
@@ -531,6 +600,10 @@
           <article class="metric">
             <h3>两个最得意比分</h3>
             <div class="score-grid" id="scoreGrid"></div>
+            <div class="cold-score-block hidden" id="coldScoreBlock">
+              <div class="cold-score-title"><span>开放局冷门比分</span><span id="coldScoreHint">防冷脚本</span></div>
+              <div class="cold-score-list" id="coldScoreList"></div>
+            </div>
           </article>
           <article class="metric">
             <h3>执行底线</h3>
@@ -550,6 +623,12 @@
               <thead><tr><th>项目</th><th>当前</th><th>初赔</th><th>信号</th></tr></thead>
               <tbody id="oddsTable"></tbody>
             </table>
+          </article>
+          <article class="report-card">
+            <h3>球员状态 · 预计阵容 · 伤停情报</h3>
+            <div class="intel-meta" id="intelligenceMeta">等待情报载入。</div>
+            <div class="intel-grid" id="intelligenceGrid"></div>
+            <div class="news-list" id="newsList"></div>
           </article>
         </div>
       </section>
@@ -632,6 +711,30 @@
       </div>
     </section>
   </div>
+  <div class="license-layer hidden" id="historyLayer">
+    <section class="license-box history-box">
+      <header>
+        <div>
+          <h2>历史回看</h2>
+          <p>查看此前研判、最终赛果以及方向是否命中。历史记录由每日更新自动保留。</p>
+        </div>
+        <button class="icon-btn" id="historyCloseBtn" type="button" aria-label="关闭历史回看" title="关闭">×</button>
+      </header>
+      <div class="license-body">
+        <div class="history-controls">
+          <input class="input" id="historySearch" placeholder="搜索球队 / 联赛 / 日期">
+          <select class="select" id="historyHitFilter">
+            <option value="">全部记录</option>
+            <option value="yes">方向命中</option>
+            <option value="no">方向未中</option>
+            <option value="pending">等待赛果</option>
+          </select>
+        </div>
+        <div class="panel-sub" id="historyMeta">尚未载入。</div>
+        <div class="history-list" id="historyList"></div>
+      </div>
+    </section>
+  </div>
   <div class="watermark hidden" id="demoWatermark">演示模式</div>
 
   <script>
@@ -688,7 +791,7 @@
       ]
     };
 
-    const state = { data: FALLBACK_DATA, matches: [], manualMatches: [], activeId: "", authorized: false, demo: false, deviceCode: "" };
+    const state = { data: FALLBACK_DATA, matches: [], manualMatches: [], activeId: "", authorized: false, demo: false, deviceCode: "", archive: [], archiveLoaded: false };
 
     const $ = (id) => document.getElementById(id);
     const pct = (value) => `${Math.round((Number(value) || 0) * 1000) / 10}%`;
@@ -720,9 +823,11 @@
       $("searchInput").addEventListener("input", renderMatchList);
       $("leagueFilter").addEventListener("change", renderMatchList);
       $("riskFilter").addEventListener("change", renderMatchList);
-      $("importBtn").addEventListener("click", () => $("fileInput").click());
-      $("fileInput").addEventListener("change", importJson);
       $("analyzeAllBtn").addEventListener("click", renderPortfolio);
+      $("historyBtn").addEventListener("click", openHistoryLayer);
+      $("historyCloseBtn").addEventListener("click", closeHistoryLayer);
+      $("historySearch").addEventListener("input", renderHistory);
+      $("historyHitFilter").addEventListener("change", renderHistory);
       $("manualBtn").addEventListener("click", openManualLayer);
       $("manualCancelBtn").addEventListener("click", closeManualLayer);
       $("manualForm").addEventListener("submit", createManualMatch);
@@ -863,9 +968,11 @@
       $("riskPct").textContent = pct(risk.score || 0);
       $("riskArc").style.strokeDashoffset = String(540 - 540 * clamp(Number(risk.score || 0), 0, 1));
       renderProbabilityBars(match.probabilities || {});
-      renderScores(conclusion.bestScores || []);
+      renderScores(conclusion.bestScores || [], conclusion.coldScores || [], Boolean(conclusion.openGame));
+      renderCustomerSummary(match);
       renderStrictReport(match);
       renderOdds(match);
+      renderIntelligence(match);
       renderAgents(match.agents || []);
       renderLeague(profile);
     }
@@ -885,7 +992,7 @@
       `).join("");
     }
 
-    function renderScores(scores) {
+    function renderScores(scores, coldScores, openGame) {
       $("scoreGrid").innerHTML = scores.slice(0, 2).map((score, index) => `
         <div class="score-card">
           <div class="panel-sub">第${index + 1}比分</div>
@@ -893,6 +1000,28 @@
           <span>${escapeHtml(score.script || "比分脚本")} · 权重 ${pct(score.probability || 0)}</span>
         </div>
       `).join("") || `<div class="panel-sub">暂无比分脚本。</div>`;
+      const cold = Array.isArray(coldScores) ? coldScores : [];
+      $("coldScoreBlock").classList.toggle("hidden", !cold.length);
+      $("coldScoreHint").textContent = openGame ? "大球场景防冷" : "防冷备选";
+      $("coldScoreList").innerHTML = cold.map(item => `
+        <span class="cold-score-chip"><b class="mono">${escapeHtml(item.score || "--")}</b>&nbsp;·&nbsp;${escapeHtml(item.script || "爆冷脚本")}&nbsp;${pct(item.probability || 0)}</span>
+      `).join("");
+    }
+
+    function renderCustomerSummary(match) {
+      const c = match.conclusion || {};
+      const summary = c.customerSummary || {};
+      const scores = summary.mainScores || (c.bestScores || []).map(item => item.score).join("、") || "--";
+      const cold = summary.coldScores || (c.coldScores || []).map(item => item.score).join("、");
+      const intelligence = match.intelligence || {};
+      $("summaryHeadline").textContent = summary.headline || `主看${c.primary || "--"}，防冷参考${match.upset?.direction || "--"}`;
+      $("summaryConfidence").textContent = `${summary.confidence ?? c.confidence ?? "--"}/100`;
+      $("summaryPrimary").textContent = summary.primary || c.primary || "--";
+      $("summarySecondary").textContent = summary.secondary || match.upset?.direction || "--";
+      $("summaryCover").textContent = summary.cover || c.cover || "--";
+      $("summaryScores").textContent = `${scores} · ${summary.overUnder || c.overUnder || "--"}${cold ? ` · 冷门${cold}` : ""}`;
+      $("summaryLineup").textContent = intelligence.impactSummary || (match.sourceType === "manual" ? "手动赛事暂无实时阵容" : "暂无可量化阵容影响");
+      $("summaryAnalysis").textContent = summary.analysis || c.finalText || "--";
     }
 
     function renderStrictReport(match) {
@@ -903,7 +1032,50 @@
         `生产状态：${c.action || "--"}。系统选择：${c.cover || "--"}。` +
         `反防平评分 ${a.score ?? "--"}，结论为${a.verdict || "--"}。` +
         `赔率形态：${o.movementCombo || o.movement || "--"}。` +
-        `比分口径：${(c.bestScores || []).map(item => item.score).join(" / ") || "--"}，${c.overUnder || "--"}。`;
+        `比分口径：${(c.bestScores || []).map(item => item.score).join(" / ") || "--"}，${c.overUnder || "--"}。` +
+        `${(c.coldScores || []).length ? ` 开放局冷门比分：${c.coldScores.map(item => item.score).join(" / ")}。` : ""}`;
+    }
+
+    function renderIntelligence(match) {
+      const intelligence = match.intelligence || {};
+      const hasLiveIntel = Boolean(intelligence.home || intelligence.away || intelligence.news);
+      if (!hasLiveIntel) {
+        $("intelligenceMeta").textContent = match.sourceType === "manual"
+          ? "手动赛事未连接实时赔率与阵容源，系统仅使用历史球队和联赛画像，不编造球员信息。"
+          : "当前赛事暂无可验证的预计阵容和实时新闻。";
+        $("intelligenceGrid").innerHTML = "";
+        $("newsList").innerHTML = "";
+        return;
+      }
+      $("intelligenceMeta").textContent = `${intelligence.lineupStatus || "阵容待定"} · ${intelligence.newsStatus || "新闻待补充"} · 来源：${intelligence.source || "公开数据"} · 获取：${formatDate(intelligence.fetchedAt)}`;
+      const teams = [
+        ["home", intelligence.home || {}, match.home, ""],
+        ["away", intelligence.away || {}, match.away, "away"]
+      ];
+      $("intelligenceGrid").innerHTML = teams.map(([, info, fallbackName, cls]) => `
+        <section class="intel-team ${cls}">
+          <h4>${escapeHtml(info.team || fallbackName || "球队")} ${info.formation ? `· ${escapeHtml(info.formation)}` : ""}</h4>
+          <div class="intel-label">500预计首发 (${(info.starters || []).length})</div>
+          ${renderPlayerList(info.starters, "暂无可靠预计首发")}
+          <div class="intel-label">伤病 / 停赛</div>
+          ${renderPlayerList([...(info.injuries || []).map(name => `伤病：${name}`), ...(info.suspensions || []).map(name => `停赛：${name}`)], "当前未列出明确伤停", true)}
+          <div class="intel-label">情报判断</div>
+          <div class="intel-meta">${escapeHtml(info.summary || "暂无可量化影响")}</div>
+        </section>
+      `).join("");
+      const news = Array.isArray(intelligence.news) ? intelligence.news : [];
+      $("newsList").innerHTML = news.length ? news.map(item => `
+        <div class="news-row">
+          <a href="${escapeHtml(item.url || "#")}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title || "未命名情报")}</a>
+          <span>${escapeHtml(item.source || "公开新闻")}${item.publishedAt ? ` · ${formatDate(item.publishedAt)}` : ""}</span>
+        </div>
+      `).join("") : `<div class="intel-meta">近21天未检索到可验证的阵容新闻，临场首发仍需复核。</div>`;
+    }
+
+    function renderPlayerList(players, emptyText, alert = false) {
+      const rows = Array.isArray(players) ? players.filter(Boolean) : [];
+      if (!rows.length) return `<div class="intel-meta">${escapeHtml(emptyText)}</div>`;
+      return `<ul class="player-list ${alert ? "alert" : ""}">${rows.map(name => `<li>${escapeHtml(name)}</li>`).join("")}</ul>`;
     }
 
     function renderOdds(match) {
@@ -972,6 +1144,60 @@
           renderActiveMatch();
         });
       });
+    }
+
+    async function openHistoryLayer() {
+      $("historyLayer").classList.remove("hidden");
+      if (!state.archiveLoaded) await loadHistoryArchive();
+      renderHistory();
+    }
+
+    function closeHistoryLayer() {
+      $("historyLayer").classList.add("hidden");
+    }
+
+    async function loadHistoryArchive() {
+      $("historyMeta").textContent = "历史记录载入中...";
+      try {
+        const response = await fetch("./data/analysis_archive.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("archive fetch failed");
+        const payload = await response.json();
+        state.archive = Array.isArray(payload.matches) ? payload.matches : [];
+      } catch (error) {
+        state.archive = state.matches.map(match => ({
+          id: match.id, date: match.date, round: match.round, league: match.league, home: match.home, away: match.away,
+          predictedPrimary: match.conclusion?.primary || "--", cover: match.conclusion?.cover || "--",
+          confidence: match.conclusion?.confidence || 0, bestScores: match.conclusion?.bestScores || [],
+          coldScores: match.conclusion?.coldScores || [], overUnder: match.conclusion?.overUnder || "--",
+          finalScore: "", actualOutcome: "", directionHit: null
+        }));
+      }
+      state.archiveLoaded = true;
+    }
+
+    function renderHistory() {
+      const q = $("historySearch").value.trim().toLowerCase();
+      const hitFilter = $("historyHitFilter").value;
+      const rows = state.archive.filter(item => {
+        const haystack = `${item.date || ""} ${item.league || ""} ${item.round || ""} ${item.home || ""} ${item.away || ""}`.toLowerCase();
+        const hitState = item.directionHit === true ? "yes" : (item.directionHit === false ? "no" : "pending");
+        return (!q || haystack.includes(q)) && (!hitFilter || hitState === hitFilter);
+      }).sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+      const finished = state.archive.filter(item => item.directionHit !== null && item.directionHit !== undefined).length;
+      const hits = state.archive.filter(item => item.directionHit === true).length;
+      $("historyMeta").textContent = `${rows.length}条记录 · 已出赛果${finished}场${finished ? ` · 方向命中${pct(hits / finished)}` : ""}`;
+      $("historyList").innerHTML = rows.length ? rows.map(item => {
+        const hitState = item.directionHit === true ? ["yes", "方向命中"] : (item.directionHit === false ? ["no", "方向未中"] : ["", "等待赛果"]);
+        const scores = (item.bestScores || []).map(score => score.score).join(" / ") || "--";
+        const cold = (item.coldScores || []).map(score => score.score).join(" / ");
+        return `
+          <div class="history-row">
+            <div><b>${escapeHtml(item.home || "--")} vs ${escapeHtml(item.away || "--")}</b><small>${escapeHtml(item.date || "--")} · ${escapeHtml(item.league || "--")} · ${escapeHtml(item.round || "")}</small></div>
+            <div class="history-result">预测：${escapeHtml(item.cover || item.predictedPrimary || "--")} · ${escapeHtml(scores)}${cold ? `<br>冷门比分：${escapeHtml(cold)}` : ""}<br>赛果：${escapeHtml(item.finalScore || "待定")} ${escapeHtml(item.actualOutcome || "")}</div>
+            <div class="history-hit ${hitState[0]}">${hitState[1]}<small>信心 ${escapeHtml(item.confidence ?? "--")}</small></div>
+          </div>
+        `;
+      }).join("") : `<div class="panel-sub">没有匹配的历史记录。</div>`;
     }
 
     function openManualLayer() {
@@ -1079,11 +1305,12 @@
       const scoreResult = buildManualScores(probs, profile, homeForm, awayForm, primaryKey, coverKey, coldRisk);
       const confidence = Math.round(clamp(42 + gap * 80 + Math.min(knownSample, 30) * .45 - dataPenalty * 45, 38, 70));
       const cover = coldRisk >= .55 ? `${primary}，防${coverSide}` : primary;
-      const scoreTotals = scoreResult.scores.map(item => item.score.split("-").reduce((sum, part) => sum + Number(part || 0), 0));
-      const overUnder = scoreTotals.every(total => total >= 3) ? "大2.5球倾向" : (scoreTotals.every(total => total <= 2) ? "小2.5球倾向" : "2/3球临界");
+      const overUnder = scoreResult.openGame ? "大2.5球倾向" : (scoreResult.total <= 2.35 ? "小2.5球倾向" : "2/3球临界");
       const id = `manual-${normalizeTeamName(home)}-${normalizeTeamName(away)}-${kickoff}`;
       const scoreText = scoreResult.scores.map(item => item.score).join("、");
+      const coldScoreText = scoreResult.coldScores.map(item => item.score).join("、");
       const sourceQuality = knownSample >= 20 ? `已匹配球队历史${knownSample}场` : (knownSample ? `球队样本仅${knownSample}场` : "未匹配到球队历史");
+      const analysisText = `历史球队画像与联赛基线合并后，${primary}概率最高，信心${confidence}/100；次选为${coverSide}，当前执行口径为${cover}。${sourceQuality}，且手动赛事暂无实时赔率、预计首发和伤停名单，结论需在临场数据补齐后复核。`;
       return {
         id, date: kickoff.replace("T", " "), round: "手动录入", league: inferredLeague, home, away, sourceType: "manual",
         odds: {
@@ -1103,14 +1330,25 @@
           action: antiDrawScore >= 62 ? "单方向优先" : (antiDrawScore >= 42 ? "平局进入复核层" : "平局进入防冷层"),
           reasons: [`模型平局概率${pct(probs.draw)}`, `联赛平局基准${pct(profile.drawRate || .28)}`, sourceQuality]
         },
+        intelligence: {
+          status: "limited", lineupStatus: "暂无预计阵容", newsStatus: "实时新闻待补充", fetchedAt: new Date().toISOString(),
+          source: "手动录入 · 本地历史画像", home: {team: home, starters: [], bench: [], injuries: [], suspensions: [], summary: "暂无可验证球员名单"},
+          away: {team: away, starters: [], bench: [], injuries: [], suspensions: [], summary: "暂无可验证球员名单"}, news: [], impactSummary: "手动赛事暂无可量化阵容影响"
+        },
         conclusion: {
           action: "资料有限：低置信观察", primary, cover, confidence, valueGate: "资料有限：等待赔率确认",
-          bestScores: scoreResult.scores, overUnder,
+          bestScores: scoreResult.scores, coldScores: scoreResult.coldScores, overUnder, openGame: scoreResult.openGame,
           defendCold: coldRisk >= .66 ? `强制提示：防${coverSide}` : `建议保留：防${coverSide}`,
-          finalText: `历史球队画像与联赛基线暂时倾向${primary}，信心指数${confidence}/100；${sourceQuality}，需等待实时赔率确认。两个最得意比分为${scoreText}，${overUnder}。`,
+          finalText: `历史球队画像与联赛基线暂时倾向${primary}，信心指数${confidence}/100；${sourceQuality}，需等待实时赔率确认。两个最得意比分为${scoreText}，${overUnder}${coldScoreText ? `；开放局冷门比分为${coldScoreText}` : ""}。`,
+          customerSummary: {
+            headline: `主看${primary}，次选${coverSide}`, primary, secondary: coverSide, cover, confidence, overUnder,
+            mainScores: scoreText, coldScores: coldScoreText,
+            probabilityLine: `主胜${pct(probs.home)} · 平局${pct(probs.draw)} · 客胜${pct(probs.away)}`,
+            analysis: analysisText
+          },
           riskNotice: `手动赛事无实时赔率，爆冷评分${pct(coldRisk)}仅作为历史画像参考。`
         },
-        agents: buildManualAgents(profile, probs, coldRisk, riskLevel, antiDrawScore, antiVerdict, scoreResult.scores, confidence, cover, sourceQuality)
+        agents: buildManualAgents(profile, probs, coldRisk, riskLevel, antiDrawScore, antiVerdict, scoreResult.scores, scoreResult.coldScores, confidence, cover, sourceQuality)
       };
     }
 
@@ -1141,6 +1379,8 @@
       const edge = clamp((probs.home - probs.away) * 1.35, -.85, .85);
       const homeLambda = clamp(total / 2 + .16 + edge, .25, 3.6);
       const awayLambda = clamp(total - homeLambda, .20, 3.2);
+      const expectedTotal = homeLambda + awayLambda;
+      const openGame = expectedTotal >= 2.72 || Number(profile.over25Rate || .50) >= .61;
       const rows = [];
       for (let h = 0; h <= 5; h++) {
         for (let a = 0; a <= 5; a++) {
@@ -1148,25 +1388,35 @@
           rows.push({score: `${h}-${a}`, probability: poissonProbability(h, homeLambda) * poissonProbability(a, awayLambda), outcome});
         }
       }
-      const overRate = Number(profile.over25Rate || .50);
       const primaryRows = rows.filter(item => item.outcome === primaryKey).sort((a, b) => b.probability - a.probability);
       const secondKey = coldRisk >= .55 ? coverKey : primaryKey;
       const secondRows = rows.filter(item => item.outcome === secondKey).sort((a, b) => b.probability - a.probability);
-      const first = overRate >= .60 && probs[primaryKey] >= .52
-        ? (primaryRows.find(item => item.score.split("-").reduce((sum, part) => sum + Number(part), 0) >= 2) || primaryRows[0])
+      const first = openGame
+        ? (primaryRows.find(item => item.score.split("-").reduce((sum, part) => sum + Number(part), 0) >= 3) || primaryRows[0])
         : primaryRows[0];
-      const openSecond = coldRisk < .55 && overRate >= .56
+      const openSecond = openGame
         ? primaryRows.find(item => item.score !== first.score && item.score.split("-").reduce((sum, part) => sum + Number(part), 0) >= 3)
         : null;
       const second = openSecond || secondRows.find(item => item.score !== first.score) || primaryRows[1];
-      return {total: homeLambda + awayLambda, scores: [first, second].map(item => {
+      const selected = [first, second];
+      const scores = selected.map(item => {
         const goals = item.score.split("-").reduce((sum, part) => sum + Number(part), 0);
         return {score: item.score, probability: item.probability, script: item.outcome !== primaryKey ? "防冷脚本" : (goals >= 3 ? "开放局脚本" : "主方向脚本")};
-      })};
+      });
+      const selectedScores = new Set(selected.map(item => item.score));
+      const coldPool = rows
+        .filter(item => item.outcome === coverKey && (!openGame || item.score.split("-").reduce((sum, part) => sum + Number(part), 0) >= 3))
+        .sort((a, b) => b.probability - a.probability);
+      const coldLimit = openGame ? 2 : (coldRisk >= .58 ? 1 : 0);
+      const coldScores = coldPool.filter(item => !selectedScores.has(item.score)).slice(0, coldLimit).map(item => ({
+        score: item.score, probability: item.probability, script: openGame ? "大球爆冷脚本" : "爆冷脚本"
+      }));
+      return {total: expectedTotal, openGame, scores, coldScores};
     }
 
-    function buildManualAgents(profile, probs, coldRisk, riskLevel, antiScore, antiVerdict, scores, confidence, cover, sourceQuality) {
+    function buildManualAgents(profile, probs, coldRisk, riskLevel, antiScore, antiVerdict, scores, coldScores, confidence, cover, sourceQuality) {
       const primary = {home: "主胜", draw: "平局", away: "客胜"}[Object.keys(probs).sort((a, b) => probs[b] - probs[a])[0]];
+      const scoreSignal = `${scores.map(item => item.score).join(" / ")}${coldScores.length ? `；冷门 ${coldScores.map(item => item.score).join(" / ")}` : ""}`;
       return [
         {name: "数据底座Agent", status: "已执行", signal: "手动录入", score: 58, view: "主队、客队和比赛时间已校验；未检测到实时赔率。"},
         {name: "基本面Agent", status: "已执行", signal: "球队近期画像", score: confidence, view: `${sourceQuality}，已按样本量自动降权。`},
@@ -1174,7 +1424,7 @@
         {name: "Interwetten赔率Agent", status: "资料不足", signal: "等待赔率", score: 35, view: "手动赛事未提供500或Interwetten实时赔率，本席不伪造盘口信号。"},
         {name: "爆冷防线Agent", status: "已执行", signal: riskLevel, score: Math.round(coldRisk * 100), view: `基于历史结构的爆冷评分${pct(coldRisk)}。`},
         {name: "反防平Agent", status: "已执行", signal: antiVerdict, score: antiScore, view: `平局概率${pct(probs.draw)}，已与联赛基准比较。`},
-        {name: "比分脚本Agent", status: "已执行", signal: scores.map(item => item.score).join(" / "), score: confidence, view: "两个比分由历史进球均值与方向矩阵联合筛选。"},
+        {name: "比分脚本Agent", status: "已执行", signal: scoreSignal, score: confidence, view: "主推比分和开放局冷门比分由历史进球均值、方向概率与Poisson矩阵联合筛选。"},
         {name: "圆桌仲裁Agent", status: "已执行", signal: cover, score: confidence, view: `低置信仲裁完成，暂定主方向${primary}，等待赔率后再升级。`}
       ];
     }
@@ -1187,25 +1437,6 @@
       let factorial = 1;
       for (let i = 2; i <= k; i++) factorial *= i;
       return Math.exp(-lambda) * Math.pow(lambda, k) / factorial;
-    }
-
-    async function importJson(event) {
-      const file = event.target.files && event.target.files[0];
-      if (!file) return;
-      try {
-        const text = await file.text();
-        const parsed = JSON.parse(text);
-        if (!Array.isArray(parsed.matches)) throw new Error("缺少 matches 数组");
-        state.data = parsed;
-        state.matches = parsed.matches;
-        state.activeId = String(state.matches[0]?.id || "");
-        hydrateFallbackAgents();
-        renderAll();
-      } catch (error) {
-        alert(`导入失败：${error.message || error}`);
-      } finally {
-        event.target.value = "";
-      }
     }
 
     async function activate() {
