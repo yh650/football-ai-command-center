@@ -1,13 +1,17 @@
 from __future__ import annotations
 
 import argparse
+import html as html_lib
 import json
 import math
 import re
 import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
-from datetime import date, datetime, timedelta
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import date, datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
@@ -17,6 +21,7 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / "data" / "matches.json"
 HISTORY_PATH = ROOT / "data" / "jc_history.json"
+ARCHIVE_PATH = ROOT / "data" / "analysis_archive.json"
 CURRENT_URL = "https://trade.500.com/jczq/index.php"
 HISTORY_URL = "https://open.500.com/iframe/kaijiang/jczq.php"
 HEADERS = {
@@ -28,6 +33,9 @@ OUTCOME_LABELS = {"home": "主胜", "draw": "平局", "away": "客胜"}
 DEFAULT_BASE_HISTORY_SAMPLE = 21138
 DEFAULT_BASE_FINISHED_SAMPLE = 21032
 DEFAULT_BASE_HISTORY_START = "2021-07-02"
+LEAGUE_ALIASES = {
+    "美职足": "美职联",
+}
 
 
 def main() -> None:
@@ -37,8 +45,9 @@ def main() -> None:
     args = parser.parse_args()
 
     old_payload = load_json(DATA_PATH, {})
-    seed_profiles = old_payload.get("seedLeagueProfiles") or old_payload.get("leagueProfiles") or []
+    seed_profiles = normalize_seed_profiles(old_payload.get("seedLeagueProfiles") or old_payload.get("leagueProfiles") or [])
     old_history = load_json(HISTORY_PATH, {"matches": []}).get("matches") or []
+    old_archive = load_json(ARCHIVE_PATH, {"matches": []}).get("matches") or []
 
     warnings: list[str] = []
     current_rows: list[dict[str, Any]] | None
@@ -65,8 +74,11 @@ def main() -> None:
         matches = old_payload.get("matches") or []
         update_status = "failed-preserved"
     else:
-        matches = [build_match(row, profiles, team_profiles) for row in current_rows]
+        intelligence = collect_match_intelligence(current_rows, old_payload.get("matches") or [], warnings)
+        matches = [build_match(row, profiles, team_profiles, intelligence.get(str(row.get("id")))) for row in current_rows]
         update_status = "success" if current_rows else "success-no-current-matches"
+
+    archive = update_analysis_archive(old_archive, matches, history, args.history_retention)
 
     payload = {
         "meta": build_meta(old_payload, matches, history, update_status, warnings),
@@ -77,6 +89,7 @@ def main() -> None:
     }
     write_json(DATA_PATH, payload)
     write_json(HISTORY_PATH, {"updatedAt": now_iso(), "matches": history})
+    write_json(ARCHIVE_PATH, {"updatedAt": now_iso(), "matches": archive})
     print(
         json.dumps(
             {
@@ -85,6 +98,7 @@ def main() -> None:
                 "history": len(history),
                 "leagues": len(profiles),
                 "teams": len(team_profiles),
+                "archive": len(archive),
                 "warnings": warnings[:5],
             },
             ensure_ascii=False,
@@ -99,6 +113,14 @@ def fetch_text(url: str, params: dict[str, str] | None = None) -> str:
     with urllib.request.urlopen(request, timeout=30) as response:
         content = response.read()
     return content.decode("gb18030", errors="replace")
+
+
+def fetch_bytes(url: str, params: dict[str, str] | None = None, headers: dict[str, str] | None = None) -> bytes:
+    if params:
+        url = f"{url}?{urllib.parse.urlencode(params)}"
+    request = urllib.request.Request(url, headers=headers or HEADERS)
+    with urllib.request.urlopen(request, timeout=30) as response:
+        return response.read()
 
 
 class TableParser(HTMLParser):
@@ -148,28 +170,52 @@ def parse_tables(html: str) -> list[list[list[str]]]:
 
 def parse_current_rows(html: str) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    for table in parse_tables(html):
-        for cells in table:
-            if len(cells) < 6 or not re.match(r"^周.\d{3}$", cells[0] or ""):
-                continue
-            home, away = split_teams(cells[3])
-            odds = [float(item) for item in re.findall(r"\d+\.\d{2}", cells[5] or "")]
-            if not home or not away or len(odds) < 3:
-                continue
-            rows.append(
-                {
-                    "id": f"500-{cells[0]}-{cells[2]}-{home}-{away}",
-                    "league": cells[1] or "竞彩足球",
-                    "match_time": normalize_time(cells[2], date.today()),
-                    "round": cells[0],
-                    "home": home,
-                    "away": away,
-                    "home_odds": odds[0],
-                    "draw_odds": odds[1],
-                    "away_odds": odds[2],
-                }
-            )
+    pattern = re.compile(r'<tr class="[^"]*bet-tb-tr[^"]*"(?P<attrs>[^>]*)>(?P<body>.*?)</tr>', re.I | re.S)
+    for item in pattern.finditer(html):
+        attrs = parse_html_attributes(item.group("attrs"))
+        body = item.group("body")
+        round_name = attrs.get("data-matchnum", "")
+        home = attrs.get("data-homesxname", "").strip()
+        away = attrs.get("data-awaysxname", "").strip()
+        league = canonical_league(attrs.get("data-simpleleague", "").strip() or "竞彩足球")
+        match_date = attrs.get("data-matchdate", "")
+        match_time = attrs.get("data-matchtime", "")
+        odds = parse_market_odds(body, "nspf") or parse_market_odds(body, "spf")
+        if not round_name or not home or not away or len(odds) < 3:
+            continue
+        rankings = [int(value) for value in re.findall(r'title="排名第(\d+)"', body)]
+        rows.append({
+            "id": f"500-{attrs.get('data-fixtureid') or round_name}",
+            "fixture_id": attrs.get("data-fixtureid", ""),
+            "info_match_id": attrs.get("data-infomatchid", ""),
+            "home_id": attrs.get("data-homeid", ""),
+            "away_id": attrs.get("data-awayid", ""),
+            "league": league,
+            "match_time": f"{match_date} {match_time}".strip(),
+            "round": round_name,
+            "home": home,
+            "away": away,
+            "home_rank": rankings[0] if rankings else None,
+            "away_rank": rankings[-1] if len(rankings) >= 2 else None,
+            "handicap": float_or_none(attrs.get("data-rangqiu")),
+            "home_odds": odds[0],
+            "draw_odds": odds[1],
+            "away_odds": odds[2],
+            "detail_url": f"https://odds.500.com/fenxi/shuju-{attrs.get('data-fixtureid')}.shtml",
+        })
     return rows
+
+
+def parse_html_attributes(value: str) -> dict[str, str]:
+    return {key.lower(): html_lib.unescape(raw) for key, raw in re.findall(r'([\w-]+)="([^"]*)"', value or "")}
+
+
+def parse_market_odds(body: str, market_type: str) -> list[float]:
+    values: dict[str, float] = {}
+    pattern = rf'data-type="{re.escape(market_type)}"\s+data-value="([310])"\s+data-sp="([\d.]+)"'
+    for outcome, price in re.findall(pattern, body or "", re.I):
+        values[outcome] = float(price)
+    return [values[key] for key in ("3", "1", "0") if key in values]
 
 
 def parse_history_rows(html: str, business_date: str) -> list[dict[str, Any]]:
@@ -188,7 +234,8 @@ def parse_history_rows(html: str, business_date: str) -> list[dict[str, Any]]:
             rows.append(
                 {
                     "id": f"500-history-{business_date}-{cells[0]}",
-                    "league": cells[1] or "竞彩足球",
+                    "league": canonical_league(cells[1] or "竞彩足球"),
+                    "round": cells[0],
                     "date": normalize_time(cells[2], reference),
                     "home": cells[3].strip(),
                     "away": cells[5].strip(),
@@ -217,11 +264,273 @@ def merge_history(old: list[dict[str, Any]], new: list[dict[str, Any]], retentio
     return sorted(output, key=lambda item: (str(item.get("date")), str(item.get("id"))))
 
 
+def collect_match_intelligence(
+    rows: list[dict[str, Any]],
+    old_matches: list[dict[str, Any]],
+    warnings: list[str],
+) -> dict[str, dict[str, Any]]:
+    previous = {str(item.get("id")): item.get("intelligence") for item in old_matches if item.get("intelligence")}
+    output: dict[str, dict[str, Any]] = {}
+    failures: list[str] = []
+    with ThreadPoolExecutor(max_workers=min(4, max(1, len(rows)))) as executor:
+        futures = {executor.submit(fetch_match_intelligence, row): row for row in rows}
+        for future in as_completed(futures):
+            row = futures[future]
+            match_id = str(row.get("id"))
+            try:
+                output[match_id] = future.result()
+            except Exception as exc:  # noqa: BLE001
+                if previous.get(match_id):
+                    output[match_id] = previous[match_id]
+                else:
+                    output[match_id] = empty_intelligence(row, f"实时情报获取失败：{exc}")
+                failures.append(f"{row.get('home')}vs{row.get('away')}")
+    if failures:
+        warnings.append(f"{len(failures)}场实时情报使用保留或降级数据：{'、'.join(failures[:4])}")
+    return output
+
+
+def fetch_match_intelligence(row: dict[str, Any]) -> dict[str, Any]:
+    fixture_id = str(row.get("fixture_id") or "")
+    if not fixture_id:
+        return empty_intelligence(row, "缺少500赛事ID")
+    detail_url = str(row.get("detail_url") or f"https://odds.500.com/fenxi/shuju-{fixture_id}.shtml")
+    detail_html = fetch_text(detail_url)
+    lineups = parse_expected_lineups(detail_html)
+    home_en = fetch_team_english_name(str(row.get("home_id") or ""))
+    away_en = fetch_team_english_name(str(row.get("away_id") or ""))
+    news_query = f'"{home_en or row.get("home")}" vs "{away_en or row.get("away")}" team news injuries lineups'
+    news = fetch_bing_news(news_query)
+
+    home_info = lineups.get("home") or empty_team_intelligence(str(row.get("home") or "主队"))
+    away_info = lineups.get("away") or empty_team_intelligence(str(row.get("away") or "客队"))
+    home_info["team"] = str(row.get("home") or home_info.get("team") or "主队")
+    away_info["team"] = str(row.get("away") or away_info.get("team") or "客队")
+    home_info["englishName"] = home_en
+    away_info["englishName"] = away_en
+    home_info["news"] = news_for_team(news, home_info["team"], home_en)
+    away_info["news"] = news_for_team(news, away_info["team"], away_en)
+    home_info["impactScore"] = team_availability_impact(home_info)
+    away_info["impactScore"] = team_availability_impact(away_info)
+    home_info["summary"] = team_availability_summary(home_info)
+    away_info["summary"] = team_availability_summary(away_info)
+    has_lineup = bool(home_info.get("starters") or away_info.get("starters"))
+    has_news = bool(news)
+    return {
+        "status": "updated" if has_lineup or has_news else "limited",
+        "lineupStatus": "500预计阵容" if has_lineup else "暂无预计阵容",
+        "newsStatus": f"近21天新闻{len(news)}条" if news else "近21天未检索到可靠新闻",
+        "fetchedAt": now_iso(),
+        "source": "500赛事数据页 + Bing News RSS",
+        "sourceUrl": detail_url,
+        "newsQuery": news_query,
+        "home": home_info,
+        "away": away_info,
+        "news": news,
+        "impactSummary": f"主队阵容影响{home_info['impactScore']:.0%}，客队阵容影响{away_info['impactScore']:.0%}",
+        "error": "",
+    }
+
+
+def empty_intelligence(row: dict[str, Any], error: str = "") -> dict[str, Any]:
+    return {
+        "status": "limited",
+        "lineupStatus": "暂无预计阵容",
+        "newsStatus": "实时新闻待补充",
+        "fetchedAt": now_iso(),
+        "source": "500赛事数据页",
+        "sourceUrl": str(row.get("detail_url") or ""),
+        "home": empty_team_intelligence(str(row.get("home") or "主队")),
+        "away": empty_team_intelligence(str(row.get("away") or "客队")),
+        "news": [],
+        "impactSummary": "暂无可量化阵容影响",
+        "error": error,
+    }
+
+
+def empty_team_intelligence(team: str) -> dict[str, Any]:
+    return {
+        "team": team,
+        "englishName": "",
+        "formation": "",
+        "starters": [],
+        "bench": [],
+        "injuries": [],
+        "suspensions": [],
+        "news": [],
+        "impactScore": 0.0,
+        "summary": "暂无明确伤停名单",
+    }
+
+
+def parse_expected_lineups(page_html: str) -> dict[str, dict[str, Any]]:
+    starting_match = re.search(r'<div\s+class="[^"]*\bstarting\b[^"]*">', page_html, re.I)
+    if not starting_match:
+        return {}
+    block_start = starting_match.start()
+    block_end = page_html.find('<div class="M_box recommend">', block_start)
+    if block_end < 0:
+        block_end = page_html.find('<!-- 心水推荐', block_start)
+    if block_end < 0:
+        block_end = min(len(page_html), block_start + 30000)
+    lineup_block = page_html[block_start:block_end]
+    home_start = lineup_block.find('<div class="team_a">')
+    away_start = lineup_block.find('<div class="team_b">', home_start + 1)
+    if home_start < 0 or away_start < 0:
+        return {}
+    away_end = lineup_block.find('<div class="clearb">', away_start + 1)
+    if away_end < 0:
+        away_end = len(lineup_block)
+    return {
+        "home": parse_lineup_team_section(lineup_block[home_start:away_start]),
+        "away": parse_lineup_team_section(lineup_block[away_start:away_end]),
+    }
+
+
+def parse_lineup_team_section(section: str) -> dict[str, Any]:
+    info = empty_team_intelligence("")
+    formation = re.search(r'class="team_name">\s*([^<]*?)阵型:&nbsp;\s*([^<]*)', section, re.I | re.S)
+    if formation:
+        info["team"] = clean_text(formation.group(1))
+        info["formation"] = clean_text(formation.group(2))
+    mode = "lineup"
+    for row_html in re.findall(r'<tr[^>]*>(.*?)</tr>', section, re.I | re.S):
+        cells = re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', row_html, re.I | re.S)
+        if not cells:
+            continue
+        texts = [clean_text(cell) for cell in cells]
+        joined = " ".join(texts)
+        if "首发" in joined and "替补" in joined:
+            mode = "lineup"
+            continue
+        if "伤病" in joined and "停赛" in joined:
+            mode = "absence"
+            continue
+        if mode == "lineup":
+            if texts and valid_player_text(texts[0]):
+                info["starters"].append(normalize_player_text(texts[0]))
+            if len(texts) > 1 and valid_player_text(texts[1]):
+                info["bench"].append(normalize_player_text(texts[1]))
+        else:
+            if texts and valid_player_text(texts[0]):
+                info["injuries"].append(normalize_player_text(texts[0]))
+            if len(texts) > 1 and valid_player_text(texts[1]):
+                info["suspensions"].append(normalize_player_text(texts[1]))
+    for key in ("starters", "bench", "injuries", "suspensions"):
+        info[key] = list(dict.fromkeys(info[key]))[:18]
+    return info
+
+
+def clean_text(value: str) -> str:
+    text = re.sub(r'<[^>]+>', ' ', value or "")
+    return re.sub(r'\s+', ' ', html_lib.unescape(text).replace("\xa0", " ")).strip()
+
+
+def valid_player_text(value: str) -> bool:
+    text = (value or "").strip(" -")
+    blocked = {"暂无", "无", "-", "总成绩", "主场", "客场", "比赛", "比赛日期", "赛事"}
+    if not text or text in blocked or text.startswith("声明"):
+        return False
+    if re.fullmatch(r"-?\d{1,4}(?:-\d{1,2}){1,2}", text):
+        return False
+    return bool(re.search(r"[A-Za-z\u4e00-\u9fff]", text)) and len(text) <= 80
+
+
+def normalize_player_text(value: str) -> str:
+    return re.sub(r'^\d+[.、\s]*', '', (value or "").strip()).strip()
+
+
+def fetch_team_english_name(team_id: str) -> str:
+    if not team_id:
+        return ""
+    try:
+        page = fetch_text(f"https://liansai.500.com/team/{team_id}/")
+        match = re.search(r'class="itm_name_en">\s*([^<]+)', page, re.I)
+        return clean_text(match.group(1)) if match else ""
+    except Exception:  # noqa: BLE001
+        return ""
+
+
+def fetch_bing_news(query: str, limit: int = 4) -> list[dict[str, Any]]:
+    headers = {"User-Agent": HEADERS["User-Agent"], "Accept-Language": "en-US,en;q=0.9"}
+    raw = fetch_bytes("https://www.bing.com/news/search", {"q": query, "format": "rss"}, headers=headers)
+    root = ET.fromstring(raw)
+    output: list[dict[str, Any]] = []
+    cutoff = datetime.now(timezone.utc) - timedelta(days=21)
+    for item in root.findall(".//item"):
+        title = clean_text(item.findtext("title") or "")
+        description = clean_text(item.findtext("description") or "")[:260]
+        link = (item.findtext("link") or "").strip()
+        published_text = (item.findtext("pubDate") or "").strip()
+        try:
+            published = parsedate_to_datetime(published_text)
+            if published.tzinfo is None:
+                published = published.replace(tzinfo=timezone.utc)
+        except (TypeError, ValueError):
+            published = None
+        if not title or not published or published < cutoff:
+            continue
+        source_node = item.find(".//{*}Source")
+        output.append({
+            "title": title,
+            "description": description,
+            "url": link,
+            "publishedAt": published.astimezone(ZoneInfo("Asia/Shanghai")).isoformat(timespec="minutes"),
+            "source": clean_text(source_node.text or "") if source_node is not None else "Bing News",
+        })
+        if len(output) >= limit:
+            break
+    return output
+
+
+def news_for_team(news: list[dict[str, Any]], chinese_name: str, english_name: str) -> list[dict[str, Any]]:
+    tokens = [token.lower() for token in (chinese_name, english_name) if token]
+    matched = [item for item in news if any(token in f"{item.get('title')} {item.get('description')}".lower() for token in tokens)]
+    return (matched or news)[:3]
+
+
+def team_availability_impact(info: dict[str, Any]) -> float:
+    impact = 0.0
+    for item in info.get("injuries") or []:
+        impact += player_absence_weight(item, suspension=False)
+    for item in info.get("suspensions") or []:
+        impact += player_absence_weight(item, suspension=True)
+    news_text = " ".join(f"{item.get('title')} {item.get('description')}" for item in info.get("news") or []).lower()
+    impact += sum(0.025 for word in ("injury", "injured", "ruled out", "doubt", "suspended", "缺席", "伤停") if word in news_text)
+    impact -= sum(0.015 for word in ("returns", "return from injury", "fit again", "复出") if word in news_text)
+    return round(clamp(impact, 0.0, 0.36), 3)
+
+
+def player_absence_weight(value: str, suspension: bool) -> float:
+    text = value or ""
+    weight = 0.055 if suspension else 0.045
+    if "守门员" in text:
+        weight += 0.035
+    elif "前锋" in text:
+        weight += 0.025
+    elif "中场" in text:
+        weight += 0.018
+    elif "后卫" in text:
+        weight += 0.012
+    return weight
+
+
+def team_availability_summary(info: dict[str, Any]) -> str:
+    injuries = info.get("injuries") or []
+    suspensions = info.get("suspensions") or []
+    starters = info.get("starters") or []
+    if injuries or suspensions:
+        return f"预计首发{len(starters)}人，伤病{len(injuries)}人，停赛{len(suspensions)}人，影响评分{float(info.get('impactScore') or 0):.0%}"
+    if starters:
+        return f"预计首发{len(starters)}人，500当前未列出明确伤停或停赛"
+    return "暂无预计首发与明确伤停名单，结论已降权"
+
+
 def build_league_profiles(seed_rows: list[dict[str, Any]], history: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
-    seed = {str(row.get("league")): row for row in seed_rows if row.get("league")}
+    seed = {str(row.get("league")): row for row in normalize_seed_profiles(seed_rows) if row.get("league")}
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in history:
-        grouped[str(row.get("league") or "竞彩足球")].append(row)
+        grouped[canonical_league(row.get("league") or "竞彩足球")].append(row)
 
     profiles: dict[str, dict[str, Any]] = {}
     for league in sorted(set(seed) | set(grouped)):
@@ -334,15 +643,22 @@ def update_team(row: dict[str, Any], name: str, league: str, is_home: bool, goal
     row[f"{prefix}{outcome}"] += 1
 
 
-def build_match(row: dict[str, Any], profiles: dict[str, dict[str, Any]], teams: dict[str, dict[str, Any]]) -> dict[str, Any]:
+def build_match(
+    row: dict[str, Any],
+    profiles: dict[str, dict[str, Any]],
+    teams: dict[str, dict[str, Any]],
+    intelligence: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     league = str(row.get("league") or "竞彩足球")
     profile = profiles.get(league) or average_profile(profiles)
+    intelligence = intelligence or empty_intelligence(row)
     market = implied_probabilities(row["home_odds"], row["draw_odds"], row["away_odds"])
     probs = normalize({
         "home": market["home"] * 0.82 + profile["homeRate"] * 0.18,
         "draw": market["draw"] * 0.82 + profile["drawRate"] * 0.18,
         "away": market["away"] * 0.82 + profile["awayRate"] * 0.18,
     })
+    probs, intelligence_adjustment = apply_intelligence_adjustment(probs, intelligence)
     ranked = sorted(probs, key=probs.get, reverse=True)
     primary_key, upset_key = ranked[0], ranked[1]
     primary, upset_direction = OUTCOME_LABELS[primary_key], OUTCOME_LABELS[upset_key]
@@ -357,9 +673,9 @@ def build_match(row: dict[str, Any], profiles: dict[str, dict[str, Any]], teams:
     risk_level = "高" if cold_risk >= 0.66 else ("中" if cold_risk >= 0.52 else ("低中" if cold_risk >= 0.40 else "低"))
     anti_draw_value = anti_draw_score(probs, profile, gap, cold_risk, upset_key)
     anti_draw_verdict = "不机械防平" if anti_draw_value >= 62 else ("保留平局风险" if anti_draw_value >= 42 else "必须防平")
-    scores, expected_total = generate_scores(probs, profile, primary_key, upset_key, cold_risk, row, teams)
+    scores, cold_scores, expected_total, open_game = generate_scores(probs, profile, primary_key, upset_key, cold_risk, row, teams)
     score_totals = [sum(int(part) for part in item["score"].split("-")) for item in scores]
-    over_under = "大2.5球倾向" if all(total >= 3 for total in score_totals) else ("小2.5球倾向" if all(total <= 2 for total in score_totals) else "2/3球临界")
+    over_under = "大2.5球倾向" if open_game and all(total >= 3 for total in score_totals) else ("小2.5球倾向" if all(total <= 2 for total in score_totals) else "2/3球临界")
     reliability_bonus = 6 if profile.get("reliable") else 2
     confidence = round(clamp(50 + gap * 70 + (1 - cold_risk) * 15 + reliability_bonus, 45, 90))
     cover = primary if cold_risk < 0.55 else f"{primary}，防{upset_direction}"
@@ -371,12 +687,17 @@ def build_match(row: dict[str, Any], profiles: dict[str, dict[str, Any]], teams:
     if cold_risk >= 0.52:
         final += f"爆冷评分{cold_risk:.1%}，重点防{upset_direction}；"
     final += f"两个最得意比分为{score_text}，{over_under}。"
+    if cold_scores:
+        final += f" 大球或比赛失控时，爆冷比分留意{'、'.join(item['score'] for item in cold_scores)}。"
+    customer_summary = build_customer_summary(row, probs, primary, upset_direction, cover, confidence, over_under, scores, cold_scores, intelligence)
 
     odds = {"home": row["home_odds"], "draw": row["draw_odds"], "away": row["away_odds"]}
-    agents = build_agents(row, profile, probs, cold_risk, risk_level, anti_draw_value, anti_draw_verdict, scores, confidence, cover)
+    agents = build_agents(row, profile, probs, cold_risk, risk_level, anti_draw_value, anti_draw_verdict, scores, cold_scores, confidence, cover, intelligence)
     return {
         "id": row["id"], "date": row["match_time"], "round": row["round"], "league": league,
         "home": row["home"], "away": row["away"], "sourceType": "500-jc",
+        "fixtureId": row.get("fixture_id"), "homeTeamId": row.get("home_id"), "awayTeamId": row.get("away_id"),
+        "homeRank": row.get("home_rank"), "awayRank": row.get("away_rank"), "handicap": row.get("handicap"),
         "odds": {
             "current": odds, "initial": odds, "shape": f"{row['home_odds']}/{row['draw_odds']}/{row['away_odds']}",
             "movement": "500竞彩即时SP", "movementCombo": "500最新竞彩赔率 + 历史联赛校准",
@@ -386,6 +707,8 @@ def build_match(row: dict[str, Any], profiles: dict[str, dict[str, Any]], teams:
             "mode": "500竞彩即时盘", "dropSide": "待临场", "dropBucket": "即时快照",
         },
         "probabilities": probs, "leagueProfile": profile,
+        "intelligence": intelligence,
+        "intelligenceAdjustment": intelligence_adjustment,
         "grid": {"signal": "500 SP基线", "roi": None, "sample": profile.get("sample"), "bucket": "JCToday/Live"},
         "upset": {
             "score": cold_risk, "level": risk_level, "direction": upset_direction,
@@ -399,7 +722,8 @@ def build_match(row: dict[str, Any], profiles: dict[str, dict[str, Any]], teams:
         },
         "conclusion": {
             "action": action, "primary": primary, "cover": cover, "confidence": confidence, "valueGate": value_gate,
-            "bestScores": scores, "overUnder": over_under, "defendCold": defend, "finalText": final,
+            "bestScores": scores, "coldScores": cold_scores, "overUnder": over_under, "openGame": open_game,
+            "defendCold": defend, "finalText": final, "customerSummary": customer_summary,
             "riskNotice": f"爆冷可能性{risk_level}，防冷方向为{upset_direction}。",
         },
         "agents": agents,
@@ -407,16 +731,25 @@ def build_match(row: dict[str, Any], profiles: dict[str, dict[str, Any]], teams:
 
 
 def build_agents(row: dict[str, Any], profile: dict[str, Any], probs: dict[str, float], cold: float, level: str,
-                 anti: int, anti_verdict: str, scores: list[dict[str, Any]], confidence: int, cover: str) -> list[dict[str, Any]]:
+                 anti: int, anti_verdict: str, scores: list[dict[str, Any]], cold_scores: list[dict[str, Any]],
+                 confidence: int, cover: str, intelligence: dict[str, Any]) -> list[dict[str, Any]]:
     primary = OUTCOME_LABELS[max(probs, key=probs.get)]
+    home_info = intelligence.get("home") or {}
+    away_info = intelligence.get("away") or {}
+    news = intelligence.get("news") or []
+    score_signal = " / ".join(item["score"] for item in scores)
+    if cold_scores:
+        score_signal += "；冷门 " + " / ".join(item["score"] for item in cold_scores)
     return [
         agent("数据底座Agent", "500实时校验", 92, f"已读取500竞彩编号{row['round']}，主平客SP完整。"),
-        agent("基本面Agent", "球队近期画像", max(48, confidence - 5), "已调用球队近一年赛果画像；样本不足时自动降权。"),
+        agent("近期状态Agent", "球队近一年画像", max(48, confidence - 5), f"主客排名{row.get('home_rank') or '--'} / {row.get('away_rank') or '--'}；历史胜平负与进球均值已经进入概率层。"),
+        agent("阵容伤停Agent", intelligence.get("lineupStatus") or "阵容待定", round(100 - max(float(home_info.get('impactScore') or 0), float(away_info.get('impactScore') or 0)) * 100), f"主队：{home_info.get('summary') or '暂无'}；客队：{away_info.get('summary') or '暂无'}。阵容为预计状态，临场名单公布后需复核。"),
+        agent("实时新闻Agent", intelligence.get("newsStatus") or "新闻待补充", 78 if news else 48, "；".join(item.get("title", "") for item in news[:2]) or "近21天未检索到可验证的阵容新闻，不编造球员消息。"),
         agent("联赛画像Agent", profile.get("topOutcome") or "联赛基准", 84 if profile.get("reliable") else 62, f"{profile['league']}累计画像{int(profile.get('sample') or 0)}场，近期增量{int(profile.get('recentSample') or 0)}场。"),
         agent("Interwetten赔率Agent", "500 SP + 历史基线", 78, f"即时赔率{row['home_odds']}/{row['draw_odds']}/{row['away_odds']}，已与Interwetten历史画像交叉校准。"),
         agent("爆冷防线Agent", level, round(cold * 100), f"爆冷评分{cold:.1%}，第二方向为{OUTCOME_LABELS[sorted(probs, key=probs.get, reverse=True)[1]]}。"),
         agent("反防平Agent", anti_verdict, anti, f"平局模型{probs['draw']:.1%}，联赛基准{profile['drawRate']:.1%}。"),
-        agent("比分脚本Agent", " / ".join(item["score"] for item in scores), confidence, "比分由胜平负方向、联赛进球基线和Poisson矩阵联合筛选。"),
+        agent("比分脚本Agent", score_signal, confidence, "常规比分与大球爆冷比分分层输出，由方向概率、进球基线、阵容影响和Poisson矩阵联合筛选。"),
         agent("圆桌仲裁Agent", cover, confidence, f"多Agent完成统一仲裁，主方向{primary}。"),
     ]
 
@@ -433,8 +766,76 @@ def anti_draw_score(probs: dict[str, float], profile: dict[str, Any], gap: float
     return round(clamp(score, 0, 100))
 
 
+def apply_intelligence_adjustment(
+    probabilities: dict[str, float],
+    intelligence: dict[str, Any],
+) -> tuple[dict[str, float], dict[str, Any]]:
+    home_impact = float((intelligence.get("home") or {}).get("impactScore") or 0)
+    away_impact = float((intelligence.get("away") or {}).get("impactScore") or 0)
+    directional_shift = clamp((away_impact - home_impact) * 0.12, -0.045, 0.045)
+    uncertainty = clamp((home_impact + away_impact) * 0.035, 0.0, 0.022)
+    adjusted = normalize({
+        "home": probabilities["home"] + directional_shift - uncertainty / 2,
+        "draw": probabilities["draw"] + uncertainty,
+        "away": probabilities["away"] - directional_shift - uncertainty / 2,
+    })
+    if abs(directional_shift) < 0.004 and uncertainty < 0.004:
+        summary = "当前伤停没有形成足以改变主方向的量化差值"
+    elif directional_shift > 0:
+        summary = f"客队伤停压力更高，主胜概率上调约{directional_shift:.1%}"
+    else:
+        summary = f"主队伤停压力更高，客胜概率上调约{abs(directional_shift):.1%}"
+    return adjusted, {
+        "homeImpact": home_impact,
+        "awayImpact": away_impact,
+        "directionalShift": round(directional_shift, 4),
+        "drawUncertainty": round(uncertainty, 4),
+        "summary": summary,
+    }
+
+
+def build_customer_summary(
+    row: dict[str, Any],
+    probs: dict[str, float],
+    primary: str,
+    upset_direction: str,
+    cover: str,
+    confidence: int,
+    over_under: str,
+    scores: list[dict[str, Any]],
+    cold_scores: list[dict[str, Any]],
+    intelligence: dict[str, Any],
+) -> dict[str, Any]:
+    home_info = intelligence.get("home") or {}
+    away_info = intelligence.get("away") or {}
+    ranks = ""
+    if row.get("home_rank") or row.get("away_rank"):
+        ranks = f"联赛排名约{row.get('home_rank') or '--'}位对{row.get('away_rank') or '--'}位。"
+    lineup = f"主队{home_info.get('summary') or '阵容待定'}；客队{away_info.get('summary') or '阵容待定'}。"
+    news = intelligence.get("news") or []
+    news_line = f"最新情报：{news[0].get('title')}。" if news else "近21天未检索到可验证的阵容新闻，临场首发仍需复核。"
+    score_line = "、".join(item["score"] for item in scores)
+    cold_line = "、".join(item["score"] for item in cold_scores)
+    analysis = (
+        f"赔率、联赛画像和阵容影响合并后，{primary}概率最高，信心{confidence}/100；"
+        f"次选为{upset_direction}，当前执行口径为{cover}。{ranks}{lineup}{news_line}"
+    )
+    return {
+        "headline": f"主看{primary}，次选{upset_direction}",
+        "primary": primary,
+        "secondary": upset_direction,
+        "cover": cover,
+        "confidence": confidence,
+        "overUnder": over_under,
+        "mainScores": score_line,
+        "coldScores": cold_line,
+        "probabilityLine": f"主胜{probs['home']:.1%} · 平局{probs['draw']:.1%} · 客胜{probs['away']:.1%}",
+        "analysis": analysis,
+    }
+
+
 def generate_scores(probs: dict[str, float], profile: dict[str, Any], primary: str, upset: str, cold: float,
-                    row: dict[str, Any], teams: dict[str, dict[str, Any]]) -> tuple[list[dict[str, Any]], float]:
+                    row: dict[str, Any], teams: dict[str, dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], float, bool]:
     home_team = teams.get(normalize_team(row["home"])) or {}
     away_team = teams.get(normalize_team(row["away"])) or {}
     over_rate = float(profile.get("over25Rate") or 0.50)
@@ -446,6 +847,8 @@ def generate_scores(probs: dict[str, float], profile: dict[str, Any], primary: s
     edge = clamp((probs["home"] - probs["away"]) * 1.35, -0.85, 0.85)
     home_lambda = clamp(total / 2 + 0.16 + edge, 0.25, 3.6)
     away_lambda = clamp(total - home_lambda, 0.20, 3.2)
+    expected_total = home_lambda + away_lambda
+    open_game = expected_total >= 2.72 or over_rate >= 0.61
     candidates = []
     for home_goals in range(6):
         for away_goals in range(6):
@@ -458,19 +861,38 @@ def generate_scores(probs: dict[str, float], profile: dict[str, Any], primary: s
     primary_rows = sorted((item for item in candidates if item["outcome"] == primary), key=lambda item: item["probability"], reverse=True)
     cover_key = upset if cold >= 0.55 else primary
     cover_rows = sorted((item for item in candidates if item["outcome"] == cover_key), key=lambda item: item["probability"], reverse=True)
-    if over_rate >= 0.60 and probs[primary] >= 0.52:
-        first = next((item for item in primary_rows if sum(int(part) for part in item["score"].split("-")) >= 2), primary_rows[0])
+    if open_game:
+        first = next((item for item in primary_rows if score_total(item["score"]) >= 3), primary_rows[0])
     else:
         first = primary_rows[0]
     selected = [first]
-    if cold < 0.55 and over_rate >= 0.56:
-        second = next((item for item in primary_rows if item["score"] != first["score"] and sum(int(part) for part in item["score"].split("-")) >= 3), None)
+    if open_game:
+        second = next((item for item in primary_rows if item["score"] != first["score"] and score_total(item["score"]) >= 3), None)
     else:
         second = None
     selected.append(second or next((item for item in cover_rows if item["score"] != first["score"]), primary_rows[1]))
     output = [{"score": item["score"], "probability": round(item["probability"], 4),
-               "script": "防冷脚本" if item["outcome"] != primary else ("开放局脚本" if sum(int(part) for part in item["score"].split("-")) >= 3 else "主方向脚本")} for item in selected]
-    return output, home_lambda + away_lambda
+               "script": "防冷脚本" if item["outcome"] != primary else ("开放局脚本" if score_total(item["score"]) >= 3 else "主方向脚本")} for item in selected]
+
+    cold_pool = sorted(
+        (item for item in candidates if item["outcome"] == upset and (not open_game or score_total(item["score"]) >= 3)),
+        key=lambda item: item["probability"],
+        reverse=True,
+    )
+    cold_limit = 2 if open_game else (1 if cold >= 0.58 else 0)
+    cold_output = [
+        {"score": item["score"], "probability": round(item["probability"], 4), "script": "大球爆冷脚本" if open_game else "爆冷脚本"}
+        for item in cold_pool[:cold_limit]
+        if item["score"] not in {selected_item["score"] for selected_item in selected}
+    ]
+    return output, cold_output, expected_total, open_game
+
+
+def score_total(score: str) -> int:
+    try:
+        return sum(int(part) for part in score.split("-", 1))
+    except (TypeError, ValueError):
+        return 0
 
 
 def implied_probabilities(home: float, draw: float, away: float) -> dict[str, float]:
@@ -494,6 +916,76 @@ def default_profile(league: str) -> dict[str, Any]:
     return {"league": league, "sample": 0, "recentSample": 0, "homeRate": 0.42, "drawRate": 0.28,
             "awayRate": 0.30, "topOutcome": "主胜", "topRate": 0.42, "favoriteHitRate": 0.55,
             "kellyHitRate": 0, "over25Rate": 0.50, "reliable": False, "source": "综合基线"}
+
+
+def update_analysis_archive(
+    old_archive: list[dict[str, Any]],
+    matches: list[dict[str, Any]],
+    history: list[dict[str, Any]],
+    retention_days: int,
+) -> list[dict[str, Any]]:
+    archive = {str(item.get("id")): dict(item) for item in old_archive if item.get("id")}
+    for match in matches:
+        conclusion = match.get("conclusion") or {}
+        archive[str(match.get("id"))] = {
+            "id": str(match.get("id")),
+            "date": match.get("date"),
+            "round": match.get("round"),
+            "league": match.get("league"),
+            "home": match.get("home"),
+            "away": match.get("away"),
+            "predictedPrimary": conclusion.get("primary"),
+            "cover": conclusion.get("cover"),
+            "confidence": conclusion.get("confidence"),
+            "bestScores": conclusion.get("bestScores") or [],
+            "coldScores": conclusion.get("coldScores") or [],
+            "overUnder": conclusion.get("overUnder"),
+            "upsetScore": (match.get("upset") or {}).get("score"),
+            "customerSummary": conclusion.get("customerSummary") or {},
+            "createdAt": (archive.get(str(match.get("id"))) or {}).get("createdAt") or now_iso(),
+            "updatedAt": now_iso(),
+            "finalScore": (archive.get(str(match.get("id"))) or {}).get("finalScore") or "",
+            "actualOutcome": (archive.get(str(match.get("id"))) or {}).get("actualOutcome") or "",
+            "directionHit": (archive.get(str(match.get("id"))) or {}).get("directionHit"),
+        }
+
+    finished_by_teams: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in history:
+        key = f"{normalize_team(row.get('home'))}|{normalize_team(row.get('away'))}"
+        finished_by_teams[key].append(row)
+    cutoff = date.today() - timedelta(days=max(30, retention_days))
+    output: list[dict[str, Any]] = []
+    for item in archive.values():
+        try:
+            match_date = datetime.strptime(str(item.get("date") or "")[:10], "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        if match_date < cutoff:
+            continue
+        key = f"{normalize_team(item.get('home'))}|{normalize_team(item.get('away'))}"
+        candidates = finished_by_teams.get(key) or []
+        result = min(
+            candidates,
+            key=lambda row: abs((safe_date(str(row.get("date") or "")) - match_date).days),
+            default=None,
+        )
+        if result and abs((safe_date(str(result.get("date") or "")) - match_date).days) <= 3:
+            home_score = int(result.get("homeScore") or 0)
+            away_score = int(result.get("awayScore") or 0)
+            actual = "主胜" if home_score > away_score else ("客胜" if home_score < away_score else "平局")
+            item["finalScore"] = f"{home_score}-{away_score}"
+            item["actualOutcome"] = actual
+            item["directionHit"] = item.get("predictedPrimary") == actual
+            item["finishedAt"] = result.get("date")
+        output.append(item)
+    return sorted(output, key=lambda item: str(item.get("date") or ""), reverse=True)
+
+
+def safe_date(value: str) -> date:
+    try:
+        return datetime.strptime((value or "")[:10], "%Y-%m-%d").date()
+    except ValueError:
+        return date(1970, 1, 1)
 
 
 def build_meta(old_payload: dict[str, Any], matches: list[dict[str, Any]], history: list[dict[str, Any]],
@@ -536,6 +1028,23 @@ def normalize_time(value: str, reference: date) -> str:
     elif (reference - parsed).days > 180:
         parsed = date(reference.year + 1, month, day)
     return f"{parsed:%Y-%m-%d} {hour_minute}"
+
+
+def canonical_league(value: Any) -> str:
+    league = str(value or "竞彩足球").strip() or "竞彩足球"
+    return LEAGUE_ALIASES.get(league, league)
+
+
+def normalize_seed_profiles(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    merged: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        league = canonical_league(row.get("league"))
+        candidate = dict(row)
+        candidate["league"] = league
+        existing = merged.get(league)
+        if existing is None or int(candidate.get("sample") or 0) > int(existing.get("sample") or 0):
+            merged[league] = candidate
+    return list(merged.values())
 
 
 def normalize_team(value: str) -> str:
