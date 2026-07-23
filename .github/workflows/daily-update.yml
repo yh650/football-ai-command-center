@@ -29,12 +29,12 @@ jobs:
 
       - name: Commit refreshed data
         run: |
-          if git diff --quiet -- data/matches.json data/jc_history.json; then
+          if git diff --quiet -- data/matches.json data/jc_history.json data/analysis_archive.json; then
             echo "No data changes"
             exit 0
           fi
           git config user.name "football-ai-data-bot"
           git config user.email "football-ai-data-bot@users.noreply.github.com"
-          git add data/matches.json data/jc_history.json
+          git add data/matches.json data/jc_history.json data/analysis_archive.json
           git commit -m "data: refresh 500 JC matches"
           git push
