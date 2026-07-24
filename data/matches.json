@@ -2,7 +2,7 @@
   "meta": {
     "product": "AI足球赛事研判指挥舱 HTML授权版",
     "modelName": "Local AI 5.5",
-    "generatedAt": "2026-07-24T11:39:07+08:00",
+    "generatedAt": "2026-07-24T11:46:49+08:00",
     "source": "500彩票网竞彩日常更新 + Interwetten五年历史画像",
     "matchCount": 8,
     "baseHistorySample": 21138,
@@ -14,7 +14,7 @@
       "status": "success",
       "historyRows": 5027,
       "warnings": [
-        "8场实时情报使用保留或降级数据：金泉尚武vs大田市民、雅罗vs塞伊奈、韦斯特罗斯vs厄格里特、浦项制铁vs全北现代"
+        "8场实时情报使用保留或降级数据：金泉尚武vs大田市民、雅罗vs塞伊奈、浦项制铁vs全北现代、韦斯特罗斯vs厄格里特"
       ]
     },
     "compliance": "仅提供体育数据分析、赛前研究与内容创作参考；不涉及赌博，不提供下注服务，不承诺结果。"
@@ -14356,9 +14356,9 @@
         "dropBucket": "即时快照"
       },
       "probabilities": {
-        "home": 0.30994245825475264,
-        "draw": 0.243621930095074,
-        "away": 0.4464356116501735
+        "home": 0.3130718159250465,
+        "draw": 0.2557277448540221,
+        "away": 0.43120043922093143
       },
       "leagueProfile": {
         "league": "综合联赛",
@@ -14374,6 +14374,12 @@
         "over25Rate": 0.5447800154805188,
         "reliable": true,
         "source": "综合基线"
+      },
+      "modelBlend": {
+        "marketWeight": 0.76,
+        "leagueWeight": 0.18,
+        "teamWeight": 0.06,
+        "teamCoverage": "仅主队画像"
       },
       "intelligence": {
         "status": "limited",
@@ -14424,24 +14430,51 @@
         "bucket": "JCToday/Live"
       },
       "upset": {
-        "score": 0.550007592249327,
-        "level": "中",
+        "score": 0.66,
+        "level": "高",
         "direction": "主胜",
-        "trap": "热门赔率1.86；主方向领先13.6%；联赛热门失手率46.3%",
+        "selectedAsPrimary": true,
+        "counterDirection": "客胜",
+        "trap": "热门赔率1.86；基础方向领先11.8%；联赛热门失手率46.3%",
         "reasons": [
-          "综合非主方向概率55.4%",
-          "第二方向主胜31.0%",
-          "联赛样本26058场"
-        ]
+          "基础概率31.3%",
+          "与热门差距11.8%",
+          "仅主队画像给反向结果33.3%",
+          "比分矩阵反向结果质量36.1%"
+        ],
+        "roundtable": {
+          "bold": true,
+          "level": "bold",
+          "verdict": "冷门主判：主胜",
+          "pickKey": "home",
+          "marketPrimaryKey": "away",
+          "candidateKey": "home",
+          "coreSupports": 3,
+          "supportAgents": [
+            "概率分歧Agent",
+            "球队反向Agent",
+            "比分反转Agent"
+          ],
+          "opposeAgents": [],
+          "consensusScore": 2.9,
+          "confidence": 64,
+          "reasons": [
+            "基础概率31.3%",
+            "与热门差距11.8%",
+            "仅主队画像给反向结果33.3%",
+            "比分矩阵反向结果质量36.1%"
+          ],
+          "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+        }
       },
       "antiDraw": {
         "score": 44,
         "verdict": "平局观察",
         "action": "平局只进入风险提示",
         "reasons": [
-          "模型平局概率24.4%",
+          "模型平局概率25.6%",
           "联赛平局基准24.8%",
-          "主方向领先13.6%",
+          "主方向领先11.8%",
           "尚未达到两席核心Agent共同支持的正式防平门槛"
         ],
         "roundtable": {
@@ -14455,41 +14488,44 @@
         }
       },
       "conclusion": {
-        "action": "重点候选",
-        "primary": "客胜",
-        "cover": "客胜，防主胜",
-        "confidence": 72,
-        "valueGate": "通过：进入候选观察池",
+        "action": "冷门主判：主胜",
+        "primary": "主胜",
+        "cover": "主胜，防客胜",
+        "confidence": 64,
+        "valueGate": "观点模式：接受高波动，冷门席拥有最终表决权",
+        "decisionMode": "bold-cold",
+        "marketPrimary": "客胜",
         "bestScores": [
           {
-            "score": "0-1",
-            "probability": 0.1102,
+            "score": "1-0",
+            "probability": 0.1081,
             "script": "主方向脚本"
           },
           {
-            "score": "1-0",
-            "probability": 0.1059,
+            "score": "0-1",
+            "probability": 0.108,
             "script": "防冷脚本"
           }
         ],
         "coldScores": [],
         "overUnder": "小2.5球倾向",
         "openGame": false,
-        "defendCold": "建议保留：防主胜",
-        "finalText": "500竞彩赔率与联赛画像统一倾向为客胜，信心指数72/100；爆冷评分55.0%，重点防主胜；两个最得意比分为0-1、1-0，小2.5球倾向。",
+        "defendCold": "主动冷门立场：主胜；原热门仅作反向防守",
+        "finalText": "本地冷门圆桌主动推翻赔率第一顺位，主判改为主胜，观点信心64/100；执行口径为主胜，防客胜；两个最得意比分为1-0、0-1，小2.5球倾向。",
         "customerSummary": {
-          "headline": "客胜居前，平局保留观察席",
-          "primary": "客胜",
-          "secondary": "主胜",
-          "cover": "客胜，防主胜",
-          "confidence": 72,
+          "headline": "这场不走正路，最终观点是主胜",
+          "primary": "主胜",
+          "secondary": "客胜",
+          "cover": "主胜，防客胜",
+          "confidence": 64,
           "overUnder": "小2.5球倾向",
-          "mainScores": "0-1、1-0",
+          "mainScores": "1-0、0-1",
           "coldScores": "",
-          "probabilityLine": "主胜31.0% · 平局24.4% · 客胜44.6%",
-          "analysis": "这场需要把主线和风险线分开看：主线仍是客胜，同时承认比赛存在转折空间。客队的有效进攻和抗压结构更占优，主队的主场身份不足以单独扭转判断。\n本地圆桌认为平局有一定讨论价值，但只有1个核心席位支持，未达到正式防平门槛。支持方为比分结构Agent，没有强反对票，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到0-1、1-0；预期总进球2.41，对应小2.5球倾向。最终口径为客胜，防主胜，信心72/100，爆冷压力约55.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "probabilityLine": "主胜31.3% · 平局25.6% · 客胜43.1%",
+          "decisionMode": "bold-cold",
+          "analysis": "这场允许冷门席真正拍板。系统承认客胜是市场热门，同时认为主胜的赛制、结构和反转证据更值得冒险。\n冷门主张得到3个核心席支持，支持方为概率分歧Agent、球队反向Agent、比分反转Agent；反对方为没有形成强反对席。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n本地圆桌认为平局有一定讨论价值，但只有1个核心席位支持，未达到正式防平门槛。支持方为比分结构Agent，没有强反对票，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到1-0、0-1；预期总进球2.41，对应小2.5球倾向。最终口径为主胜，防客胜，信心64/100，爆冷压力约66.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
-        "riskNotice": "爆冷可能性中，当前执行防守方向为主胜。"
+        "riskNotice": "本场主动选择主胜作为冷门主判，原热门客胜只作反向防守。"
       },
       "agents": [
         {
@@ -14503,7 +14539,7 @@
           "name": "近期状态Agent",
           "status": "已执行",
           "signal": "球队近一年画像",
-          "score": 67,
+          "score": 59,
           "view": "主客排名11 / 10；历史胜平负与进球均值已经进入概率层。"
         },
         {
@@ -14537,9 +14573,16 @@
         {
           "name": "爆冷防线Agent",
           "status": "已执行",
-          "signal": "中",
-          "score": 55,
-          "view": "爆冷评分55.0%，第二方向为主胜。"
+          "signal": "高",
+          "score": 66,
+          "view": "爆冷评分66.0%，第二方向为主胜。"
+        },
+        {
+          "name": "冷门主张Agent",
+          "status": "已执行",
+          "signal": "冷门主判：主胜",
+          "score": 64,
+          "view": "核心支持3席；支持：概率分歧Agent、球队反向Agent、比分反转Agent；反对：无。已推翻市场第一顺位。"
         },
         {
           "name": "本地防平圆桌Agent",
@@ -14551,16 +14594,16 @@
         {
           "name": "比分脚本Agent",
           "status": "已执行",
-          "signal": "0-1 / 1-0",
-          "score": 72,
+          "signal": "1-0 / 0-1",
+          "score": 64,
           "view": "常规比分与大球爆冷比分分层输出，由方向概率、进球基线、阵容影响和Poisson矩阵联合筛选。"
         },
         {
           "name": "圆桌仲裁Agent",
           "status": "已执行",
-          "signal": "客胜，防主胜",
-          "score": 72,
-          "view": "多Agent完成统一仲裁，主方向客胜。"
+          "signal": "主胜，防客胜",
+          "score": 64,
+          "view": "多Agent完成统一仲裁，基础热门客胜，最终主方向主胜。"
         }
       ]
     },
@@ -14602,9 +14645,9 @@
         "dropBucket": "即时快照"
       },
       "probabilities": {
-        "home": 0.5568658176859231,
-        "draw": 0.2486323055759987,
-        "away": 0.19450187673807823
+        "home": 0.5442621274612496,
+        "draw": 0.2585822869691245,
+        "away": 0.19715558556962598
       },
       "leagueProfile": {
         "league": "瑞超",
@@ -14620,6 +14663,12 @@
         "over25Rate": 0.5,
         "reliable": false,
         "source": "Interwetten五年基线 + 500竞彩每日增量"
+      },
+      "modelBlend": {
+        "marketWeight": 0.76,
+        "leagueWeight": 0.24,
+        "teamWeight": 0.0,
+        "teamCoverage": "无球队画像"
       },
       "intelligence": {
         "status": "limited",
@@ -14670,31 +14719,58 @@
         "bucket": "JCToday/Live"
       },
       "upset": {
-        "score": 0.463755718492855,
+        "score": 0.4750193713611077,
         "level": "低中",
         "direction": "平局",
-        "trap": "热门赔率1.49；主方向领先30.8%；联赛热门失手率50.0%",
+        "selectedAsPrimary": false,
+        "counterDirection": "主胜",
+        "trap": "热门赔率1.49；基础方向领先28.6%；联赛热门失手率50.0%",
         "reasons": [
-          "综合非主方向概率44.3%",
-          "第二方向平局24.9%",
+          "综合非主方向概率45.6%",
+          "第二方向平局25.9%",
           "联赛样本2场"
-        ]
+        ],
+        "roundtable": {
+          "bold": false,
+          "level": "none",
+          "verdict": "维持基础主线",
+          "pickKey": "home",
+          "marketPrimaryKey": "home",
+          "candidateKey": "away",
+          "coreSupports": 0,
+          "supportAgents": [
+            "联赛反热门Agent"
+          ],
+          "opposeAgents": [
+            "概率分歧Agent",
+            "比分反转Agent"
+          ],
+          "consensusScore": 0.1,
+          "confidence": 48,
+          "reasons": [
+            "全场次圆桌横向比较后，本场平局证据降为观察",
+            "基础概率19.7%",
+            "与热门差距34.7%"
+          ],
+          "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+        }
       },
       "antiDraw": {
-        "score": 49,
+        "score": 37,
         "verdict": "平局观察",
         "action": "平局只进入风险提示",
         "reasons": [
-          "模型平局概率24.9%",
+          "模型平局概率25.9%",
           "联赛平局基准38.5%",
-          "主方向领先30.8%",
+          "主方向领先28.6%",
           "尚未达到两席核心Agent共同支持的正式防平门槛"
         ],
         "roundtable": {
-          "consensusScore": 0.35,
-          "coreSupports": 1,
+          "consensusScore": 0.9,
+          "coreSupports": 2,
           "supportAgents": [
             "概率模型Agent",
+            "比分结构Agent",
             "联赛画像Agent"
           ],
           "opposeAgents": [
@@ -14708,17 +14784,19 @@
         "action": "重点候选",
         "primary": "主胜",
         "cover": "主胜",
-        "confidence": 82,
+        "confidence": 80,
         "valueGate": "通过：进入候选观察池",
+        "decisionMode": "base",
+        "marketPrimary": "主胜",
         "bestScores": [
           {
             "score": "1-0",
-            "probability": 0.174,
+            "probability": 0.172,
             "script": "主方向脚本"
           },
           {
             "score": "2-0",
-            "probability": 0.1587,
+            "probability": 0.1551,
             "script": "主方向脚本"
           }
         ],
@@ -14726,18 +14804,19 @@
         "overUnder": "小2.5球倾向",
         "openGame": false,
         "defendCold": "轻度观察：平局",
-        "finalText": "500竞彩赔率与联赛画像统一倾向为主胜，信心指数82/100；两个最得意比分为1-0、2-0，小2.5球倾向。",
+        "finalText": "500竞彩赔率、联赛画像与球队样本综合倾向为主胜，信心指数80/100；两个最得意比分为1-0、2-0，小2.5球倾向。",
         "customerSummary": {
           "headline": "主胜居前，平局保留观察席",
           "primary": "主胜",
           "secondary": "主胜",
           "cover": "主胜",
-          "confidence": 82,
+          "confidence": 80,
           "overUnder": "小2.5球倾向",
           "mainScores": "1-0、2-0",
           "coldScores": "",
-          "probabilityLine": "主胜55.7% · 平局24.9% · 客胜19.5%",
-          "analysis": "这场需要把主线和风险线分开看：主线仍是主胜，同时承认比赛存在转折空间。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n本地圆桌认为平局有一定讨论价值，但只有1个核心席位支持，未达到正式防平门槛。支持方为概率模型Agent、联赛画像Agent，反对方为赔率参考Agent、强弱差Agent，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像2场与Poisson比分矩阵把两个首选比分收敛到1-0、2-0；预期总进球2.35，对应小2.5球倾向。最终口径为主胜，信心82/100，爆冷压力约46.4%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "probabilityLine": "主胜54.4% · 平局25.9% · 客胜19.7%",
+          "decisionMode": "base",
+          "analysis": "这场需要把主线和风险线分开看：主线仍是主胜，同时承认比赛存在转折空间。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n本地圆桌认为平局有一定讨论价值，但只有2个核心席位支持，未达到正式防平门槛。支持方为概率模型Agent、比分结构Agent、联赛画像Agent，反对方为赔率参考Agent、强弱差Agent，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像2场与Poisson比分矩阵把两个首选比分收敛到1-0、2-0；预期总进球2.35，对应小2.5球倾向。最终口径为主胜，信心80/100，爆冷压力约47.5%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
         "riskNotice": "爆冷可能性低中，当前执行防守方向为主胜。"
       },
@@ -14753,7 +14832,7 @@
           "name": "近期状态Agent",
           "status": "已执行",
           "signal": "球队近一年画像",
-          "score": 77,
+          "score": 75,
           "view": "主客排名8 / 15；历史胜平负与进球均值已经进入概率层。"
         },
         {
@@ -14788,29 +14867,36 @@
           "name": "爆冷防线Agent",
           "status": "已执行",
           "signal": "低中",
-          "score": 46,
-          "view": "爆冷评分46.4%，第二方向为平局。"
+          "score": 48,
+          "view": "爆冷评分47.5%，第二方向为平局。"
+        },
+        {
+          "name": "冷门主张Agent",
+          "status": "已执行",
+          "signal": "维持基础主线",
+          "score": 48,
+          "view": "核心支持0席；支持：联赛反热门Agent；反对：概率分歧Agent、比分反转Agent。未达到推翻热门门槛。"
         },
         {
           "name": "本地防平圆桌Agent",
           "status": "已执行",
           "signal": "平局观察",
-          "score": 62,
-          "view": "核心支持1席；支持：概率模型Agent、联赛画像Agent；反对：赔率参考Agent、强弱差Agent。赔率公司只作参考。"
+          "score": 72,
+          "view": "核心支持2席；支持：概率模型Agent、比分结构Agent、联赛画像Agent；反对：赔率参考Agent、强弱差Agent。赔率公司只作参考。"
         },
         {
           "name": "比分脚本Agent",
           "status": "已执行",
           "signal": "1-0 / 2-0",
-          "score": 82,
+          "score": 80,
           "view": "常规比分与大球爆冷比分分层输出，由方向概率、进球基线、阵容影响和Poisson矩阵联合筛选。"
         },
         {
           "name": "圆桌仲裁Agent",
           "status": "已执行",
           "signal": "主胜",
-          "score": 82,
-          "view": "多Agent完成统一仲裁，主方向主胜。"
+          "score": 80,
+          "view": "多Agent完成统一仲裁，基础热门主胜，最终主方向主胜。"
         }
       ]
     },
@@ -14852,9 +14938,9 @@
         "dropBucket": "即时快照"
       },
       "probabilities": {
-        "home": 0.3367797607847781,
-        "draw": 0.27879255601113456,
-        "away": 0.38442768320408743
+        "home": 0.31720188471988997,
+        "draw": 0.2982060179642073,
+        "away": 0.3845920973159028
       },
       "leagueProfile": {
         "league": "综合联赛",
@@ -14870,6 +14956,12 @@
         "over25Rate": 0.5447800154805188,
         "reliable": true,
         "source": "综合基线"
+      },
+      "modelBlend": {
+        "marketWeight": 0.76,
+        "leagueWeight": 0.12,
+        "teamWeight": 0.12,
+        "teamCoverage": "双方球队画像"
       },
       "intelligence": {
         "status": "limited",
@@ -14920,31 +15012,57 @@
         "bucket": "JCToday/Live"
       },
       "upset": {
-        "score": 0.6605575072871146,
+        "score": 0.66,
         "level": "高",
-        "direction": "主胜",
-        "trap": "热门赔率2.21；主方向领先4.8%；联赛热门失手率46.3%",
+        "direction": "平局",
+        "selectedAsPrimary": true,
+        "counterDirection": "客胜",
+        "trap": "热门赔率2.21；基础方向领先6.7%；联赛热门失手率46.3%",
         "reasons": [
-          "综合非主方向概率61.6%",
-          "第二方向主胜33.7%",
-          "联赛样本26058场"
-        ]
-      },
-      "antiDraw": {
-        "score": 16,
-        "verdict": "平局观察",
-        "action": "平局作为第三风险提示",
-        "reasons": [
-          "模型平局概率27.9%",
-          "联赛平局基准24.8%",
-          "主方向领先4.8%",
-          "主客场球队平局画像42.9%",
-          "第二方向风险更高，正式保护位优先留给第二方向"
+          "平局得到3个本地核心席独立支持",
+          "主方向基础概率只有38.5%，没有形成压倒性优势",
+          "联赛热门命中率53.7%，冷门席拒绝继续只做观察"
         ],
         "roundtable": {
-          "consensusScore": 2.45,
-          "coreSupports": 2,
+          "bold": true,
+          "level": "bold",
+          "verdict": "冷门主判：平局",
+          "pickKey": "draw",
+          "marketPrimaryKey": "away",
+          "candidateKey": "draw",
+          "coreSupports": 3,
           "supportAgents": [
+            "概率模型Agent",
+            "球队状态Agent",
+            "比分结构Agent",
+            "赔率参考Agent"
+          ],
+          "opposeAgents": [],
+          "consensusScore": 3.7,
+          "confidence": 61,
+          "reasons": [
+            "平局得到3个本地核心席独立支持",
+            "主方向基础概率只有38.5%，没有形成压倒性优势",
+            "联赛热门命中率53.7%，冷门席拒绝继续只做观察"
+          ],
+          "bookmakerRole": "平赔只作参考，平局升为主判来自本地核心席共识"
+        }
+      },
+      "antiDraw": {
+        "score": 5,
+        "verdict": "平局为主方向",
+        "action": "平局进入主判断层",
+        "reasons": [
+          "模型平局概率29.8%",
+          "联赛平局基准24.8%",
+          "主方向领先8.6%",
+          "主客场球队平局画像42.9%"
+        ],
+        "roundtable": {
+          "consensusScore": 3.7,
+          "coreSupports": 3,
+          "supportAgents": [
+            "概率模型Agent",
             "球队状态Agent",
             "比分结构Agent",
             "赔率参考Agent"
@@ -14954,47 +15072,44 @@
         }
       },
       "conclusion": {
-        "action": "防冷优先：客胜，防主胜",
-        "primary": "客胜",
-        "cover": "客胜，防主胜",
-        "confidence": 64,
-        "valueGate": "高风险：只做防冷复盘",
+        "action": "冷门主判：平局",
+        "primary": "平局",
+        "cover": "平局，防客胜",
+        "confidence": 61,
+        "valueGate": "观点模式：接受高波动，冷门席拥有最终表决权",
+        "decisionMode": "bold-cold",
+        "marketPrimary": "客胜",
         "bestScores": [
           {
-            "score": "0-1",
-            "probability": 0.0995,
+            "score": "1-1",
+            "probability": 0.13,
             "script": "主方向脚本"
           },
           {
-            "score": "1-0",
-            "probability": 0.1167,
+            "score": "0-1",
+            "probability": 0.1019,
             "script": "防冷脚本"
           }
         ],
-        "coldScores": [
-          {
-            "score": "2-1",
-            "probability": 0.0843,
-            "script": "爆冷脚本"
-          }
-        ],
+        "coldScores": [],
         "overUnder": "小2.5球倾向",
         "openGame": false,
-        "defendCold": "强制提示：防主胜",
-        "finalText": "500竞彩赔率与联赛画像统一倾向为客胜，信心指数64/100；爆冷评分66.1%，重点防主胜；两个最得意比分为0-1、1-0，小2.5球倾向。 大球或比赛失控时，爆冷比分留意2-1。",
+        "defendCold": "主动冷门立场：平局；原热门仅作反向防守",
+        "finalText": "本地冷门圆桌主动推翻赔率第一顺位，主判改为平局，观点信心61/100；执行口径为平局，防客胜；两个最得意比分为1-1、0-1，小2.5球倾向。",
         "customerSummary": {
-          "headline": "客胜暂居上风，真正防线放在主胜",
-          "primary": "客胜",
-          "secondary": "主胜",
-          "cover": "客胜，防主胜",
-          "confidence": 64,
+          "headline": "冷门立场：平局升为最终主判",
+          "primary": "平局",
+          "secondary": "客胜",
+          "cover": "平局，防客胜",
+          "confidence": 61,
           "overUnder": "小2.5球倾向",
-          "mainScores": "0-1、1-0",
-          "coldScores": "2-1",
-          "probabilityLine": "主胜33.7% · 平局27.9% · 客胜38.4%",
-          "analysis": "先把结论摆出来：金泉尚武对大田市民并不是一眼能定性的比赛，几个方向贴得很近。客队的有效进攻和抗压结构更占优，主队的主场身份不足以单独扭转判断。\n本地圆桌认为平局有一定讨论价值，但只有2个核心席位支持，未达到正式防平门槛。支持方为球队状态Agent、比分结构Agent、赔率参考Agent，没有强反对票，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到0-1、1-0；预期总进球2.41，对应小2.5球倾向。最终口径为客胜，防主胜，信心64/100，爆冷压力约66.1%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "mainScores": "1-1、0-1",
+          "coldScores": "",
+          "probabilityLine": "主胜31.7% · 平局29.8% · 客胜38.5%",
+          "decisionMode": "bold-cold",
+          "analysis": "这场不跟低赔走。基础概率仍把客胜放在前面，但本地冷门圆桌最终把主判改成平局，这是主动观点，不是模糊防守。\n冷门主张得到3个核心席支持，支持方为概率模型Agent、球队状态Agent、比分结构Agent、赔率参考Agent；反对方为没有形成强反对席。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n平局不再只是“防一下”，而是从风险层升为最终主判。基础平局概率29.8%，但3个核心席认为热门优势不足以兑现。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到1-1、0-1；预期总进球2.41，对应小2.5球倾向。最终口径为平局，防客胜，信心61/100，爆冷压力约66.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
-        "riskNotice": "爆冷可能性高，当前执行防守方向为主胜。"
+        "riskNotice": "本场主动选择平局作为冷门主判，原热门客胜只作反向防守。"
       },
       "agents": [
         {
@@ -15008,7 +15123,7 @@
           "name": "近期状态Agent",
           "status": "已执行",
           "signal": "球队近一年画像",
-          "score": 59,
+          "score": 56,
           "view": "主客排名11 / 9；历史胜平负与进球均值已经进入概率层。"
         },
         {
@@ -15044,28 +15159,35 @@
           "status": "已执行",
           "signal": "高",
           "score": 66,
-          "view": "爆冷评分66.1%，第二方向为主胜。"
+          "view": "爆冷评分66.0%，第二方向为主胜。"
+        },
+        {
+          "name": "冷门主张Agent",
+          "status": "已执行",
+          "signal": "冷门主判：平局",
+          "score": 61,
+          "view": "核心支持3席；支持：概率模型Agent、球队状态Agent、比分结构Agent、赔率参考Agent；反对：无。已推翻市场第一顺位。"
         },
         {
           "name": "本地防平圆桌Agent",
           "status": "已执行",
-          "signal": "平局观察",
-          "score": 86,
-          "view": "核心支持2席；支持：球队状态Agent、比分结构Agent、赔率参考Agent；反对：无。赔率公司只作参考。"
+          "signal": "平局为主方向",
+          "score": 90,
+          "view": "核心支持3席；支持：概率模型Agent、球队状态Agent、比分结构Agent、赔率参考Agent；反对：无。赔率公司只作参考。"
         },
         {
           "name": "比分脚本Agent",
           "status": "已执行",
-          "signal": "0-1 / 1-0；冷门 2-1",
-          "score": 64,
+          "signal": "1-1 / 0-1",
+          "score": 61,
           "view": "常规比分与大球爆冷比分分层输出，由方向概率、进球基线、阵容影响和Poisson矩阵联合筛选。"
         },
         {
           "name": "圆桌仲裁Agent",
           "status": "已执行",
-          "signal": "客胜，防主胜",
-          "score": 64,
-          "view": "多Agent完成统一仲裁，主方向客胜。"
+          "signal": "平局，防客胜",
+          "score": 61,
+          "view": "多Agent完成统一仲裁，基础热门客胜，最终主方向平局。"
         }
       ]
     },
@@ -15107,9 +15229,9 @@
         "dropBucket": "即时快照"
       },
       "probabilities": {
-        "home": 0.3166078161267252,
-        "draw": 0.28661047987549254,
-        "away": 0.39678170399778234
+        "home": 0.3121075616590401,
+        "draw": 0.2946185372552516,
+        "away": 0.3932739010857084
       },
       "leagueProfile": {
         "league": "综合联赛",
@@ -15125,6 +15247,12 @@
         "over25Rate": 0.5447800154805188,
         "reliable": true,
         "source": "综合基线"
+      },
+      "modelBlend": {
+        "marketWeight": 0.76,
+        "leagueWeight": 0.18,
+        "teamWeight": 0.06,
+        "teamCoverage": "仅客队画像"
       },
       "intelligence": {
         "status": "limited",
@@ -15175,24 +15303,49 @@
         "bucket": "JCToday/Live"
       },
       "upset": {
-        "score": 0.5872247844908827,
+        "score": 0.5887603466046851,
         "level": "中",
         "direction": "主胜",
-        "trap": "热门赔率2.13；主方向领先8.0%；联赛热门失手率46.3%",
+        "selectedAsPrimary": false,
+        "counterDirection": "客胜",
+        "trap": "热门赔率2.13；基础方向领先8.1%；联赛热门失手率46.3%",
         "reasons": [
-          "综合非主方向概率60.3%",
-          "第二方向主胜31.7%",
+          "综合非主方向概率60.7%",
+          "第二方向主胜31.2%",
           "联赛样本26058场"
-        ]
+        ],
+        "roundtable": {
+          "bold": false,
+          "level": "watch",
+          "verdict": "冷门观察：主胜",
+          "pickKey": "away",
+          "marketPrimaryKey": "away",
+          "candidateKey": "home",
+          "coreSupports": 2,
+          "supportAgents": [
+            "概率分歧Agent",
+            "比分反转Agent"
+          ],
+          "opposeAgents": [],
+          "consensusScore": 1.85,
+          "confidence": 61,
+          "reasons": [
+            "全场次圆桌横向比较后，本场平局证据降为观察",
+            "基础概率31.2%",
+            "与热门差距8.1%",
+            "比分矩阵反向结果质量38.5%"
+          ],
+          "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+        }
       },
       "antiDraw": {
         "score": 14,
         "verdict": "平局观察",
         "action": "平局作为第三风险提示",
         "reasons": [
-          "模型平局概率28.7%",
+          "模型平局概率29.5%",
           "联赛平局基准24.8%",
-          "主方向领先8.0%",
+          "主方向领先8.1%",
           "本地核心Agent有2席独立支持",
           "第二方向风险更高，正式保护位优先留给第二方向"
         ],
@@ -15214,15 +15367,17 @@
         "cover": "客胜，防主胜",
         "confidence": 68,
         "valueGate": "观察：等待临场确认",
+        "decisionMode": "base",
+        "marketPrimary": "客胜",
         "bestScores": [
           {
             "score": "0-1",
-            "probability": 0.1034,
+            "probability": 0.1035,
             "script": "主方向脚本"
           },
           {
             "score": "1-0",
-            "probability": 0.1127,
+            "probability": 0.1126,
             "script": "防冷脚本"
           }
         ],
@@ -15236,7 +15391,7 @@
         "overUnder": "小2.5球倾向",
         "openGame": false,
         "defendCold": "建议保留：防主胜",
-        "finalText": "500竞彩赔率与联赛画像统一倾向为客胜，信心指数68/100；爆冷评分58.7%，重点防主胜；两个最得意比分为0-1、1-0，小2.5球倾向。 大球或比赛失控时，爆冷比分留意2-1。",
+        "finalText": "500竞彩赔率、联赛画像与球队样本综合倾向为客胜，信心指数68/100；爆冷评分58.9%，重点防主胜；两个最得意比分为0-1、1-0，小2.5球倾向。 大球或比赛失控时，爆冷比分留意2-1。",
         "customerSummary": {
           "headline": "圆桌选择客胜，防冷重点转向主胜",
           "primary": "客胜",
@@ -15246,8 +15401,9 @@
           "overUnder": "小2.5球倾向",
           "mainScores": "0-1、1-0",
           "coldScores": "2-1",
-          "probabilityLine": "主胜31.7% · 平局28.7% · 客胜39.7%",
-          "analysis": "这场需要把主线和风险线分开看：主线仍是客胜，同时承认比赛存在转折空间。客队的有效进攻和抗压结构更占优，主队的主场身份不足以单独扭转判断。\n本地圆桌认为平局有一定讨论价值，但只有2个核心席位支持，未达到正式防平门槛。支持方为概率模型Agent、比分结构Agent、赔率参考Agent，没有强反对票，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到0-1、1-0；预期总进球2.41，对应小2.5球倾向。最终口径为客胜，防主胜，信心68/100，爆冷压力约58.7%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "probabilityLine": "主胜31.2% · 平局29.5% · 客胜39.3%",
+          "decisionMode": "base",
+          "analysis": "这场需要把主线和风险线分开看：主线仍是客胜，同时承认比赛存在转折空间。客队的有效进攻和抗压结构更占优，主队的主场身份不足以单独扭转判断。\n本地圆桌认为平局有一定讨论价值，但只有2个核心席位支持，未达到正式防平门槛。支持方为概率模型Agent、比分结构Agent、赔率参考Agent，没有强反对票，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到0-1、1-0；预期总进球2.41，对应小2.5球倾向。最终口径为客胜，防主胜，信心68/100，爆冷压力约58.9%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
         "riskNotice": "爆冷可能性中，当前执行防守方向为主胜。"
       },
@@ -15299,7 +15455,14 @@
           "status": "已执行",
           "signal": "中",
           "score": 59,
-          "view": "爆冷评分58.7%，第二方向为主胜。"
+          "view": "爆冷评分58.9%，第二方向为主胜。"
+        },
+        {
+          "name": "冷门主张Agent",
+          "status": "已执行",
+          "signal": "冷门观察：主胜",
+          "score": 61,
+          "view": "核心支持2席；支持：概率分歧Agent、比分反转Agent；反对：无。未达到推翻热门门槛。"
         },
         {
           "name": "本地防平圆桌Agent",
@@ -15320,7 +15483,7 @@
           "status": "已执行",
           "signal": "客胜，防主胜",
           "score": 68,
-          "view": "多Agent完成统一仲裁，主方向客胜。"
+          "view": "多Agent完成统一仲裁，基础热门客胜，最终主方向客胜。"
         }
       ]
     },
@@ -15362,9 +15525,9 @@
         "dropBucket": "即时快照"
       },
       "probabilities": {
-        "home": 0.5168550842824452,
-        "draw": 0.25214458477047785,
-        "away": 0.23100033094707703
+        "home": 0.5112955742130405,
+        "draw": 0.25184323987531176,
+        "away": 0.23686118591164781
       },
       "leagueProfile": {
         "league": "综合联赛",
@@ -15380,6 +15543,12 @@
         "over25Rate": 0.5447800154805188,
         "reliable": true,
         "source": "综合基线"
+      },
+      "modelBlend": {
+        "marketWeight": 0.76,
+        "leagueWeight": 0.24,
+        "teamWeight": 0.0,
+        "teamCoverage": "无球队画像"
       },
       "intelligence": {
         "status": "limited",
@@ -15430,15 +15599,39 @@
         "bucket": "JCToday/Live"
       },
       "upset": {
-        "score": 0.48659003978755094,
+        "score": 0.4905265911605858,
         "level": "低中",
         "direction": "平局",
-        "trap": "热门赔率1.66；主方向领先26.5%；联赛热门失手率46.3%",
+        "selectedAsPrimary": false,
+        "counterDirection": "主胜",
+        "trap": "热门赔率1.66；基础方向领先25.9%；联赛热门失手率46.3%",
         "reasons": [
-          "综合非主方向概率48.3%",
+          "综合非主方向概率48.9%",
           "第二方向平局25.2%",
           "联赛样本26058场"
-        ]
+        ],
+        "roundtable": {
+          "bold": false,
+          "level": "none",
+          "verdict": "维持基础主线",
+          "pickKey": "home",
+          "marketPrimaryKey": "home",
+          "candidateKey": "away",
+          "coreSupports": 0,
+          "supportAgents": [],
+          "opposeAgents": [
+            "概率分歧Agent",
+            "比分反转Agent"
+          ],
+          "consensusScore": -0.45,
+          "confidence": 48,
+          "reasons": [
+            "全场次圆桌横向比较后，本场平局证据降为观察",
+            "基础概率23.7%",
+            "与热门差距27.4%"
+          ],
+          "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+        }
       },
       "antiDraw": {
         "score": 26,
@@ -15447,7 +15640,7 @@
         "reasons": [
           "模型平局概率25.2%",
           "联赛平局基准24.8%",
-          "主方向领先26.5%",
+          "主方向领先25.9%",
           "本地核心Agent有2席独立支持"
         ],
         "roundtable": {
@@ -15467,15 +15660,17 @@
         "cover": "主胜，防平局",
         "confidence": 80,
         "valueGate": "通过：进入候选观察池",
+        "decisionMode": "base",
+        "marketPrimary": "主胜",
         "bestScores": [
           {
             "score": "1-0",
-            "probability": 0.157,
+            "probability": 0.1556,
             "script": "主方向脚本"
           },
           {
             "score": "1-1",
-            "probability": 0.1037,
+            "probability": 0.1051,
             "script": "防冷脚本"
           }
         ],
@@ -15483,7 +15678,7 @@
         "overUnder": "小2.5球倾向",
         "openGame": false,
         "defendCold": "建议保留：防平局",
-        "finalText": "500竞彩赔率与联赛画像统一倾向为主胜，信心指数80/100；平局防守等级为建议防平，执行口径为主胜，防平局；两个最得意比分为1-0、1-1，小2.5球倾向。",
+        "finalText": "500竞彩赔率、联赛画像与球队样本综合倾向为主胜，信心指数80/100；平局防守等级为建议防平，执行口径为主胜，防平局；两个最得意比分为1-0、1-1，小2.5球倾向。",
         "customerSummary": {
           "headline": "主胜是主线，平局经圆桌表决进入保护",
           "primary": "主胜",
@@ -15493,8 +15688,9 @@
           "overUnder": "小2.5球倾向",
           "mainScores": "1-0、1-1",
           "coldScores": "",
-          "probabilityLine": "主胜51.7% · 平局25.2% · 客胜23.1%",
-          "analysis": "首尔FC对蔚山现代当前更偏向主胜，但优势还没有大到可以把另一条比赛路线删掉。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n圆桌在平局问题上不是顺着平赔走：2个本地核心席位给出独立支持，支持方为概率模型Agent、比分结构Agent；圆桌没有出现足以否决防平的核心反对票。因此平局才进入正式保护。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到1-0、1-1；预期总进球2.41，对应小2.5球倾向。最终口径为主胜，防平局，信心80/100，爆冷压力约48.7%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "probabilityLine": "主胜51.1% · 平局25.2% · 客胜23.7%",
+          "decisionMode": "base",
+          "analysis": "首尔FC对蔚山现代当前更偏向主胜，但优势还没有大到可以把另一条比赛路线删掉。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n圆桌在平局问题上不是顺着平赔走：2个本地核心席位给出独立支持，支持方为概率模型Agent、比分结构Agent；圆桌没有出现足以否决防平的核心反对票。因此平局才进入正式保护。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到1-0、1-1；预期总进球2.41，对应小2.5球倾向。最终口径为主胜，防平局，信心80/100，爆冷压力约49.1%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
         "riskNotice": "爆冷可能性低中，当前执行防守方向为平局。"
       },
@@ -15546,7 +15742,14 @@
           "status": "已执行",
           "signal": "低中",
           "score": 49,
-          "view": "爆冷评分48.7%，第二方向为平局。"
+          "view": "爆冷评分49.1%，第二方向为平局。"
+        },
+        {
+          "name": "冷门主张Agent",
+          "status": "已执行",
+          "signal": "维持基础主线",
+          "score": 48,
+          "view": "核心支持0席；支持：无；反对：概率分歧Agent、比分反转Agent。未达到推翻热门门槛。"
         },
         {
           "name": "本地防平圆桌Agent",
@@ -15567,7 +15770,7 @@
           "status": "已执行",
           "signal": "主胜，防平局",
           "score": 80,
-          "view": "多Agent完成统一仲裁，主方向主胜。"
+          "view": "多Agent完成统一仲裁，基础热门主胜，最终主方向主胜。"
         }
       ]
     },
@@ -15609,9 +15812,9 @@
         "dropBucket": "即时快照"
       },
       "probabilities": {
-        "home": 0.5393285915989592,
-        "draw": 0.26354754490766075,
-        "away": 0.19712386349338007
+        "home": 0.518308666216763,
+        "draw": 0.26624888261983365,
+        "away": 0.21544245116340338
       },
       "leagueProfile": {
         "league": "综合联赛",
@@ -15627,6 +15830,12 @@
         "over25Rate": 0.5447800154805188,
         "reliable": true,
         "source": "综合基线"
+      },
+      "modelBlend": {
+        "marketWeight": 0.76,
+        "leagueWeight": 0.12,
+        "teamWeight": 0.12,
+        "teamCoverage": "双方球队画像"
       },
       "intelligence": {
         "status": "limited",
@@ -15677,74 +15886,101 @@
         "bucket": "JCToday/Live"
       },
       "upset": {
-        "score": 0.47291776574984107,
-        "level": "低中",
+        "score": 0.66,
+        "level": "高",
         "direction": "平局",
-        "trap": "热门赔率1.58；主方向领先27.6%；联赛热门失手率46.3%",
+        "selectedAsPrimary": true,
+        "counterDirection": "主胜",
+        "trap": "热门赔率1.58；基础方向领先25.2%；联赛热门失手率46.3%",
         "reasons": [
-          "综合非主方向概率46.1%",
-          "第二方向平局26.4%",
-          "联赛样本26058场"
-        ]
-      },
-      "antiDraw": {
-        "score": 20,
-        "verdict": "建议防平",
-        "action": "主方向 + 平局保护",
-        "reasons": [
-          "模型平局概率26.4%",
-          "联赛平局基准24.8%",
-          "主方向领先27.6%",
-          "主客场球队平局画像29.2%",
-          "本地核心Agent有2席独立支持"
+          "平局得到3个本地核心席独立支持",
+          "主方向基础概率只有51.8%，没有形成压倒性优势",
+          "联赛热门命中率53.7%，冷门席拒绝继续只做观察"
         ],
         "roundtable": {
-          "consensusScore": 2.15,
-          "coreSupports": 2,
+          "bold": true,
+          "level": "bold",
+          "verdict": "冷门主判：平局",
+          "pickKey": "draw",
+          "marketPrimaryKey": "home",
+          "candidateKey": "draw",
+          "coreSupports": 3,
           "supportAgents": [
             "概率模型Agent",
-            "球队状态Agent"
+            "球队状态Agent",
+            "比分结构Agent"
+          ],
+          "opposeAgents": [],
+          "consensusScore": 2.7,
+          "confidence": 61,
+          "reasons": [
+            "平局得到3个本地核心席独立支持",
+            "主方向基础概率只有51.8%，没有形成压倒性优势",
+            "联赛热门命中率53.7%，冷门席拒绝继续只做观察"
+          ],
+          "bookmakerRole": "平赔只作参考，平局升为主判来自本地核心席共识"
+        }
+      },
+      "antiDraw": {
+        "score": 26,
+        "verdict": "平局为主方向",
+        "action": "平局进入主判断层",
+        "reasons": [
+          "模型平局概率26.6%",
+          "联赛平局基准24.8%",
+          "主方向领先25.2%",
+          "主客场球队平局画像29.2%"
+        ],
+        "roundtable": {
+          "consensusScore": 1.7,
+          "coreSupports": 2,
+          "supportAgents": [
+            "球队状态Agent",
+            "比分结构Agent"
           ],
           "opposeAgents": [],
           "bookmakerRole": "赔率公司仅作参考票，不能单独触发防平"
         }
       },
       "conclusion": {
-        "action": "重点候选",
-        "primary": "主胜",
-        "cover": "主胜，防平局",
-        "confidence": 81,
-        "valueGate": "通过：进入候选观察池",
+        "action": "冷门主判：平局",
+        "primary": "平局",
+        "cover": "平局，防主胜",
+        "confidence": 61,
+        "valueGate": "观点模式：接受高波动，冷门席拥有最终表决权",
+        "decisionMode": "bold-cold",
+        "marketPrimary": "主胜",
         "bestScores": [
           {
-            "score": "1-0",
-            "probability": 0.1602,
+            "score": "1-1",
+            "probability": 0.1015,
             "script": "主方向脚本"
           },
           {
-            "score": "1-1",
-            "probability": 0.096,
+            "score": "1-0",
+            "probability": 0.1556,
             "script": "防冷脚本"
           }
         ],
         "coldScores": [],
         "overUnder": "小2.5球倾向",
         "openGame": false,
-        "defendCold": "建议保留：防平局",
-        "finalText": "500竞彩赔率与联赛画像统一倾向为主胜，信心指数81/100；平局防守等级为建议防平，执行口径为主胜，防平局；两个最得意比分为1-0、1-1，小2.5球倾向。",
+        "defendCold": "主动冷门立场：平局；原热门仅作反向防守",
+        "finalText": "本地冷门圆桌主动推翻赔率第一顺位，主判改为平局，观点信心61/100；执行口径为平局，防主胜；两个最得意比分为1-1、1-0，小2.5球倾向。",
         "customerSummary": {
-          "headline": "方向看主胜，平局保护有独立证据",
-          "primary": "主胜",
-          "secondary": "平局",
-          "cover": "主胜，防平局",
-          "confidence": 81,
+          "headline": "圆桌推翻主胜，选择平局",
+          "primary": "平局",
+          "secondary": "主胜",
+          "cover": "平局，防主胜",
+          "confidence": 61,
           "overUnder": "小2.5球倾向",
-          "mainScores": "1-0、1-1",
+          "mainScores": "1-1、1-0",
           "coldScores": "",
-          "probabilityLine": "主胜53.9% · 平局26.4% · 客胜19.7%",
-          "analysis": "圆桌最后把主胜放在第一顺位，这是各席证据交叉后的选择，不是照抄任何一家公司的推荐。\n圆桌在平局问题上不是顺着平赔走：2个本地核心席位给出独立支持，支持方为概率模型Agent、球队状态Agent；圆桌没有出现足以否决防平的核心反对票。因此平局才进入正式保护。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到1-0、1-1；预期总进球2.44，对应小2.5球倾向。最终口径为主胜，防平局，信心81/100，爆冷压力约47.3%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "probabilityLine": "主胜51.8% · 平局26.6% · 客胜21.5%",
+          "decisionMode": "bold-cold",
+          "analysis": "先把态度亮出来：仁川联对富川FC选择平局作为最终立场。赔率第一顺位是主胜，但它没有拿到圆桌否决权。\n冷门主张得到3个核心席支持，支持方为概率模型Agent、球队状态Agent、比分结构Agent；反对方为没有形成强反对席。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n平局不再只是“防一下”，而是从风险层升为最终主判。基础平局概率26.6%，但3个核心席认为热门优势不足以兑现。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到1-1、1-0；预期总进球2.44，对应小2.5球倾向。最终口径为平局，防主胜，信心61/100，爆冷压力约66.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
-        "riskNotice": "爆冷可能性低中，当前执行防守方向为平局。"
+        "riskNotice": "本场主动选择平局作为冷门主判，原热门主胜只作反向防守。"
       },
       "agents": [
         {
@@ -15758,7 +15994,7 @@
           "name": "近期状态Agent",
           "status": "已执行",
           "signal": "球队近一年画像",
-          "score": 76,
+          "score": 56,
           "view": "主客排名7 / 10；历史胜平负与进球均值已经进入概率层。"
         },
         {
@@ -15792,30 +16028,37 @@
         {
           "name": "爆冷防线Agent",
           "status": "已执行",
-          "signal": "低中",
-          "score": 47,
-          "view": "爆冷评分47.3%，第二方向为平局。"
+          "signal": "高",
+          "score": 66,
+          "view": "爆冷评分66.0%，第二方向为平局。"
+        },
+        {
+          "name": "冷门主张Agent",
+          "status": "已执行",
+          "signal": "冷门主判：平局",
+          "score": 61,
+          "view": "核心支持3席；支持：概率模型Agent、球队状态Agent、比分结构Agent；反对：无。已推翻市场第一顺位。"
         },
         {
           "name": "本地防平圆桌Agent",
           "status": "已执行",
-          "signal": "建议防平",
-          "score": 83,
-          "view": "核心支持2席；支持：概率模型Agent、球队状态Agent；反对：无。赔率公司只作参考。"
+          "signal": "平局为主方向",
+          "score": 79,
+          "view": "核心支持2席；支持：球队状态Agent、比分结构Agent；反对：无。赔率公司只作参考。"
         },
         {
           "name": "比分脚本Agent",
           "status": "已执行",
-          "signal": "1-0 / 1-1",
-          "score": 81,
+          "signal": "1-1 / 1-0",
+          "score": 61,
           "view": "常规比分与大球爆冷比分分层输出，由方向概率、进球基线、阵容影响和Poisson矩阵联合筛选。"
         },
         {
           "name": "圆桌仲裁Agent",
           "status": "已执行",
-          "signal": "主胜，防平局",
-          "score": 81,
-          "view": "多Agent完成统一仲裁，主方向主胜。"
+          "signal": "平局，防主胜",
+          "score": 61,
+          "view": "多Agent完成统一仲裁，基础热门主胜，最终主方向平局。"
         }
       ]
     },
@@ -15857,9 +16100,9 @@
         "dropBucket": "即时快照"
       },
       "probabilities": {
-        "home": 0.2785268173295561,
-        "draw": 0.2869268087950567,
-        "away": 0.4345463738753872
+        "home": 0.2824166243971619,
+        "draw": 0.2968894779171899,
+        "away": 0.4206938976856483
       },
       "leagueProfile": {
         "league": "综合联赛",
@@ -15875,6 +16118,12 @@
         "over25Rate": 0.5447800154805188,
         "reliable": true,
         "source": "综合基线"
+      },
+      "modelBlend": {
+        "marketWeight": 0.76,
+        "leagueWeight": 0.18,
+        "teamWeight": 0.06,
+        "teamCoverage": "仅主队画像"
       },
       "intelligence": {
         "status": "limited",
@@ -15925,24 +16174,53 @@
         "bucket": "JCToday/Live"
       },
       "upset": {
-        "score": 0.55350440056604,
-        "level": "中",
-        "direction": "平局",
-        "trap": "热门赔率1.92；主方向领先14.8%；联赛热门失手率46.3%",
+        "score": 0.66,
+        "level": "高",
+        "direction": "主胜",
+        "selectedAsPrimary": true,
+        "counterDirection": "客胜",
+        "trap": "热门赔率1.92；基础方向领先12.4%；联赛热门失手率46.3%",
         "reasons": [
-          "综合非主方向概率56.5%",
-          "第二方向平局28.7%",
-          "联赛样本26058场"
-        ]
+          "全场次圆桌横向比较后，本场平局证据降为观察",
+          "基础概率28.2%",
+          "与热门差距13.8%",
+          "仅主队画像给反向结果30.8%",
+          "比分矩阵反向结果质量34.8%"
+        ],
+        "roundtable": {
+          "bold": true,
+          "level": "bold",
+          "verdict": "冷门主判：主胜",
+          "pickKey": "home",
+          "marketPrimaryKey": "away",
+          "candidateKey": "home",
+          "coreSupports": 3,
+          "supportAgents": [
+            "概率分歧Agent",
+            "球队反向Agent",
+            "比分反转Agent"
+          ],
+          "opposeAgents": [],
+          "consensusScore": 2.9,
+          "confidence": 64,
+          "reasons": [
+            "全场次圆桌横向比较后，本场平局证据降为观察",
+            "基础概率28.2%",
+            "与热门差距13.8%",
+            "仅主队画像给反向结果30.8%",
+            "比分矩阵反向结果质量34.8%"
+          ],
+          "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+        }
       },
       "antiDraw": {
         "score": 14,
         "verdict": "建议防平",
         "action": "主方向 + 平局保护",
         "reasons": [
-          "模型平局概率28.7%",
+          "模型平局概率29.7%",
           "联赛平局基准24.8%",
-          "主方向领先14.8%",
+          "主方向领先13.8%",
           "本地核心Agent有2席独立支持"
         ],
         "roundtable": {
@@ -15958,41 +16236,44 @@
         }
       },
       "conclusion": {
-        "action": "观察复核",
-        "primary": "客胜",
-        "cover": "客胜，防平局",
-        "confidence": 71,
-        "valueGate": "观察：等待临场确认",
+        "action": "冷门主判：主胜",
+        "primary": "主胜",
+        "cover": "主胜，防客胜",
+        "confidence": 64,
+        "valueGate": "观点模式：接受高波动，冷门席拥有最终表决权",
+        "decisionMode": "bold-cold",
+        "marketPrimary": "客胜",
         "bestScores": [
           {
-            "score": "0-1",
-            "probability": 0.1126,
+            "score": "1-0",
+            "probability": 0.1057,
             "script": "主方向脚本"
           },
           {
-            "score": "1-1",
-            "probability": 0.1301,
+            "score": "0-1",
+            "probability": 0.1104,
             "script": "防冷脚本"
           }
         ],
         "coldScores": [],
         "overUnder": "小2.5球倾向",
         "openGame": false,
-        "defendCold": "建议保留：防平局",
-        "finalText": "500竞彩赔率与联赛画像统一倾向为客胜，信心指数71/100；平局防守等级为建议防平，执行口径为客胜，防平局；两个最得意比分为0-1、1-1，小2.5球倾向。",
+        "defendCold": "主动冷门立场：主胜；原热门仅作反向防守",
+        "finalText": "本地冷门圆桌主动推翻赔率第一顺位，主判改为主胜，观点信心64/100；执行口径为主胜，防客胜；两个最得意比分为1-0、0-1，小2.5球倾向。",
         "customerSummary": {
-          "headline": "客胜是主线，平局经圆桌表决进入保护",
-          "primary": "客胜",
-          "secondary": "平局",
-          "cover": "客胜，防平局",
-          "confidence": 71,
+          "headline": "冷门立场：主胜升为最终主判",
+          "primary": "主胜",
+          "secondary": "客胜",
+          "cover": "主胜，防客胜",
+          "confidence": 64,
           "overUnder": "小2.5球倾向",
-          "mainScores": "0-1、1-1",
+          "mainScores": "1-0、0-1",
           "coldScores": "",
-          "probabilityLine": "主胜27.9% · 平局28.7% · 客胜43.5%",
-          "analysis": "光州FC对济州SK当前更偏向客胜，但优势还没有大到可以把另一条比赛路线删掉。客队的有效进攻和抗压结构更占优，主队的主场身份不足以单独扭转判断。\n圆桌在平局问题上不是顺着平赔走：2个本地核心席位给出独立支持，支持方为概率模型Agent、比分结构Agent、赔率参考Agent；圆桌没有出现足以否决防平的核心反对票。因此平局才进入正式保护。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到0-1、1-1；预期总进球2.41，对应小2.5球倾向。最终口径为客胜，防平局，信心71/100，爆冷压力约55.4%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "probabilityLine": "主胜28.2% · 平局29.7% · 客胜42.1%",
+          "decisionMode": "bold-cold",
+          "analysis": "这场不跟低赔走。基础概率仍把客胜放在前面，但本地冷门圆桌最终把主判改成主胜，这是主动观点，不是模糊防守。\n冷门主张得到3个核心席支持，支持方为概率分歧Agent、球队反向Agent、比分反转Agent；反对方为没有形成强反对席。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n圆桌在平局问题上不是顺着平赔走：2个本地核心席位给出独立支持，支持方为概率模型Agent、比分结构Agent、赔率参考Agent；圆桌没有出现足以否决防平的核心反对票。因此平局才进入正式保护。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到1-0、0-1；预期总进球2.41，对应小2.5球倾向。最终口径为主胜，防客胜，信心64/100，爆冷压力约66.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
-        "riskNotice": "爆冷可能性中，当前执行防守方向为平局。"
+        "riskNotice": "本场主动选择主胜作为冷门主判，原热门客胜只作反向防守。"
       },
       "agents": [
         {
@@ -16006,7 +16287,7 @@
           "name": "近期状态Agent",
           "status": "已执行",
           "signal": "球队近一年画像",
-          "score": 66,
+          "score": 59,
           "view": "主客排名12 / 8；历史胜平负与进球均值已经进入概率层。"
         },
         {
@@ -16040,9 +16321,16 @@
         {
           "name": "爆冷防线Agent",
           "status": "已执行",
-          "signal": "中",
-          "score": 55,
-          "view": "爆冷评分55.4%，第二方向为平局。"
+          "signal": "高",
+          "score": 66,
+          "view": "爆冷评分66.0%，第二方向为平局。"
+        },
+        {
+          "name": "冷门主张Agent",
+          "status": "已执行",
+          "signal": "冷门主判：主胜",
+          "score": 64,
+          "view": "核心支持3席；支持：概率分歧Agent、球队反向Agent、比分反转Agent；反对：无。已推翻市场第一顺位。"
         },
         {
           "name": "本地防平圆桌Agent",
@@ -16054,16 +16342,16 @@
         {
           "name": "比分脚本Agent",
           "status": "已执行",
-          "signal": "0-1 / 1-1",
-          "score": 71,
+          "signal": "1-0 / 0-1",
+          "score": 64,
           "view": "常规比分与大球爆冷比分分层输出，由方向概率、进球基线、阵容影响和Poisson矩阵联合筛选。"
         },
         {
           "name": "圆桌仲裁Agent",
           "status": "已执行",
-          "signal": "客胜，防平局",
-          "score": 71,
-          "view": "多Agent完成统一仲裁，主方向客胜。"
+          "signal": "主胜，防客胜",
+          "score": 64,
+          "view": "多Agent完成统一仲裁，基础热门客胜，最终主方向主胜。"
         }
       ]
     },
@@ -16105,9 +16393,9 @@
         "dropBucket": "即时快照"
       },
       "probabilities": {
-        "home": 0.262745049820387,
-        "draw": 0.28666991599605485,
-        "away": 0.4505850341835582
+        "home": 0.27479449658777083,
+        "draw": 0.2961848328645633,
+        "away": 0.4290206705476659
       },
       "leagueProfile": {
         "league": "综合联赛",
@@ -16123,6 +16411,12 @@
         "over25Rate": 0.5447800154805188,
         "reliable": true,
         "source": "综合基线"
+      },
+      "modelBlend": {
+        "marketWeight": 0.76,
+        "leagueWeight": 0.12,
+        "teamWeight": 0.12,
+        "teamCoverage": "双方球队画像"
       },
       "intelligence": {
         "status": "limited",
@@ -16173,26 +16467,51 @@
         "bucket": "JCToday/Live"
       },
       "upset": {
-        "score": 0.5419000487283765,
-        "level": "中",
+        "score": 0.66,
+        "level": "高",
         "direction": "平局",
-        "trap": "热门赔率1.84；主方向领先16.4%；联赛热门失手率46.3%",
+        "selectedAsPrimary": true,
+        "counterDirection": "客胜",
+        "trap": "热门赔率1.84；基础方向领先13.3%；联赛热门失手率46.3%",
         "reasons": [
-          "综合非主方向概率54.9%",
-          "第二方向平局28.7%",
-          "联赛样本26058场"
-        ]
+          "平局得到3个本地核心席独立支持",
+          "主方向基础概率只有42.9%，没有形成压倒性优势",
+          "联赛热门命中率53.7%，冷门席拒绝继续只做观察"
+        ],
+        "roundtable": {
+          "bold": true,
+          "level": "bold",
+          "verdict": "冷门主判：平局",
+          "pickKey": "draw",
+          "marketPrimaryKey": "away",
+          "candidateKey": "draw",
+          "coreSupports": 3,
+          "supportAgents": [
+            "概率模型Agent",
+            "球队状态Agent",
+            "比分结构Agent",
+            "赔率参考Agent"
+          ],
+          "opposeAgents": [],
+          "consensusScore": 3.7,
+          "confidence": 61,
+          "reasons": [
+            "平局得到3个本地核心席独立支持",
+            "主方向基础概率只有42.9%，没有形成压倒性优势",
+            "联赛热门命中率53.7%，冷门席拒绝继续只做观察"
+          ],
+          "bookmakerRole": "平赔只作参考，平局升为主判来自本地核心席共识"
+        }
       },
       "antiDraw": {
         "score": 5,
-        "verdict": "必须防平",
-        "action": "平局进入正式防守层",
+        "verdict": "平局为主方向",
+        "action": "平局进入主判断层",
         "reasons": [
-          "模型平局概率28.7%",
+          "模型平局概率29.6%",
           "联赛平局基准24.8%",
-          "主方向领先16.4%",
-          "主客场球队平局画像35.1%",
-          "本地核心Agent有3席独立支持"
+          "主方向领先13.3%",
+          "主客场球队平局画像35.1%"
         ],
         "roundtable": {
           "consensusScore": 3.7,
@@ -16208,41 +16527,44 @@
         }
       },
       "conclusion": {
-        "action": "观察复核",
-        "primary": "客胜",
-        "cover": "客胜，防平局",
-        "confidence": 70,
-        "valueGate": "观察：等待临场确认",
+        "action": "冷门主判：平局",
+        "primary": "平局",
+        "cover": "平局，防客胜",
+        "confidence": 61,
+        "valueGate": "观点模式：接受高波动，冷门席拥有最终表决权",
+        "decisionMode": "bold-cold",
+        "marketPrimary": "客胜",
         "bestScores": [
           {
-            "score": "0-1",
-            "probability": 0.1192,
+            "score": "1-1",
+            "probability": 0.1309,
             "script": "主方向脚本"
           },
           {
-            "score": "1-1",
-            "probability": 0.1304,
+            "score": "0-1",
+            "probability": 0.1149,
             "script": "防冷脚本"
           }
         ],
         "coldScores": [],
         "overUnder": "小2.5球倾向",
         "openGame": false,
-        "defendCold": "强制提示：防平局",
-        "finalText": "500竞彩赔率与联赛画像统一倾向为客胜，信心指数70/100；平局防守等级为必须防平，执行口径为客胜，防平局；两个最得意比分为0-1、1-1，小2.5球倾向。",
+        "defendCold": "主动冷门立场：平局；原热门仅作反向防守",
+        "finalText": "本地冷门圆桌主动推翻赔率第一顺位，主判改为平局，观点信心61/100；执行口径为平局，防客胜；两个最得意比分为1-1、0-1，小2.5球倾向。",
         "customerSummary": {
-          "headline": "主线落在客胜，防平不是跟随平赔",
-          "primary": "客胜",
-          "secondary": "平局",
-          "cover": "客胜，防平局",
-          "confidence": 70,
+          "headline": "这场不走正路，最终观点是平局",
+          "primary": "平局",
+          "secondary": "客胜",
+          "cover": "平局，防客胜",
+          "confidence": 61,
           "overUnder": "小2.5球倾向",
-          "mainScores": "0-1、1-1",
+          "mainScores": "1-1、0-1",
           "coldScores": "",
-          "probabilityLine": "主胜26.3% · 平局28.7% · 客胜45.1%",
-          "analysis": "这场需要把主线和风险线分开看：主线仍是客胜，同时承认比赛存在转折空间。客队的有效进攻和抗压结构更占优，主队的主场身份不足以单独扭转判断。\n圆桌在平局问题上不是顺着平赔走：3个本地核心席位给出独立支持，支持方为概率模型Agent、球队状态Agent、比分结构Agent、赔率参考Agent；圆桌没有出现足以否决防平的核心反对票。因此平局才进入正式保护。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到0-1、1-1；预期总进球2.37，对应小2.5球倾向。最终口径为客胜，防平局，信心70/100，爆冷压力约54.2%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "probabilityLine": "主胜27.5% · 平局29.6% · 客胜42.9%",
+          "decisionMode": "bold-cold",
+          "analysis": "这场允许冷门席真正拍板。系统承认客胜是市场热门，同时认为平局的赛制、结构和反转证据更值得冒险。\n冷门主张得到3个核心席支持，支持方为概率模型Agent、球队状态Agent、比分结构Agent、赔率参考Agent；反对方为没有形成强反对席。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n平局不再只是“防一下”，而是从风险层升为最终主判。基础平局概率29.6%，但3个核心席认为热门优势不足以兑现。\n落到执行层，联赛历史画像26058场与Poisson比分矩阵把两个首选比分收敛到1-1、0-1；预期总进球2.37，对应小2.5球倾向。最终口径为平局，防客胜，信心61/100，爆冷压力约66.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
-        "riskNotice": "爆冷可能性中，当前执行防守方向为平局。"
+        "riskNotice": "本场主动选择平局作为冷门主判，原热门客胜只作反向防守。"
       },
       "agents": [
         {
@@ -16256,7 +16578,7 @@
           "name": "近期状态Agent",
           "status": "已执行",
           "signal": "球队近一年画像",
-          "score": 65,
+          "score": 56,
           "view": "主客排名6 / 2；历史胜平负与进球均值已经进入概率层。"
         },
         {
@@ -16290,30 +16612,37 @@
         {
           "name": "爆冷防线Agent",
           "status": "已执行",
-          "signal": "中",
-          "score": 54,
-          "view": "爆冷评分54.2%，第二方向为平局。"
+          "signal": "高",
+          "score": 66,
+          "view": "爆冷评分66.0%，第二方向为平局。"
+        },
+        {
+          "name": "冷门主张Agent",
+          "status": "已执行",
+          "signal": "冷门主判：平局",
+          "score": 61,
+          "view": "核心支持3席；支持：概率模型Agent、球队状态Agent、比分结构Agent、赔率参考Agent；反对：无。已推翻市场第一顺位。"
         },
         {
           "name": "本地防平圆桌Agent",
           "status": "已执行",
-          "signal": "必须防平",
+          "signal": "平局为主方向",
           "score": 90,
           "view": "核心支持3席；支持：概率模型Agent、球队状态Agent、比分结构Agent、赔率参考Agent；反对：无。赔率公司只作参考。"
         },
         {
           "name": "比分脚本Agent",
           "status": "已执行",
-          "signal": "0-1 / 1-1",
-          "score": 70,
+          "signal": "1-1 / 0-1",
+          "score": 61,
           "view": "常规比分与大球爆冷比分分层输出，由方向概率、进球基线、阵容影响和Poisson矩阵联合筛选。"
         },
         {
           "name": "圆桌仲裁Agent",
           "status": "已执行",
-          "signal": "客胜，防平局",
-          "score": 70,
-          "view": "多Agent完成统一仲裁，主方向客胜。"
+          "signal": "平局，防客胜",
+          "score": 61,
+          "view": "多Agent完成统一仲裁，基础热门客胜，最终主方向平局。"
         }
       ]
     }
