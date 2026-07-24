@@ -188,6 +188,7 @@
     .tag.hot { color: #0b1b18; background: var(--green); }
     .tag.warn { color: #211702; background: var(--amber); }
     .tag.red { color: #fff; background: rgba(255,99,125,.84); }
+    .tag.cold-pick { color: #fff; background: #c73e58; border: 1px solid rgba(255,255,255,.22); }
 
     .hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(230px, .7fr); gap: 12px; }
     .final-card {
@@ -215,7 +216,7 @@
     }
     .final-content { position: relative; z-index: 1; }
     .kicker { color: var(--cyan); font-size: 12px; font-weight: 800; letter-spacing: 0; }
-    .match-title { margin: 10px 0 6px; font-size: clamp(24px, 4vw, 46px); line-height: 1.06; letter-spacing: 0; }
+    .match-title { margin: 10px 0 6px; font-size: 34px; line-height: 1.08; letter-spacing: 0; overflow-wrap: anywhere; }
     .league-line { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
     .decision-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
     .decision-box {
@@ -248,6 +249,8 @@
     .summary-item span { display: block; color: var(--muted); font-size: 11px; }
     .summary-item b { display: block; margin-top: 5px; font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
     .summary-analysis { margin: 13px 0 0; color: #dce9f8; font-size: 14px; line-height: 1.75; overflow-wrap: anywhere; white-space: pre-line; }
+    .summary-board.bold-cold { border-color: rgba(255,200,87,.65); border-left-color: var(--amber); background: linear-gradient(90deg, rgba(255,200,87,.12), rgba(50,213,255,.035) 58%, rgba(255,99,125,.06)); }
+    .summary-board.deep-cold { border-color: rgba(255,99,125,.68); border-left-color: var(--red); background: linear-gradient(90deg, rgba(255,99,125,.13), rgba(50,213,255,.035) 58%, rgba(255,200,87,.05)); }
 
     .radar-card {
       min-height: 240px;
@@ -470,6 +473,7 @@
       .license-actions { grid-template-columns: 1fr; }
       .manual-actions { grid-template-columns: 1fr; }
       .brand { align-items: flex-start; }
+      .match-title { font-size: 28px; }
       .brand p { max-width: min(280px, calc(100vw - 96px)); line-height: 1.35; word-break: break-word; }
       .panel-head { flex-wrap: wrap; }
       .panel-sub, .final-text, .report-card p, .league-line, .match-meta { word-break: break-all; }
@@ -508,6 +512,7 @@
               <select class="select" id="leagueFilter"><option value="">全部联赛</option></select>
               <select class="select" id="riskFilter">
                 <option value="">全部风险</option>
+                <option value="主判">冷门主判</option>
                 <option value="高">高冷门</option>
                 <option value="中">中风险</option>
                 <option value="低">低风险</option>
@@ -594,7 +599,7 @@
 
         <div class="data-grid">
           <article class="metric">
-            <h3>胜平负概率</h3>
+            <h3>基础胜平负概率</h3>
             <div class="bar-list" id="probBars"></div>
           </article>
           <article class="metric">
@@ -910,7 +915,8 @@
       return state.matches.filter(match => {
         const haystack = `${match.league} ${match.round} ${match.home} ${match.away}`.toLowerCase();
         const riskLevel = match.upset?.level || "";
-        const riskOk = !risk || riskLevel.includes(risk) || (risk === "低" && riskLevel.includes("低"));
+        const decisionMode = match.conclusion?.decisionMode || "base";
+        const riskOk = !risk || (risk === "主判" ? decisionMode !== "base" : (riskLevel.includes(risk) || (risk === "低" && riskLevel.includes("低"))));
         return (!q || haystack.includes(q)) && (!league || match.league === league) && riskOk;
       });
     }
@@ -925,12 +931,15 @@
       list.innerHTML = rows.map(match => {
         const active = String(match.id) === state.activeId ? " active" : "";
         const riskClass = (match.upset?.score || 0) >= .65 ? "red" : ((match.upset?.score || 0) >= .5 ? "warn" : "");
+        const decisionMode = match.conclusion?.decisionMode || "base";
+        const decisionTag = decisionMode === "deep-cold" ? `<span class="tag cold-pick">深冷试胆</span>` : (decisionMode === "bold-cold" ? `<span class="tag cold-pick">冷门主判</span>` : "");
         return `
           <button class="match-card${active}" data-id="${escapeHtml(match.id)}">
             <div class="match-meta"><span>${escapeHtml(match.league)} · ${escapeHtml(match.round || "")}</span><span>${escapeHtml(match.date || "")}</span></div>
             <div class="match-name">${escapeHtml(match.home)} vs ${escapeHtml(match.away)}</div>
             <div class="match-tags">
               <span class="tag hot">${escapeHtml(match.conclusion?.primary || "--")}</span>
+              ${decisionTag}
               <span class="tag ${riskClass}">冷门 ${pct(match.upset?.score || 0)}</span>
               <span class="tag">${escapeHtml(match.sourceType === "manual" ? "手动" : (match.grid?.signal || "Pass"))}</span>
             </div>
@@ -956,13 +965,17 @@
       const conclusion = match.conclusion || {};
       const risk = match.upset || {};
       const profile = match.leagueProfile || {};
-      $("matchKicker").textContent = `${match.league} · ${match.round || "赛前研判"}`;
+      const decisionMode = conclusion.decisionMode || "base";
+      const decisionLabel = decisionMode === "deep-cold" ? "深冷试胆" : (decisionMode === "bold-cold" ? "冷门主判" : "基础主线");
+      $("matchKicker").textContent = `${match.league} · ${match.round || "赛前研判"} · ${decisionLabel}`;
       $("matchTitle").textContent = `${match.home} vs ${match.away}`;
       $("matchInfo").textContent = `${match.date || "--"} | ${state.data.meta?.modelName || "Local AI 5.5"} | ${state.data.meta?.source || ""}`;
       if (match.sourceType === "manual") $("matchInfo").textContent = `${match.date || "--"} | Local AI 5.5 | 手动录入 · 历史画像研判`;
       $("deleteManualBtn").classList.toggle("hidden", match.sourceType !== "manual");
       $("systemAction").textContent = conclusion.action || "--";
       $("primaryPick").textContent = conclusion.primary || "--";
+      $("systemAction").classList.toggle("red", decisionMode !== "base");
+      $("primaryPick").classList.toggle("red", decisionMode !== "base");
       $("coverPick").textContent = conclusion.cover || "--";
       $("finalText").textContent = conclusion.finalText || "--";
       $("confidence").textContent = conclusion.confidence ? `${conclusion.confidence}` : "--";
@@ -973,6 +986,9 @@
       $("riskLevel").textContent = `风险 ${risk.level || "--"}`;
       $("riskPct").textContent = pct(risk.score || 0);
       $("riskArc").style.strokeDashoffset = String(540 - 540 * clamp(Number(risk.score || 0), 0, 1));
+      const summaryBoard = document.querySelector(".summary-board");
+      summaryBoard.classList.toggle("bold-cold", decisionMode === "bold-cold");
+      summaryBoard.classList.toggle("deep-cold", decisionMode === "deep-cold");
       renderProbabilityBars(match.probabilities || {});
       renderScores(conclusion.bestScores || [], conclusion.coldScores || [], Boolean(conclusion.openGame));
       renderCustomerSummary(match);
@@ -1034,8 +1050,12 @@
       const c = match.conclusion || {};
       const a = match.antiDraw || {};
       const o = match.odds || {};
+      const roundtable = match.upset?.roundtable || {};
+      const coldDecision = c.decisionMode && c.decisionMode !== "base"
+        ? `冷门圆桌已推翻基础第一顺位${c.marketPrimary || "--"}，${roundtable.coreSupports || 0}个核心席支持最终主判${c.primary || "--"}。`
+        : `基础第一顺位${c.marketPrimary || c.primary || "--"}保留为最终主线。`;
       $("strictReport").textContent =
-        `生产状态：${c.action || "--"}。系统选择：${c.cover || "--"}。` +
+        `生产状态：${c.action || "--"}。${coldDecision}系统选择：${c.cover || "--"}。` +
         `反防平评分 ${a.score ?? "--"}，结论为${a.verdict || "--"}。` +
         `赔率形态：${o.movementCombo || o.movement || "--"}。` +
         `比分口径：${(c.bestScores || []).map(item => item.score).join(" / ") || "--"}，${c.overUnder || "--"}。` +
@@ -1234,9 +1254,10 @@
         const hitState = item.directionHit === true ? ["yes", "方向命中"] : (item.directionHit === false ? ["no", "方向未中"] : ["", "等待赛果"]);
         const scores = (item.bestScores || []).map(score => score.score).join(" / ") || "--";
         const cold = (item.coldScores || []).map(score => score.score).join(" / ");
+        const decisionLabel = item.decisionMode === "deep-cold" ? "深冷试胆" : (item.decisionMode === "bold-cold" ? "冷门主判" : "基础主线");
         return `
           <div class="history-row">
-            <div><b>${escapeHtml(item.home || "--")} vs ${escapeHtml(item.away || "--")}</b><small>${escapeHtml(item.date || "--")} · ${escapeHtml(item.league || "--")} · ${escapeHtml(item.round || "")}</small></div>
+            <div><b>${escapeHtml(item.home || "--")} vs ${escapeHtml(item.away || "--")}</b><small>${escapeHtml(item.date || "--")} · ${escapeHtml(item.league || "--")} · ${escapeHtml(item.round || "")} · ${decisionLabel}</small></div>
             <div class="history-result">预测：${escapeHtml(item.cover || item.predictedPrimary || "--")} · ${escapeHtml(scores)}${cold ? `<br>冷门比分：${escapeHtml(cold)}` : ""}<br>赛果：${escapeHtml(item.finalScore || "待定")} ${escapeHtml(item.actualOutcome || "")}</div>
             <div class="history-hit ${hitState[0]}">${hitState[1]}<small>信心 ${escapeHtml(item.confidence ?? "--")}</small></div>
           </div>
