@@ -76,6 +76,7 @@ def main() -> None:
     else:
         intelligence = collect_match_intelligence(current_rows, old_payload.get("matches") or [], warnings)
         matches = [build_match(row, profiles, team_profiles, intelligence.get(str(row.get("id")))) for row in current_rows]
+        matches = balance_slate_decisions(current_rows, matches, profiles, team_profiles, intelligence)
         update_status = "success" if current_rows else "success-no-current-matches"
 
     archive = update_analysis_archive(old_archive, matches, history, args.history_retention)
@@ -643,6 +644,98 @@ def update_team(row: dict[str, Any], name: str, league: str, is_home: bool, goal
     row[f"{prefix}{outcome}"] += 1
 
 
+def team_outcome_view(row: dict[str, Any], teams: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    home = teams.get(normalize_team(row.get("home"))) or {}
+    away = teams.get(normalize_team(row.get("away"))) or {}
+    home_sample = int(home.get("sample") or 0)
+    away_sample = int(away.get("sample") or 0)
+    if home and away:
+        values = normalize({
+            "home": (float(home.get("homeWinRate") or home.get("winRate") or 0.38) + float(away.get("awayLossRate") or away.get("lossRate") or 0.34)) / 2,
+            "draw": (float(home.get("homeDrawRate") or home.get("drawRate") or 0.28) + float(away.get("awayDrawRate") or away.get("drawRate") or 0.28)) / 2,
+            "away": (float(home.get("homeLossRate") or home.get("lossRate") or 0.34) + float(away.get("awayWinRate") or away.get("winRate") or 0.38)) / 2,
+        })
+        sample = home_sample + away_sample
+        weight = 0.12 if sample >= 20 else (0.08 if sample >= 8 else (0.05 if sample >= 4 else 0.0))
+        coverage = "双方球队画像"
+    elif home:
+        values = normalize({
+            "home": float(home.get("homeWinRate") or home.get("winRate") or 0.40),
+            "draw": float(home.get("homeDrawRate") or home.get("drawRate") or 0.28),
+            "away": float(home.get("homeLossRate") or home.get("lossRate") or 0.32),
+        })
+        sample = home_sample
+        weight = 0.06 if sample >= 16 else (0.04 if sample >= 8 else 0.0)
+        coverage = "仅主队画像"
+    elif away:
+        values = normalize({
+            "home": float(away.get("awayLossRate") or away.get("lossRate") or 0.34),
+            "draw": float(away.get("awayDrawRate") or away.get("drawRate") or 0.28),
+            "away": float(away.get("awayWinRate") or away.get("winRate") or 0.38),
+        })
+        sample = away_sample
+        weight = 0.06 if sample >= 16 else (0.04 if sample >= 8 else 0.0)
+        coverage = "仅客队画像"
+    else:
+        values, sample, weight, coverage = {}, 0, 0.0, "无球队画像"
+    return {"probabilities": values, "sample": sample, "weight": weight, "coverage": coverage}
+
+
+def competition_is_volatile(league: str, row: dict[str, Any] | None = None) -> bool:
+    row = row or {}
+    context = " ".join(str(row.get(key) or "") for key in ("stage", "phase", "competition", "round"))
+    if any(token in f"{league} {context}" for token in ("资格", "附加", "淘汰", "两回合", "杯")):
+        return True
+    match_date = str(row.get("match_time") or row.get("date") or "")
+    month_match = re.search(r"\d{4}-(\d{2})-\d{2}", match_date)
+    summer_qualifier = bool(month_match and int(month_match.group(1)) in {6, 7, 8})
+    return summer_qualifier and any(token in str(league) for token in ("欧冠", "欧罗巴", "欧协联"))
+
+
+def balance_slate_decisions(
+    rows: list[dict[str, Any]],
+    matches: list[dict[str, Any]],
+    profiles: dict[str, dict[str, Any]],
+    teams: dict[str, dict[str, Any]],
+    intelligence: dict[str, dict[str, Any]],
+) -> list[dict[str, Any]]:
+    draw_picks = [
+        (index, match) for index, match in enumerate(matches)
+        if (match.get("conclusion") or {}).get("primary") == "平局"
+        and (match.get("conclusion") or {}).get("decisionMode") == "bold-cold"
+    ]
+    draw_limit = max(1, round(len(matches) * 0.34)) if matches else 0
+    if len(draw_picks) <= draw_limit:
+        return matches
+
+    ranked = sorted(
+        draw_picks,
+        key=lambda item: (
+            float((((item[1].get("upset") or {}).get("roundtable") or {}).get("consensusScore") or 0)),
+            int((((item[1].get("upset") or {}).get("roundtable") or {}).get("coreSupports") or 0)),
+            float((item[1].get("probabilities") or {}).get("draw") or 0),
+        ),
+        reverse=True,
+    )
+    keep = {index for index, _ in ranked[:draw_limit]}
+    rows_by_id = {str(row.get("id")): row for row in rows}
+    output = list(matches)
+    for index, match in draw_picks:
+        if index in keep:
+            continue
+        original = rows_by_id.get(str(match.get("id")))
+        if not original:
+            continue
+        rerun_row = {**original, "suppress_draw_primary": True}
+        output[index] = build_match(
+            rerun_row,
+            profiles,
+            teams,
+            intelligence.get(str(original.get("id"))),
+        )
+    return output
+
+
 def build_match(
     row: dict[str, Any],
     profiles: dict[str, dict[str, Any]],
@@ -653,78 +746,114 @@ def build_match(
     profile = profiles.get(league) or average_profile(profiles)
     intelligence = intelligence or empty_intelligence(row)
     market = implied_probabilities(row["home_odds"], row["draw_odds"], row["away_odds"])
+    team_view = team_outcome_view(row, teams)
+    team_probs = team_view.get("probabilities") or {}
+    volatile = competition_is_volatile(league, row)
+    market_weight = 0.68 if volatile else 0.76
+    team_weight = float(team_view.get("weight") or 0)
+    league_weight = 1 - market_weight - team_weight
     probs = normalize({
-        "home": market["home"] * 0.82 + profile["homeRate"] * 0.18,
-        "draw": market["draw"] * 0.82 + profile["drawRate"] * 0.18,
-        "away": market["away"] * 0.82 + profile["awayRate"] * 0.18,
+        "home": market["home"] * market_weight + profile["homeRate"] * league_weight + float(team_probs.get("home") or profile["homeRate"]) * team_weight,
+        "draw": market["draw"] * market_weight + profile["drawRate"] * league_weight + float(team_probs.get("draw") or profile["drawRate"]) * team_weight,
+        "away": market["away"] * market_weight + profile["awayRate"] * league_weight + float(team_probs.get("away") or profile["awayRate"]) * team_weight,
     })
     probs, intelligence_adjustment = apply_intelligence_adjustment(probs, intelligence)
     ranked = sorted(probs, key=probs.get, reverse=True)
-    primary_key, upset_key = ranked[0], ranked[1]
-    primary, upset_direction = OUTCOME_LABELS[primary_key], OUTCOME_LABELS[upset_key]
-    gap = probs[primary_key] - probs[upset_key]
+    base_primary_key, base_second_key = ranked[0], ranked[1]
+    base_gap = probs[base_primary_key] - probs[base_second_key]
     favorite_fail = 1 - float(profile.get("favoriteHitRate") or 0.55)
     favorite_odds = min(row["home_odds"], row["draw_odds"], row["away_odds"])
-    cold_risk = clamp((1 - probs[primary_key]) * 0.72 + probs[upset_key] * 0.22 + favorite_fail * 0.18, 0.18, 0.84)
+    cold_risk = clamp((1 - probs[base_primary_key]) * 0.72 + probs[base_second_key] * 0.22 + favorite_fail * 0.18, 0.18, 0.84)
     if favorite_odds >= 2.40:
         cold_risk = clamp(cold_risk + 0.07, 0, 0.88)
-    if gap <= 0.05:
+    if base_gap <= 0.05:
         cold_risk = clamp(cold_risk + 0.06, 0, 0.90)
-    risk_level = "高" if cold_risk >= 0.66 else ("中" if cold_risk >= 0.52 else ("低中" if cold_risk >= 0.40 else "低"))
     score_context = build_score_model_context(probs, profile, row, teams)
-    draw_defense = local_draw_roundtable(
-        probs, profile, row, teams, primary_key, upset_key, gap, cold_risk, favorite_odds, score_context
+    base_draw_defense = local_draw_roundtable(
+        probs, profile, row, teams, base_primary_key, base_second_key, base_gap, cold_risk, favorite_odds, score_context
     )
+    upset_roundtable = local_upset_roundtable(
+        probs, market, profile, row, teams, base_primary_key, base_second_key, cold_risk,
+        score_context, base_draw_defense, team_view,
+    )
+    bold_pick = bool(upset_roundtable.get("bold"))
+    primary_key = str(upset_roundtable.get("pickKey") or base_primary_key) if bold_pick else base_primary_key
+    upset_key = base_primary_key if bold_pick else base_second_key
+    primary, upset_direction = OUTCOME_LABELS[primary_key], OUTCOME_LABELS[upset_key]
+    decision_gap = abs(probs[primary_key] - probs[upset_key])
+    if bold_pick:
+        cold_risk = max(cold_risk, 0.72 if upset_roundtable.get("level") == "deep" else 0.66)
+        draw_defense = local_draw_roundtable(
+            probs, profile, row, teams, primary_key, upset_key, decision_gap, cold_risk, favorite_odds, score_context
+        )
+        protection_key = base_primary_key
+    else:
+        draw_defense = base_draw_defense
+        protection_key = upset_key if cold_risk >= 0.55 else ("draw" if draw_defense["cover"] else primary_key)
+        if draw_defense["cover"] and primary_key != "draw" and protection_key != "draw":
+            draw_defense = {
+                **draw_defense,
+                "cover": False,
+                "level": "watch",
+                "label": "平局观察",
+                "verdict": "平局观察",
+                "action": "平局作为第三风险提示",
+                "reasons": [*draw_defense["reasons"][:4], "第二方向风险更高，正式保护位优先留给第二方向"],
+            }
+    risk_level = "高" if cold_risk >= 0.66 else ("中" if cold_risk >= 0.52 else ("低中" if cold_risk >= 0.40 else "低"))
     anti_draw_value = draw_defense["antiScore"]
-    protection_key = upset_key if cold_risk >= 0.55 else ("draw" if draw_defense["cover"] else primary_key)
-    if draw_defense["cover"] and primary_key != "draw" and protection_key != "draw":
-        draw_defense = {
-            **draw_defense,
-            "cover": False,
-            "level": "watch",
-            "label": "平局观察",
-            "verdict": "平局观察",
-            "action": "平局作为第三风险提示",
-            "reasons": [*draw_defense["reasons"][:4], "第二方向风险更高，正式保护位优先留给第二方向"],
-        }
     anti_draw_verdict = draw_defense["verdict"]
     scores, cold_scores, expected_total, open_game = generate_scores(
         probs, profile, primary_key, upset_key, cold_risk, row, teams, protection_key, score_context
     )
+    if bold_pick:
+        cold_scores = []
     score_totals = [sum(int(part) for part in item["score"].split("-")) for item in scores]
     over_under = "大2.5球倾向" if open_game and all(total >= 3 for total in score_totals) else ("小2.5球倾向" if all(total <= 2 for total in score_totals) else "2/3球临界")
     reliability_bonus = 6 if profile.get("reliable") else 2
-    confidence = round(clamp(50 + gap * 70 + (1 - cold_risk) * 15 + reliability_bonus, 45, 90))
-    if draw_defense["level"] == "must":
-        confidence = min(confidence - 4, 82)
-    elif draw_defense["cover"]:
-        confidence = min(confidence - 2, 86)
+    if bold_pick:
+        confidence = int(upset_roundtable.get("confidence") or 52)
+    else:
+        confidence = round(clamp(50 + base_gap * 70 + (1 - cold_risk) * 15 + reliability_bonus, 45, 90))
+        if draw_defense["level"] == "must":
+            confidence = min(confidence - 4, 82)
+        elif draw_defense["cover"]:
+            confidence = min(confidence - 2, 86)
     protection_direction = OUTCOME_LABELS[protection_key]
     cover = primary if protection_key == primary_key else f"{primary}，防{protection_direction}"
-    action = "重点候选" if confidence >= 72 and cold_risk < 0.60 else (f"防冷优先：{cover}" if cold_risk >= 0.66 else "观察复核")
-    value_gate = "通过：进入候选观察池" if action == "重点候选" else ("高风险：只做防冷复盘" if cold_risk >= 0.66 else "观察：等待临场确认")
-    if protection_key == "draw" and primary_key != "draw":
+    if bold_pick:
+        action = f"{'深冷' if upset_roundtable.get('level') == 'deep' else '冷门'}主判：{primary}"
+        value_gate = "观点模式：接受高波动，冷门席拥有最终表决权"
+    else:
+        action = "重点候选" if confidence >= 72 and cold_risk < 0.60 else (f"防冷优先：{cover}" if cold_risk >= 0.66 else "观察复核")
+        value_gate = "通过：进入候选观察池" if action == "重点候选" else ("高风险：只做防冷复盘" if cold_risk >= 0.66 else "观察：等待临场确认")
+    if bold_pick:
+        defend = f"主动冷门立场：{primary}；原热门仅作反向防守"
+    elif protection_key == "draw" and primary_key != "draw":
         defend = "强制提示：防平局" if draw_defense["level"] == "must" else "建议保留：防平局"
     else:
         defend = f"强制提示：防{upset_direction}" if cold_risk >= 0.66 else (f"建议保留：防{upset_direction}" if cold_risk >= 0.52 else f"轻度观察：{upset_direction}")
     score_text = "、".join(item["score"] for item in scores)
-    final = f"500竞彩赔率与联赛画像统一倾向为{primary}，信心指数{confidence}/100；"
-    if protection_key == "draw" and primary_key != "draw":
+    if bold_pick:
+        final = f"本地冷门圆桌主动推翻赔率第一顺位，主判改为{primary}，观点信心{confidence}/100；执行口径为{cover}；"
+    else:
+        final = f"500竞彩赔率、联赛画像与球队样本综合倾向为{primary}，信心指数{confidence}/100；"
+    if not bold_pick and protection_key == "draw" and primary_key != "draw":
         final += f"平局防守等级为{draw_defense['label']}，执行口径为{cover}；"
-    elif cold_risk >= 0.52:
+    elif not bold_pick and cold_risk >= 0.52:
         final += f"爆冷评分{cold_risk:.1%}，重点防{upset_direction}；"
     final += f"两个最得意比分为{score_text}，{over_under}。"
     if cold_scores:
         final += f" 大球或比赛失控时，爆冷比分留意{'、'.join(item['score'] for item in cold_scores)}。"
     customer_summary = build_customer_summary(
         row, probs, profile, primary, protection_direction, cover, confidence, over_under, scores, cold_scores,
-        intelligence, draw_defense, cold_risk, score_context,
+        intelligence, draw_defense, cold_risk, score_context, upset_roundtable,
     )
 
     odds = {"home": row["home_odds"], "draw": row["draw_odds"], "away": row["away_odds"]}
     agents = build_agents(
         row, profile, probs, cold_risk, risk_level, anti_draw_value, anti_draw_verdict, scores, cold_scores,
-        confidence, cover, intelligence, draw_defense,
+        confidence, cover, intelligence, draw_defense, upset_roundtable, primary,
     )
     return {
         "id": row["id"], "date": row["match_time"], "round": row["round"], "league": league,
@@ -740,13 +869,16 @@ def build_match(
             "mode": "500竞彩即时盘", "dropSide": "待临场", "dropBucket": "即时快照",
         },
         "probabilities": probs, "leagueProfile": profile,
+        "modelBlend": {"marketWeight": market_weight, "leagueWeight": league_weight, "teamWeight": team_weight, "teamCoverage": team_view.get("coverage")},
         "intelligence": intelligence,
         "intelligenceAdjustment": intelligence_adjustment,
         "grid": {"signal": "500 SP基线", "roi": None, "sample": profile.get("sample"), "bucket": "JCToday/Live"},
         "upset": {
-            "score": cold_risk, "level": risk_level, "direction": upset_direction,
-            "trap": f"热门赔率{favorite_odds:.2f}；主方向领先{gap:.1%}；联赛热门失手率{favorite_fail:.1%}",
-            "reasons": [f"综合非主方向概率{1-probs[primary_key]:.1%}", f"第二方向{upset_direction}{probs[upset_key]:.1%}", f"联赛样本{int(profile.get('sample') or 0)}场"],
+            "score": cold_risk, "level": risk_level, "direction": primary if bold_pick else upset_direction,
+            "selectedAsPrimary": bold_pick, "counterDirection": upset_direction if bold_pick else OUTCOME_LABELS[base_primary_key],
+            "trap": f"热门赔率{favorite_odds:.2f}；基础方向领先{base_gap:.1%}；联赛热门失手率{favorite_fail:.1%}",
+            "reasons": upset_roundtable.get("reasons") if bold_pick else [f"综合非主方向概率{1-probs[base_primary_key]:.1%}", f"第二方向{OUTCOME_LABELS[base_second_key]}{probs[base_second_key]:.1%}", f"联赛样本{int(profile.get('sample') or 0)}场"],
+            "roundtable": upset_roundtable,
         },
         "antiDraw": {
             "score": anti_draw_value, "verdict": anti_draw_verdict,
@@ -762,9 +894,11 @@ def build_match(
         },
         "conclusion": {
             "action": action, "primary": primary, "cover": cover, "confidence": confidence, "valueGate": value_gate,
+            "decisionMode": "deep-cold" if upset_roundtable.get("level") == "deep" else ("bold-cold" if bold_pick else "base"),
+            "marketPrimary": OUTCOME_LABELS[base_primary_key],
             "bestScores": scores, "coldScores": cold_scores, "overUnder": over_under, "openGame": open_game,
             "defendCold": defend, "finalText": final, "customerSummary": customer_summary,
-            "riskNotice": f"爆冷可能性{risk_level}，当前执行防守方向为{protection_direction}。",
+            "riskNotice": f"本场主动选择{primary}作为冷门主判，原热门{protection_direction}只作反向防守。" if bold_pick else f"爆冷可能性{risk_level}，当前执行防守方向为{protection_direction}。",
         },
         "agents": agents,
     }
@@ -773,8 +907,8 @@ def build_match(
 def build_agents(row: dict[str, Any], profile: dict[str, Any], probs: dict[str, float], cold: float, level: str,
                  anti: int, anti_verdict: str, scores: list[dict[str, Any]], cold_scores: list[dict[str, Any]],
                  confidence: int, cover: str, intelligence: dict[str, Any],
-                 draw_roundtable: dict[str, Any]) -> list[dict[str, Any]]:
-    primary = OUTCOME_LABELS[max(probs, key=probs.get)]
+                 draw_roundtable: dict[str, Any], upset_roundtable: dict[str, Any], final_primary: str) -> list[dict[str, Any]]:
+    market_primary = OUTCOME_LABELS[max(probs, key=probs.get)]
     home_info = intelligence.get("home") or {}
     away_info = intelligence.get("away") or {}
     news = intelligence.get("news") or []
@@ -790,12 +924,17 @@ def build_agents(row: dict[str, Any], profile: dict[str, Any], probs: dict[str, 
         agent("Interwetten赔率Agent", "参考席", 64, f"即时赔率{row['home_odds']}/{row['draw_odds']}/{row['away_odds']}，只提供一张参考票，不单独决定防平或爆冷方向。"),
         agent("爆冷防线Agent", level, round(cold * 100), f"爆冷评分{cold:.1%}，第二方向为{OUTCOME_LABELS[sorted(probs, key=probs.get, reverse=True)[1]]}。"),
         agent(
+            "冷门主张Agent", upset_roundtable.get("verdict") or "维持基础主线", int(upset_roundtable.get("confidence") or 50),
+            f"核心支持{upset_roundtable.get('coreSupports', 0)}席；支持：{'、'.join(upset_roundtable.get('supportAgents') or []) or '无'}；"
+            f"反对：{'、'.join(upset_roundtable.get('opposeAgents') or []) or '无'}。{'已推翻市场第一顺位' if upset_roundtable.get('bold') else '未达到推翻热门门槛'}。",
+        ),
+        agent(
             "本地防平圆桌Agent", anti_verdict, draw_roundtable["roundtableConfidence"],
             f"核心支持{draw_roundtable['coreSupports']}席；支持：{'、'.join(draw_roundtable['supportAgents']) or '无'}；"
             f"反对：{'、'.join(draw_roundtable['opposeAgents']) or '无'}。赔率公司只作参考。",
         ),
         agent("比分脚本Agent", score_signal, confidence, "常规比分与大球爆冷比分分层输出，由方向概率、进球基线、阵容影响和Poisson矩阵联合筛选。"),
-        agent("圆桌仲裁Agent", cover, confidence, f"多Agent完成统一仲裁，主方向{primary}。"),
+        agent("圆桌仲裁Agent", cover, confidence, f"多Agent完成统一仲裁，基础热门{market_primary}，最终主方向{final_primary}。"),
     ]
 
 
@@ -809,6 +948,144 @@ def anti_draw_score(probs: dict[str, float], profile: dict[str, Any], gap: float
     if upset_key == "draw":
         score -= 16
     return round(clamp(score, 0, 100))
+
+
+def local_upset_roundtable(
+    probs: dict[str, float],
+    market: dict[str, float],
+    profile: dict[str, Any],
+    row: dict[str, Any],
+    teams: dict[str, dict[str, Any]],
+    primary_key: str,
+    second_key: str,
+    cold: float,
+    score_context: dict[str, Any],
+    draw_roundtable: dict[str, Any],
+    team_view: dict[str, Any],
+) -> dict[str, Any]:
+    league = str(row.get("league") or "")
+    favorite_key = min(("home", "draw", "away"), key=lambda key: float(row[f"{key}_odds"]))
+    favorite_odds = float(row[f"{favorite_key}_odds"])
+    primary_prob = float(probs[primary_key])
+    favorite_hit = float(profile.get("favoriteHitRate") or 0.55)
+    outcome_mass = score_context.get("outcomeMass") or {}
+    volatile = competition_is_volatile(league, row)
+
+    if volatile and primary_key == favorite_key and primary_key != "draw" and favorite_odds <= 1.42:
+        opposite_key = "away" if primary_key == "home" else "home"
+        opposite_odds = float(row[f"{opposite_key}_odds"])
+        opposite_edge = float(probs[opposite_key]) - float(market[opposite_key])
+        if opposite_odds >= 5.50 and float(probs[opposite_key]) >= 0.12 and opposite_edge >= 0.04:
+            support_agents = ["赛制波动Agent", "热门过热Agent"]
+            reasons = [
+                f"{league}属于高波动淘汰/资格阶段",
+                f"热门赔率低至{favorite_odds:.2f}，对面赔率达到{opposite_odds:.2f}",
+                f"基础概率仍给{OUTCOME_LABELS[opposite_key]}保留{probs[opposite_key]:.1%}",
+                f"联赛与球队模型把反向结果较市场隐含概率抬高{opposite_edge:.1%}",
+                "极端盘不再只做口头防冷，冷门席获得正式主张权",
+            ]
+            return {
+                "bold": True, "level": "deep", "verdict": f"深冷主判：{OUTCOME_LABELS[opposite_key]}",
+                "pickKey": opposite_key, "marketPrimaryKey": primary_key, "candidateKey": opposite_key,
+                "coreSupports": 2, "supportAgents": support_agents, "opposeAgents": ["基础概率Agent", "赔率参考Agent"],
+                "consensusScore": 2.85, "confidence": round(clamp(48 + (1.42 - favorite_odds) * 18, 48, 55)),
+                "reasons": reasons, "bookmakerRole": "极端低赔在资格赛中被视为过热证据，不拥有否决权",
+            }
+
+    draw_core = int(draw_roundtable.get("coreSupports") or 0)
+    draw_prob = float(probs.get("draw") or 0)
+    draw_bold = not row.get("suppress_draw_primary") and primary_key != "draw" and draw_core >= 2 and cold >= 0.47 and (
+        primary_prob <= 0.525 or (favorite_hit <= 0.50 and primary_prob <= 0.57 and draw_prob >= 0.245)
+    )
+    if draw_bold:
+        score = float(draw_roundtable.get("consensusScore") or 0) + max(0.0, 0.52 - favorite_hit) * 4
+        return {
+            "bold": True, "level": "bold", "verdict": "冷门主判：平局",
+            "pickKey": "draw", "marketPrimaryKey": primary_key, "candidateKey": "draw",
+            "coreSupports": draw_core, "supportAgents": draw_roundtable.get("supportAgents") or [],
+            "opposeAgents": draw_roundtable.get("opposeAgents") or [], "consensusScore": round(score, 2),
+            "confidence": round(clamp(49 + draw_core * 4 + max(0.0, 0.52 - favorite_hit) * 35, 50, 64)),
+            "reasons": [
+                f"平局得到{draw_core}个本地核心席独立支持",
+                f"主方向基础概率只有{primary_prob:.1%}，没有形成压倒性优势",
+                f"联赛热门命中率{favorite_hit:.1%}，冷门席拒绝继续只做观察",
+            ],
+            "bookmakerRole": "平赔只作参考，平局升为主判来自本地核心席共识",
+        }
+
+    candidates: list[dict[str, Any]] = []
+    team_probs = team_view.get("probabilities") or {}
+    for candidate_key in ("home", "draw", "away"):
+        if candidate_key == primary_key or candidate_key == "draw":
+            continue
+        candidate_prob = float(probs[candidate_key])
+        gap = primary_prob - candidate_prob
+        consensus = 0.0
+        core_supports: list[str] = []
+        support_agents: list[str] = []
+        oppose_agents: list[str] = []
+        reasons = [f"基础概率{candidate_prob:.1%}", f"与热门差距{gap:.1%}"]
+        if candidate_prob >= 0.28 and gap <= 0.17:
+            consensus += 1.0
+            core_supports.append("概率分歧Agent")
+            support_agents.append("概率分歧Agent")
+        elif candidate_prob >= 0.23 and gap <= 0.24:
+            consensus += 0.65
+            core_supports.append("概率分歧Agent")
+            support_agents.append("概率分歧Agent")
+        else:
+            oppose_agents.append("概率分歧Agent")
+
+        if team_probs:
+            team_candidate = float(team_probs.get(candidate_key) or 0)
+            team_primary = float(team_probs.get(primary_key) or 0)
+            if team_candidate >= 0.42 or team_candidate >= team_primary + 0.06:
+                consensus += 1.05
+                core_supports.append("球队反向Agent")
+                support_agents.append("球队反向Agent")
+                reasons.append(f"{team_view.get('coverage')}给反向结果{team_candidate:.1%}")
+            elif team_primary >= team_candidate + 0.18:
+                consensus -= 0.55
+                oppose_agents.append("球队反向Agent")
+
+        candidate_mass = float(outcome_mass.get(candidate_key) or 0)
+        primary_mass = float(outcome_mass.get(primary_key) or 0)
+        if candidate_mass >= 0.27 and primary_mass - candidate_mass <= 0.16:
+            consensus += 0.85
+            core_supports.append("比分反转Agent")
+            support_agents.append("比分反转Agent")
+            reasons.append(f"比分矩阵反向结果质量{candidate_mass:.1%}")
+        elif primary_mass - candidate_mass >= 0.30:
+            consensus -= 0.45
+            oppose_agents.append("比分反转Agent")
+
+        if favorite_hit <= 0.52 and primary_key == favorite_key:
+            consensus += 0.55
+            support_agents.append("联赛反热门Agent")
+        if volatile:
+            consensus += 0.35
+            support_agents.append("赛制波动Agent")
+        core_count = len(set(core_supports))
+        candidates.append({
+            "key": candidate_key, "score": consensus, "core": core_count,
+            "support": list(dict.fromkeys(support_agents)), "oppose": list(dict.fromkeys(oppose_agents)),
+            "reasons": reasons,
+        })
+
+    best = max(candidates, key=lambda item: item["score"], default={"key": second_key, "score": 0.0, "core": 0, "support": [], "oppose": [], "reasons": []})
+    bold = bool(best["core"] >= 2 and best["score"] >= 2.15 and cold >= 0.56 and float(probs[best["key"]]) >= 0.22)
+    level = "bold" if bold else ("watch" if best["score"] >= 1.15 else "none")
+    verdict = f"冷门主判：{OUTCOME_LABELS[best['key']]}" if bold else (f"冷门观察：{OUTCOME_LABELS[best['key']]}" if level == "watch" else "维持基础主线")
+    if row.get("suppress_draw_primary"):
+        best["reasons"] = ["全场次圆桌横向比较后，本场平局证据降为观察", *best["reasons"]]
+    return {
+        "bold": bold, "level": level, "verdict": verdict,
+        "pickKey": best["key"] if bold else primary_key, "marketPrimaryKey": primary_key, "candidateKey": best["key"],
+        "coreSupports": best["core"], "supportAgents": best["support"], "opposeAgents": best["oppose"],
+        "consensusScore": round(float(best["score"]), 2),
+        "confidence": round(clamp(48 + float(best["score"]) * 5 + int(best["core"]) * 2, 48, 64)),
+        "reasons": best["reasons"][:5], "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识",
+    }
 
 
 def local_draw_roundtable(
@@ -865,6 +1142,15 @@ def local_draw_roundtable(
         elif team_draw <= 0.20:
             consensus_score -= 0.9
             oppose_agents.append("球队状态Agent")
+    elif home_sample + away_sample >= 4 and home_profile and away_profile:
+        home_draw = float(home_profile.get("homeDrawRate") or home_profile.get("drawRate") or 0)
+        away_draw = float(away_profile.get("awayDrawRate") or away_profile.get("drawRate") or 0)
+        team_draw = (home_draw + away_draw) / 2
+        if team_draw >= 0.42:
+            consensus_score += 0.65
+            core_supports.append("球队状态Agent")
+            support_agents.append("球队状态Agent")
+            reasons.append(f"小样本主客场胶着率{team_draw:.1%}，降权后仍支持平局")
 
     draw_mass = float(score_context.get("drawMass") or 0)
     expected_total = float(score_context.get("expectedTotal") or 0)
@@ -989,6 +1275,7 @@ def build_customer_summary(
     draw_defense: dict[str, Any],
     cold_risk: float,
     score_context: dict[str, Any],
+    upset_roundtable: dict[str, Any],
 ) -> dict[str, Any]:
     home_info = intelligence.get("home") or {}
     away_info = intelligence.get("away") or {}
@@ -1002,7 +1289,7 @@ def build_customer_summary(
     cold_line = "、".join(item["score"] for item in cold_scores)
     narrative = build_local_summary_narrative(
         row, probs, profile, primary, secondary_direction, cover, confidence, over_under, score_line,
-        intelligence, draw_defense, cold_risk, score_context,
+        intelligence, draw_defense, cold_risk, score_context, upset_roundtable,
     )
     return {
         "headline": narrative["headline"],
@@ -1014,6 +1301,7 @@ def build_customer_summary(
         "mainScores": score_line,
         "coldScores": cold_line,
         "probabilityLine": f"主胜{probs['home']:.1%} · 平局{probs['draw']:.1%} · 客胜{probs['away']:.1%}",
+        "decisionMode": "deep-cold" if upset_roundtable.get("level") == "deep" else ("bold-cold" if upset_roundtable.get("bold") else "base"),
         "analysis": narrative["text"],
     }
 
@@ -1032,12 +1320,15 @@ def build_local_summary_narrative(
     draw_roundtable: dict[str, Any],
     cold_risk: float,
     score_context: dict[str, Any],
+    upset_roundtable: dict[str, Any],
 ) -> dict[str, str]:
     key = f"{row.get('home')}|{row.get('away')}|{row.get('match_time')}"
     variant = sum(ord(char) for char in key) % 3
     ranked = sorted(probs, key=probs.get, reverse=True)
     gap = probs[ranked[0]] - probs[ranked[1]]
     primary_prob = probs[ranked[0]]
+    bold_pick = bool(upset_roundtable.get("bold"))
+    market_primary = OUTCOME_LABELS.get(str(upset_roundtable.get("marketPrimaryKey")), OUTCOME_LABELS[ranked[0]])
     home = str(row.get("home") or "主队")
     away = str(row.get("away") or "客队")
     match_name = f"{home}对{away}"
@@ -1047,7 +1338,13 @@ def build_local_summary_narrative(
         direction_read = "客队的有效进攻和抗压结构更占优，主队的主场身份不足以单独扭转判断"
     else:
         direction_read = "双方都缺少持续拉开差距的证据，比赛更可能在反复试探中维持均衡"
-    if gap <= 0.08:
+    if bold_pick:
+        openings = [
+            f"这场不跟低赔走。基础概率仍把{market_primary}放在前面，但本地冷门圆桌最终把主判改成{primary}，这是主动观点，不是模糊防守。",
+            f"先把态度亮出来：{match_name}选择{primary}作为最终立场。赔率第一顺位是{market_primary}，但它没有拿到圆桌否决权。",
+            f"这场允许冷门席真正拍板。系统承认{market_primary}是市场热门，同时认为{primary}的赛制、结构和反转证据更值得冒险。",
+        ]
+    elif gap <= 0.08:
         openings = [
             f"先把结论摆出来：{match_name}并不是一眼能定性的比赛，几个方向贴得很近。{direction_read}。",
             f"{match_name}属于典型拉扯局，难点不是找赔率最低的一方，而是分辨哪种比赛脚本更容易落地。{direction_read}。",
@@ -1070,7 +1367,20 @@ def build_local_summary_narrative(
     oppose_agents = draw_roundtable.get("opposeAgents") or []
     support = "、".join(support_agents) or "暂无明确支持席"
     oppose = "、".join(oppose_agents)
-    if draw_roundtable.get("cover"):
+    upset_support = "、".join(upset_roundtable.get("supportAgents") or []) or "暂无明确支持席"
+    upset_oppose = "、".join(upset_roundtable.get("opposeAgents") or []) or "没有形成强反对席"
+    upset_text = ""
+    if bold_pick:
+        upset_text = (
+            f"冷门主张得到{upset_roundtable.get('coreSupports', 0)}个核心席支持，支持方为{upset_support}；"
+            f"反对方为{upset_oppose}。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。"
+        )
+    if bold_pick and primary == "平局":
+        draw_text = (
+            f"平局不再只是“防一下”，而是从风险层升为最终主判。基础平局概率{probs['draw']:.1%}，"
+            f"但{upset_roundtable.get('coreSupports', 0)}个核心席认为热门优势不足以兑现。"
+        )
+    elif draw_roundtable.get("cover"):
         opposition_clause = f"反对方为{oppose}，但票数和证据不足以推翻保护。" if oppose else "圆桌没有出现足以否决防平的核心反对票。"
         draw_text = (
             f"圆桌在平局问题上不是顺着平赔走：{draw_roundtable.get('coreSupports', 0)}个本地核心席位给出独立支持，"
@@ -1104,7 +1414,11 @@ def build_local_summary_narrative(
         intelligence_text = f"阵容层面，{intelligence_text}；临场还要盯住：{news[0].get('title', '')}。"
     else:
         intelligence_text = f"阵容层面，{intelligence_text}；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
-    if draw_roundtable.get("cover"):
+    if bold_pick and upset_roundtable.get("level") == "deep":
+        headlines = [f"深冷立场：{primary}，主动反对{market_primary}热门", f"不跟极端低赔，圆桌主判{primary}", f"资格赛深冷：{primary}获得最终表决权"]
+    elif bold_pick:
+        headlines = [f"冷门立场：{primary}升为最终主判", f"圆桌推翻{market_primary}，选择{primary}", f"这场不走正路，最终观点是{primary}"]
+    elif draw_roundtable.get("cover"):
         headlines = [f"{primary}是主线，平局经圆桌表决进入保护", f"方向看{primary}，平局保护有独立证据", f"主线落在{primary}，防平不是跟随平赔"]
     elif cold_risk >= 0.58 and secondary != "平局":
         headlines = [f"{primary}暂居上风，真正防线放在{secondary}", f"主选{primary}，第二风险不是平局而是{secondary}", f"圆桌选择{primary}，防冷重点转向{secondary}"]
@@ -1114,7 +1428,11 @@ def build_local_summary_narrative(
         headlines = [f"{primary}优势清楚，平局未获圆桌共识", f"圆桌明确选择{primary}，不机械附加平局", f"主线清晰指向{primary}，防平证据不足"]
     else:
         headlines = [f"圆桌偏向{primary}，保留临场复核", f"第一顺位是{primary}，风险线另行处理", f"综合证据更支持{primary}，仍需临场确认"]
-    return {"headline": headlines[variant], "text": "\n".join((openings[variant], draw_text, pace_text, intelligence_text))}
+    paragraphs = [openings[variant]]
+    if upset_text:
+        paragraphs.append(upset_text)
+    paragraphs.extend((draw_text, pace_text, intelligence_text))
+    return {"headline": headlines[variant], "text": "\n".join(paragraphs)}
 
 
 def generate_scores(probs: dict[str, float], profile: dict[str, Any], primary: str, upset: str, cold: float,
@@ -1191,12 +1509,18 @@ def build_score_model_context(
     home_lambda = clamp(total / 2 + 0.16 + edge, 0.25, 3.6)
     away_lambda = clamp(total - home_lambda, 0.20, 3.2)
     expected_total = home_lambda + away_lambda
-    draw_mass = sum(poisson(goals, home_lambda) * poisson(goals, away_lambda) for goals in range(6))
+    outcome_mass = {"home": 0.0, "draw": 0.0, "away": 0.0}
+    for home_goals in range(6):
+        for away_goals in range(6):
+            outcome = "home" if home_goals > away_goals else ("away" if home_goals < away_goals else "draw")
+            outcome_mass[outcome] += poisson(home_goals, home_lambda) * poisson(away_goals, away_lambda)
+    draw_mass = outcome_mass["draw"]
     return {
         "homeLambda": home_lambda,
         "awayLambda": away_lambda,
         "expectedTotal": expected_total,
         "drawMass": draw_mass,
+        "outcomeMass": outcome_mass,
         "openGame": expected_total >= 2.72 or over_rate >= 0.61,
     }
 
@@ -1240,32 +1564,55 @@ def update_analysis_archive(
     archive = {str(item.get("id")): dict(item) for item in old_archive if item.get("id")}
     for match in matches:
         conclusion = match.get("conclusion") or {}
-        archive[str(match.get("id"))] = {
-            "id": str(match.get("id")),
+        match_id = str(match.get("id"))
+        duplicate_id = next(
+            (
+                item_id for item_id, item in archive.items()
+                if str(item.get("date") or "")[:10] == str(match.get("date") or "")[:10]
+                and str(item.get("round") or "") == str(match.get("round") or "")
+                and normalize_team(item.get("home")) == normalize_team(match.get("home"))
+                and normalize_team(item.get("away")) == normalize_team(match.get("away"))
+            ),
+            None,
+        )
+        match_is_provisional = bool(re.fullmatch(r"500-周.\d{3}", match_id))
+        duplicate_is_provisional = bool(duplicate_id and re.fullmatch(r"500-周.\d{3}", duplicate_id))
+        archive_id = duplicate_id if duplicate_id and match_is_provisional and not duplicate_is_provisional else match_id
+        previous = archive.get(archive_id) or (archive.get(duplicate_id) if duplicate_id else {}) or {}
+        if duplicate_id and duplicate_id != archive_id:
+            archive.pop(duplicate_id, None)
+        archive[archive_id] = {
+            "id": archive_id,
             "date": match.get("date"),
             "round": match.get("round"),
             "league": match.get("league"),
             "home": match.get("home"),
             "away": match.get("away"),
             "predictedPrimary": conclusion.get("primary"),
+            "marketPrimary": conclusion.get("marketPrimary"),
+            "decisionMode": conclusion.get("decisionMode") or "base",
             "cover": conclusion.get("cover"),
             "confidence": conclusion.get("confidence"),
             "bestScores": conclusion.get("bestScores") or [],
             "coldScores": conclusion.get("coldScores") or [],
             "overUnder": conclusion.get("overUnder"),
             "upsetScore": (match.get("upset") or {}).get("score"),
+            "upsetRoundtable": (match.get("upset") or {}).get("roundtable") or {},
             "customerSummary": conclusion.get("customerSummary") or {},
-            "createdAt": (archive.get(str(match.get("id"))) or {}).get("createdAt") or now_iso(),
+            "createdAt": previous.get("createdAt") or now_iso(),
             "updatedAt": now_iso(),
-            "finalScore": (archive.get(str(match.get("id"))) or {}).get("finalScore") or "",
-            "actualOutcome": (archive.get(str(match.get("id"))) or {}).get("actualOutcome") or "",
-            "directionHit": (archive.get(str(match.get("id"))) or {}).get("directionHit"),
+            "finalScore": previous.get("finalScore") or "",
+            "actualOutcome": previous.get("actualOutcome") or "",
+            "directionHit": previous.get("directionHit"),
         }
 
     finished_by_teams: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    finished_by_round: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in history:
         key = f"{normalize_team(row.get('home'))}|{normalize_team(row.get('away'))}"
         finished_by_teams[key].append(row)
+        if row.get("round"):
+            finished_by_round[str(row.get("round"))].append(row)
     cutoff = date.today() - timedelta(days=max(30, retention_days))
     output: list[dict[str, Any]] = []
     for item in archive.values():
@@ -1277,6 +1624,11 @@ def update_analysis_archive(
             continue
         key = f"{normalize_team(item.get('home'))}|{normalize_team(item.get('away'))}"
         candidates = finished_by_teams.get(key) or []
+        if not candidates and item.get("round"):
+            candidates = [
+                row for row in finished_by_round.get(str(item.get("round"))) or []
+                if canonical_league(row.get("league")) == canonical_league(item.get("league"))
+            ]
         result = min(
             candidates,
             key=lambda row: abs((safe_date(str(row.get("date") or "")) - match_date).days),
