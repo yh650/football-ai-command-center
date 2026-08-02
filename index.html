@@ -797,6 +797,9 @@
     const PRODUCT_NAME = "AI足球赛事研判指挥舱 HTML授权版";
     const SECRET = "football-ai-html-command-center-license-2026-v1";
     const STORAGE_KEY = "football_ai_html_license_v1";
+    const DEVICE_CODE_KEY = "football_ai_device_code_v2";
+    const LICENSE_DB_NAME = "football_ai_license_store_v1";
+    const LICENSE_DB_STORE = "values";
     const MANUAL_STORAGE_KEY = "football_ai_manual_matches_v1";
     const FIXTURE_CATALOG_CACHE_KEY = "football_ai_fixture_catalog_v1";
     const FALLBACK_DATA = {
@@ -869,6 +872,7 @@
       state.authorized = auth.ok;
       state.demo = Boolean(auth.demo);
       renderAuth(auth);
+      if (auth.ok) requestPersistentStorage();
       if (!auth.ok && !auth.demo) $("licenseLayer").classList.remove("hidden");
       await loadData();
       if (state.demo) {
@@ -1371,6 +1375,106 @@
       } catch (error) {
         // Storage quota or privacy mode: the live page still remains usable.
       }
+    }
+
+    async function readDurableValue(key) {
+      try {
+        const localValue = localStorage.getItem(key);
+        if (localValue) {
+          writeIndexedValue(key, localValue);
+          return localValue;
+        }
+      } catch (error) {
+        // IndexedDB remains available when localStorage is restricted.
+      }
+      const indexedValue = await readIndexedValue(key);
+      if (!indexedValue) return "";
+      try {
+        localStorage.setItem(key, indexedValue);
+      } catch (error) {
+        // The IndexedDB copy is sufficient for later recovery.
+      }
+      return indexedValue;
+    }
+
+    async function writeDurableValue(key, value) {
+      try {
+        localStorage.setItem(key, String(value));
+      } catch (error) {
+        // Continue with the IndexedDB backup.
+      }
+      await writeIndexedValue(key, String(value));
+    }
+
+    function openLicenseDb() {
+      return new Promise(resolve => {
+        if (!("indexedDB" in window)) {
+          resolve(null);
+          return;
+        }
+        let settled = false;
+        const finish = (db) => {
+          if (settled) {
+            if (db) db.close();
+            return;
+          }
+          settled = true;
+          resolve(db);
+        };
+        try {
+          const request = indexedDB.open(LICENSE_DB_NAME, 1);
+          request.onupgradeneeded = () => {
+            if (!request.result.objectStoreNames.contains(LICENSE_DB_STORE)) {
+              request.result.createObjectStore(LICENSE_DB_STORE);
+            }
+          };
+          request.onsuccess = () => finish(request.result);
+          request.onerror = () => finish(null);
+          request.onblocked = () => finish(null);
+        } catch (error) {
+          finish(null);
+        }
+      });
+    }
+
+    async function readIndexedValue(key) {
+      const db = await openLicenseDb();
+      if (!db) return "";
+      return new Promise(resolve => {
+        try {
+          const transaction = db.transaction(LICENSE_DB_STORE, "readonly");
+          const request = transaction.objectStore(LICENSE_DB_STORE).get(key);
+          request.onsuccess = () => resolve(typeof request.result === "string" ? request.result : "");
+          request.onerror = () => resolve("");
+          transaction.oncomplete = () => db.close();
+          transaction.onabort = () => { db.close(); resolve(""); };
+        } catch (error) {
+          db.close();
+          resolve("");
+        }
+      });
+    }
+
+    async function writeIndexedValue(key, value) {
+      const db = await openLicenseDb();
+      if (!db) return;
+      await new Promise(resolve => {
+        try {
+          const transaction = db.transaction(LICENSE_DB_STORE, "readwrite");
+          transaction.objectStore(LICENSE_DB_STORE).put(String(value), key);
+          transaction.oncomplete = resolve;
+          transaction.onerror = resolve;
+          transaction.onabort = resolve;
+        } catch (error) {
+          resolve();
+        }
+      });
+      db.close();
+    }
+
+    function requestPersistentStorage() {
+      if (!navigator.storage?.persist) return;
+      navigator.storage.persist().catch(() => {});
     }
 
     function registerOfflineSupport() {
@@ -1987,7 +2091,9 @@
       const activatedAt = new Date();
       const expiresAt = result.days ? new Date(activatedAt.getTime() + result.days * 86400000).toISOString() : "";
       const payload = { license: result.normalized, machineCode: state.deviceCode, activatedAt: activatedAt.toISOString(), expiresAt, days: result.days || null };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      await writeDurableValue(DEVICE_CODE_KEY, state.deviceCode);
+      await writeDurableValue(STORAGE_KEY, JSON.stringify(payload));
+      requestPersistentStorage();
       state.authorized = true;
       state.demo = false;
       renderAuth({ ok: true, message: result.days ? `${result.days}天授权` : "永久授权" });
@@ -2005,14 +2111,21 @@
     }
 
     async function readActivation() {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw = await readDurableValue(STORAGE_KEY);
       if (!raw) return { ok: false, message: "未激活" };
       try {
         const payload = JSON.parse(raw);
-        if (payload.machineCode !== state.deviceCode) return { ok: false, message: "设备码变化，需要重新激活" };
-        const result = await validateLicense(payload.license, state.deviceCode);
+        const licensedMachine = normalizeMachine(payload.machineCode);
+        if (!licensedMachine) return { ok: false, message: "激活信息缺少设备码" };
+        const result = await validateLicense(payload.license, licensedMachine);
         if (!result.ok) return result;
         if (payload.expiresAt && new Date() >= new Date(payload.expiresAt)) return { ok: false, message: "授权已到期" };
+        if (state.deviceCode !== licensedMachine) {
+          state.deviceCode = licensedMachine;
+          $("deviceCode").textContent = licensedMachine;
+        }
+        await writeDurableValue(DEVICE_CODE_KEY, licensedMachine);
+        await writeDurableValue(STORAGE_KEY, JSON.stringify({...payload, machineCode: licensedMachine}));
         return { ok: true, message: payload.expiresAt ? `有效至 ${formatDate(payload.expiresAt)}` : "永久授权" };
       } catch (error) {
         return { ok: false, message: "激活信息损坏" };
@@ -2054,7 +2167,24 @@
     }
 
     async function getDeviceCode() {
-      const raw = [
+      const savedCode = normalizeMachine(await readDurableValue(DEVICE_CODE_KEY));
+      if (savedCode) return savedCode;
+
+      const activationRaw = await readDurableValue(STORAGE_KEY);
+      if (activationRaw) {
+        try {
+          const activation = JSON.parse(activationRaw);
+          const legacyCode = normalizeMachine(activation.machineCode);
+          if (legacyCode) {
+            await writeDurableValue(DEVICE_CODE_KEY, legacyCode);
+            return legacyCode;
+          }
+        } catch (error) {
+          // A damaged activation cannot provide a migration code.
+        }
+      }
+
+      const legacySeed = [
         navigator.userAgent,
         navigator.language,
         screen.width,
@@ -2062,8 +2192,10 @@
         screen.colorDepth,
         Intl.DateTimeFormat().resolvedOptions().timeZone || ""
       ].join("|");
-      const digest = sha256Hex(utf8Bytes(raw)).toUpperCase().slice(0, 20);
-      return `FAI-${chunk(digest, 4)}`;
+      const digest = sha256Hex(utf8Bytes(legacySeed)).toUpperCase().slice(0, 20);
+      const code = `FAI-${chunk(digest, 4)}`;
+      await writeDurableValue(DEVICE_CODE_KEY, code);
+      return code;
     }
 
     function normalizeMachine(value) {

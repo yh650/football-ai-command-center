@@ -1,10 +1,11 @@
-const CACHE_NAME = "football-ai-command-center-v5";
+const CACHE_NAME = "football-ai-command-center-v6";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./data/matches.json",
   "./data/analysis_archive.json",
   "./data/jc_history.json",
+  "./data/fixture_catalog.json",
   "./使用说明.txt",
   "./免责声明.txt"
 ];
