@@ -2,7 +2,7 @@
   "meta": {
     "product": "AI足球赛事研判指挥舱 HTML授权版",
     "modelName": "Local AI 5.5",
-    "generatedAt": "2026-08-12T03:17:45+08:00",
+    "generatedAt": "2026-08-12T05:02:26+08:00",
     "source": "500彩票网竞彩日常更新 + Interwetten五年历史画像",
     "matchCount": 4,
     "baseHistorySample": 21138,
@@ -14,7 +14,7 @@
       "status": "success",
       "historyRows": 5187,
       "warnings": [
-        "4场实时情报使用保留或降级数据：巴黎圣曼vs维拉、帕梅拉斯vs波特诺、普拉滕斯vs科金博联、弗鲁米嫩vs里瓦达维亚独立",
+        "4场实时情报使用保留或降级数据：普拉滕斯vs科金博联、巴黎圣曼vs维拉、帕梅拉斯vs波特诺、弗鲁米嫩vs里瓦达维亚独立",
         "500完整赛事目录更新失败，已保留上一版：<urlopen error [Errno 111] Connection refused>"
       ]
     },
@@ -14727,15 +14727,15 @@
         {
           "name": "变盘锁定Agent",
           "status": "已执行",
-          "signal": "稳定：主胜",
-          "score": 86,
-          "view": "最新赔率复核后仍维持主胜，方向未发生改判。"
+          "signal": "临场锁定：主胜",
+          "score": 100,
+          "view": "最新赔率复核后仍维持主胜，方向未发生改判。 已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
         }
       ],
       "analysisTracking": {
-        "status": "steady",
+        "status": "locked",
         "firstSeenAt": "2026-08-11T15:34:03+08:00",
-        "updatedAt": "2026-08-12T03:17:45+08:00",
+        "updatedAt": "2026-08-12T05:02:26+08:00",
         "initialOdds": {
           "home": 1.51,
           "draw": 3.4,
@@ -14773,8 +14773,8 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-12T03:17:45+08:00",
-          "stage": "latest",
+          "at": "2026-08-12T05:02:26+08:00",
+          "stage": "locked",
           "odds": {
             "home": 1.57,
             "draw": 3.25,
@@ -14801,11 +14801,41 @@
           "overUnder": "小2.5球倾向",
           "upsetScore": 0.454496611944397,
           "accepted": true,
-          "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
+          "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
         },
-        "locked": false,
-        "lockedAt": "",
-        "lockedSnapshot": null,
+        "locked": true,
+        "lockedAt": "2026-08-12T05:02:26+08:00",
+        "lockedSnapshot": {
+          "at": "2026-08-12T05:02:26+08:00",
+          "stage": "locked",
+          "odds": {
+            "home": 1.57,
+            "draw": 3.25,
+            "away": 5.4
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜",
+          "confidence": 76,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "1-0",
+              "probability": 0.2088,
+              "script": "主方向脚本"
+            },
+            {
+              "score": "2-0",
+              "probability": 0.177,
+              "script": "主方向脚本"
+            }
+          ],
+          "coldScores": [],
+          "overUnder": "小2.5球倾向",
+          "upsetScore": 0.454496611944397,
+          "accepted": true,
+          "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
+        },
         "decisionAnchor": {
           "at": "2026-08-11T15:34:03+08:00",
           "primary": "主胜",
@@ -14828,7 +14858,7 @@
           "oddsThreshold": 0.1,
           "impliedThreshold": 0.025,
           "requiredCoreSupports": 2,
-          "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
+          "reason": "最新赔率复核后仍维持主胜，方向未发生改判。 已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
         },
         "snapshots": [
           {
@@ -14923,6 +14953,37 @@
             "upsetScore": 0.454496611944397,
             "accepted": true,
             "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
+          },
+          {
+            "at": "2026-08-12T05:02:26+08:00",
+            "stage": "locked",
+            "odds": {
+              "home": 1.57,
+              "draw": 3.25,
+              "away": 5.4
+            },
+            "primary": "主胜",
+            "candidatePrimary": "主胜",
+            "cover": "主胜",
+            "confidence": 76,
+            "decisionMode": "base",
+            "bestScores": [
+              {
+                "score": "1-0",
+                "probability": 0.2088,
+                "script": "主方向脚本"
+              },
+              {
+                "score": "2-0",
+                "probability": 0.177,
+                "script": "主方向脚本"
+              }
+            ],
+            "coldScores": [],
+            "overUnder": "小2.5球倾向",
+            "upsetScore": 0.454496611944397,
+            "accepted": true,
+            "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
           }
         ]
       }
@@ -15258,7 +15319,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-11T15:34:03+08:00",
-        "updatedAt": "2026-08-12T03:17:45+08:00",
+        "updatedAt": "2026-08-12T05:02:26+08:00",
         "initialOdds": {
           "home": 1.6,
           "draw": 3.58,
@@ -15307,7 +15368,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-12T03:17:45+08:00",
+          "at": "2026-08-12T05:02:26+08:00",
           "stage": "latest",
           "odds": {
             "home": 1.6,
@@ -15741,7 +15802,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-11T15:34:03+08:00",
-        "updatedAt": "2026-08-12T03:17:45+08:00",
+        "updatedAt": "2026-08-12T05:02:26+08:00",
         "initialOdds": {
           "home": 1.74,
           "draw": 3.05,
@@ -15779,7 +15840,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-12T03:17:45+08:00",
+          "at": "2026-08-12T05:02:26+08:00",
           "stage": "latest",
           "odds": {
             "home": 1.74,
@@ -16194,7 +16255,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-11T15:34:03+08:00",
-        "updatedAt": "2026-08-12T03:17:45+08:00",
+        "updatedAt": "2026-08-12T05:02:26+08:00",
         "initialOdds": {
           "home": 1.19,
           "draw": 5.1,
@@ -16232,7 +16293,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-12T03:17:45+08:00",
+          "at": "2026-08-12T05:02:26+08:00",
           "stage": "latest",
           "odds": {
             "home": 1.19,
