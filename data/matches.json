@@ -2,7 +2,7 @@
   "meta": {
     "product": "AI足球赛事研判指挥舱 HTML授权版",
     "modelName": "Local AI 5.5",
-    "generatedAt": "2026-08-12T23:12:54+08:00",
+    "generatedAt": "2026-08-13T01:10:58+08:00",
     "source": "500彩票网竞彩日常更新 + Interwetten五年历史画像",
     "matchCount": 7,
     "baseHistorySample": 21138,
@@ -13,10 +13,7 @@
     "dailyUpdate": {
       "status": "success",
       "historyRows": 5196,
-      "warnings": [
-        "7场实时情报使用保留或降级数据：艾卜哈vs拉斯决心、帕梅拉斯vs波特诺、普拉滕斯vs科金博联、巴黎圣曼vs维拉",
-        "500完整赛事目录更新失败，已保留上一版：<urlopen error [Errno 111] Connection refused>"
-      ]
+      "warnings": []
     },
     "compliance": "仅提供体育数据分析、赛前研究与内容创作参考；不涉及赌博，不提供下注服务，不承诺结果。"
   },
@@ -14459,7 +14456,7 @@
         },
         "shape": "1.6/3.48/4.6",
         "movement": "主胜不变 · 平局降0.10 · 客胜升0.15",
-        "movementCombo": "相对初始：主胜不变 · 平局降0.10 · 客胜升0.15；较上次：主胜升0.04 · 平局降0.12 · 客胜降0.15",
+        "movementCombo": "相对初始：主胜不变 · 平局降0.10 · 客胜升0.15；较上次：主胜不变 · 平局不变 · 客胜不变",
         "favorite": "主胜",
         "favoriteOdds": 1.6,
         "favoriteChange": "不变",
@@ -14469,9 +14466,9 @@
         "dropSide": "平局",
         "dropBucket": "降0.10",
         "previous": {
-          "home": 1.56,
-          "draw": 3.6,
-          "away": 4.75
+          "home": 1.6,
+          "draw": 3.48,
+          "away": 4.6
         },
         "deltaFromInitial": {
           "home": 0.0,
@@ -14479,9 +14476,9 @@
           "away": 0.15
         },
         "deltaFromPrevious": {
-          "home": 0.04,
-          "draw": -0.12,
-          "away": -0.15
+          "home": 0.0,
+          "draw": 0.0,
+          "away": 0.0
         },
         "movementMagnitude": 0.15
       },
@@ -14513,39 +14510,162 @@
         "teamProbabilities": {}
       },
       "intelligence": {
-        "status": "limited",
-        "lineupStatus": "暂无预计阵容",
-        "newsStatus": "实时新闻待补充",
-        "fetchedAt": "2026-08-11T15:34:03+08:00",
-        "source": "500赛事数据页",
+        "status": "updated",
+        "lineupStatus": "500预计阵容",
+        "newsStatus": "近21天新闻4条",
+        "fetchedAt": "2026-08-13T01:10:50+08:00",
+        "source": "500赛事数据页 + Bing News RSS",
         "sourceUrl": "https://odds.500.com/fenxi/shuju-1413295.shtml",
+        "newsQuery": "\"Paris Saint Germain\" vs \"Aston Villa\" team news injuries lineups",
         "home": {
           "team": "巴黎圣曼",
-          "englishName": "",
+          "englishName": "Paris Saint Germain",
           "formation": "",
-          "starters": [],
-          "bench": [],
+          "starters": [
+            "科维查·克瓦拉茨赫利亚(前锋)",
+            "亚当·阿亚里(前锋)",
+            "易卜拉欣·姆巴耶(前锋)",
+            "德罗·费尔南德斯(中场)",
+            "卢卡斯·贝拉尔多(中场)",
+            "森尼·马尤鲁(中场)",
+            "阿克塞尔·库卡巴(后卫)",
+            "威廉·帕乔(后卫)",
+            "伊利亚·扎巴尔尼(后卫)",
+            "戴维·博利(后卫)",
+            "马特维·萨福诺夫(守门员)"
+          ],
+          "bench": [
+            "维蒂尼亚(中场)",
+            "保罗·布尔丹(中场)",
+            "拉亚(中场)",
+            "卢卡·舍瓦利耶(守门员)",
+            "亚利桑德罗·隆戈尼(守门员)",
+            "迪米特里·卢西亚(后卫)",
+            "马尔基尼奥斯(后卫)",
+            "马马杜·梅特(前锋)",
+            "努诺·门德斯(后卫)",
+            "昆汀·恩詹图(前锋)",
+            "若昂·内维斯(中场)",
+            "范妮·德拉梅(中场)",
+            "尤内斯·伊德尔(中场)"
+          ],
           "injuries": [],
           "suspensions": [],
-          "news": [],
+          "news": [
+            {
+              "title": "PSG vs Aston Villa: UEFA Super Cup – prediction, lineups, teams",
+              "description": "The traditional curtain raiser for Europe's football league season pits Paris Saint-Germain against Aston Villa.",
+              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.aljazeera.com%2fsports%2f2026%2f8%2f11%2fpsg-vs-aston-villa-uefa-super-cup-teams-start-lineups&c=472964614604795651&mkt=es-cl",
+              "publishedAt": "2026-08-11T17:55+08:00",
+              "source": "Al Jazeera"
+            },
+            {
+              "title": "Paris Saint-Germain vs Aston Villa: Where to watch, line-ups, stats and preview for UEFA Super Cup",
+              "description": "PSG arrive in Austria as favourites after another hugely successful campaign. The French champions defended their Champions League crown by overcoming Arsenal on penalties in last season’s final and ...",
+              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.101greatgoals.com%2fmatch-previews%2fparis-saint-germain-vs-aston-villa-where-to-watch-line-ups-stats-preview-uefa-super-cup%2f&c=14227082142849021106&mkt=es-cl",
+              "publishedAt": "2026-08-12T08:46+08:00",
+              "source": "101 Great Goals"
+            },
+            {
+              "title": "PSG vs. Aston Villa Lineups & Confirmed Team News for UEFA Super Cup Final",
+              "description": "PSG vs. Aston Villa is the 2026 UEFA Super Cup Final and it will be played today, August 12, 2026 at the Red Bull Arena in Wals-Siezenheim, Austria. The Suepr Cup is between the current Champions ...",
+              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fathlonsports.com%2fsoccer%2fpsg-vs-aston-villa-lineups-confirmed-team-news-for-uefa-super-cup-final&c=3431120637503206358&mkt=es-cl",
+              "publishedAt": "2026-08-12T17:01+08:00",
+              "source": "Athlon Sports"
+            }
+          ],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
         },
         "away": {
           "team": "维拉",
-          "englishName": "",
+          "englishName": "Aston Villa",
           "formation": "",
-          "starters": [],
-          "bench": [],
+          "starters": [
+            "布莱恩·马德约(前锋)",
+            "埃文·盖桑(前锋)",
+            "埃米利亚诺·布恩迪亚(中场)",
+            "若昂·戈麦斯(中场)",
+            "布巴卡尔·卡马拉(中场)",
+            "乔治·海明斯(中场)",
+            "伊恩·马特森(后卫)",
+            "保·托雷斯(后卫)",
+            "维克托·林德洛夫(后卫)",
+            "马蒂·卡什(后卫)",
+            "马尔科·比佐特(守门员)"
+          ],
+          "bench": [
+            "西奥多·卡罗尔(后卫)",
+            "特里斯顿·罗(后卫)",
+            "科斯塔·内德尔科维奇(后卫)",
+            "泰隆·明斯(后卫)",
+            "卢卡·林奇(中场)",
+            "布拉德利·伯罗斯(中场)",
+            "拉马尔·博加德(中场)",
+            "欧文·阿塞莫塔(守门员)",
+            "詹姆斯·赖特(守门员)",
+            "塔米·亚伯拉罕(前锋)"
+          ],
           "injuries": [],
           "suspensions": [],
-          "news": [],
+          "news": [
+            {
+              "title": "PSG vs Aston Villa: UEFA Super Cup – prediction, lineups, teams",
+              "description": "The traditional curtain raiser for Europe's football league season pits Paris Saint-Germain against Aston Villa.",
+              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.aljazeera.com%2fsports%2f2026%2f8%2f11%2fpsg-vs-aston-villa-uefa-super-cup-teams-start-lineups&c=472964614604795651&mkt=es-cl",
+              "publishedAt": "2026-08-11T17:55+08:00",
+              "source": "Al Jazeera"
+            },
+            {
+              "title": "Paris Saint-Germain vs Aston Villa: Where to watch, line-ups, stats and preview for UEFA Super Cup",
+              "description": "PSG arrive in Austria as favourites after another hugely successful campaign. The French champions defended their Champions League crown by overcoming Arsenal on penalties in last season’s final and ...",
+              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.101greatgoals.com%2fmatch-previews%2fparis-saint-germain-vs-aston-villa-where-to-watch-line-ups-stats-preview-uefa-super-cup%2f&c=14227082142849021106&mkt=es-cl",
+              "publishedAt": "2026-08-12T08:46+08:00",
+              "source": "101 Great Goals"
+            },
+            {
+              "title": "PSG vs. Aston Villa Lineups & Confirmed Team News for UEFA Super Cup Final",
+              "description": "PSG vs. Aston Villa is the 2026 UEFA Super Cup Final and it will be played today, August 12, 2026 at the Red Bull Arena in Wals-Siezenheim, Austria. The Suepr Cup is between the current Champions ...",
+              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fathlonsports.com%2fsoccer%2fpsg-vs-aston-villa-lineups-confirmed-team-news-for-uefa-super-cup-final&c=3431120637503206358&mkt=es-cl",
+              "publishedAt": "2026-08-12T17:01+08:00",
+              "source": "Athlon Sports"
+            }
+          ],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
         },
-        "news": [],
-        "impactSummary": "暂无可量化阵容影响",
-        "error": "实时情报获取失败：<urlopen error [Errno 111] Connection refused>"
+        "news": [
+          {
+            "title": "PSG vs Aston Villa: UEFA Super Cup – prediction, lineups, teams",
+            "description": "The traditional curtain raiser for Europe's football league season pits Paris Saint-Germain against Aston Villa.",
+            "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.aljazeera.com%2fsports%2f2026%2f8%2f11%2fpsg-vs-aston-villa-uefa-super-cup-teams-start-lineups&c=472964614604795651&mkt=es-cl",
+            "publishedAt": "2026-08-11T17:55+08:00",
+            "source": "Al Jazeera"
+          },
+          {
+            "title": "Paris Saint-Germain vs Aston Villa: Where to watch, line-ups, stats and preview for UEFA Super Cup",
+            "description": "PSG arrive in Austria as favourites after another hugely successful campaign. The French champions defended their Champions League crown by overcoming Arsenal on penalties in last season’s final and ...",
+            "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.101greatgoals.com%2fmatch-previews%2fparis-saint-germain-vs-aston-villa-where-to-watch-line-ups-stats-preview-uefa-super-cup%2f&c=14227082142849021106&mkt=es-cl",
+            "publishedAt": "2026-08-12T08:46+08:00",
+            "source": "101 Great Goals"
+          },
+          {
+            "title": "PSG vs. Aston Villa Lineups & Confirmed Team News for UEFA Super Cup Final",
+            "description": "PSG vs. Aston Villa is the 2026 UEFA Super Cup Final and it will be played today, August 12, 2026 at the Red Bull Arena in Wals-Siezenheim, Austria. The Suepr Cup is between the current Champions ...",
+            "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fathlonsports.com%2fsoccer%2fpsg-vs-aston-villa-lineups-confirmed-team-news-for-uefa-super-cup-final&c=3431120637503206358&mkt=es-cl",
+            "publishedAt": "2026-08-12T17:01+08:00",
+            "source": "Athlon Sports"
+          },
+          {
+            "title": "Preview: Paris Saint-Germain vs Aston Villa - prediction, team news, lineups",
+            "description": "Sports Mole previews Wednesday's UEFA Super Cup clash between Paris Saint-Germain and Aston Villa, including predictions, team news and possible lineups.",
+            "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.sportsmole.co.uk%2ffootball%2fpsg%2fpreview%2fpsg-vs-aston-villa-prediction-team-news-lineups_602691.html&c=13880248488325832696&mkt=es-cl",
+            "publishedAt": "2026-08-10T16:47+08:00",
+            "source": "Sports Mole"
+          }
+        ],
+        "impactSummary": "主队阵容影响0%，客队阵容影响0%",
+        "error": ""
       },
       "intelligenceAdjustment": {
         "homeImpact": 0.0,
@@ -14669,7 +14789,7 @@
           "coldScores": "3-3、4-4",
           "probabilityLine": "主胜46.8% · 平局40.2% · 客胜13.1%",
           "decisionMode": "base",
-          "analysis": "巴黎圣曼对维拉属于典型拉扯局，难点不是找赔率最低的一方，而是分辨哪种比赛脚本更容易落地。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n本地圆桌认为平局有一定讨论价值，但只有1个核心席位支持，未达到正式防平门槛。支持方为概率模型Agent、联赛画像Agent，反对方为比分结构Agent，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像6场与Poisson比分矩阵把两个首选比分收敛到2-1、2-2；预期总进球3.05，对应大2.5球倾向。最终口径为主胜，防平局，信心59/100，爆冷压力约60.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "analysis": "巴黎圣曼对维拉属于典型拉扯局，难点不是找赔率最低的一方，而是分辨哪种比赛脚本更容易落地。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n本地圆桌认为平局有一定讨论价值，但只有1个核心席位支持，未达到正式防平门槛。支持方为概率模型Agent、联赛画像Agent，反对方为比分结构Agent，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像6场与Poisson比分矩阵把两个首选比分收敛到2-1、2-2；预期总进球3.05，对应大2.5球倾向。最终口径为主胜，防平局，信心59/100，爆冷压力约60.0%。\n阵容层面，主队阵容影响0%，客队阵容影响0%；临场还要盯住：PSG vs Aston Villa: UEFA Super Cup – prediction, lineups, teams。"
         },
         "riskNotice": "爆冷可能性中，当前执行防守方向为平局。"
       },
@@ -14691,16 +14811,16 @@
         {
           "name": "阵容伤停Agent",
           "status": "已执行",
-          "signal": "暂无预计阵容",
+          "signal": "500预计阵容",
           "score": 100,
-          "view": "主队：暂无明确伤停名单；客队：暂无明确伤停名单。阵容为预计状态，临场名单公布后需复核。"
+          "view": "主队：预计首发11人，500当前未列出明确伤停或停赛；客队：预计首发11人，500当前未列出明确伤停或停赛。阵容为预计状态，临场名单公布后需复核。"
         },
         {
           "name": "实时新闻Agent",
           "status": "已执行",
-          "signal": "实时新闻待补充",
-          "score": 48,
-          "view": "近21天未检索到可验证的阵容新闻，不编造球员消息。"
+          "signal": "近21天新闻4条",
+          "score": 78,
+          "view": "PSG vs Aston Villa: UEFA Super Cup – prediction, lineups, teams；Paris Saint-Germain vs Aston Villa: Where to watch, line-ups, stats and preview for UEFA Super Cup"
         },
         {
           "name": "联赛画像Agent",
@@ -14762,7 +14882,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-11T15:34:03+08:00",
-        "updatedAt": "2026-08-12T23:12:54+08:00",
+        "updatedAt": "2026-08-13T01:10:55+08:00",
         "initialOdds": {
           "home": 1.6,
           "draw": 3.58,
@@ -14811,7 +14931,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-12T23:12:54+08:00",
+          "at": "2026-08-13T01:10:55+08:00",
           "stage": "latest",
           "odds": {
             "home": 1.6,
@@ -15079,7 +15199,7 @@
         },
         "shape": "1.88/2.67/4.5",
         "movement": "主胜升0.14 · 平局降0.38 · 客胜升0.10",
-        "movementCombo": "相对初始：主胜升0.14 · 平局降0.38 · 客胜升0.10；较上次：主胜升0.07 · 平局降0.11 · 客胜降0.10",
+        "movementCombo": "相对初始：主胜升0.14 · 平局降0.38 · 客胜升0.10；较上次：主胜不变 · 平局不变 · 客胜不变",
         "favorite": "主胜",
         "favoriteOdds": 1.88,
         "favoriteChange": "升0.14",
@@ -15089,9 +15209,9 @@
         "dropSide": "平局",
         "dropBucket": "降0.38",
         "previous": {
-          "home": 1.81,
-          "draw": 2.78,
-          "away": 4.6
+          "home": 1.88,
+          "draw": 2.67,
+          "away": 4.5
         },
         "deltaFromInitial": {
           "home": 0.14,
@@ -15099,9 +15219,9 @@
           "away": 0.1
         },
         "deltaFromPrevious": {
-          "home": 0.07,
-          "draw": -0.11,
-          "away": -0.1
+          "home": 0.0,
+          "draw": 0.0,
+          "away": 0.0
         },
         "movementMagnitude": 0.38
       },
@@ -15137,39 +15257,87 @@
         }
       },
       "intelligence": {
-        "status": "limited",
-        "lineupStatus": "暂无预计阵容",
-        "newsStatus": "实时新闻待补充",
-        "fetchedAt": "2026-08-11T15:34:03+08:00",
-        "source": "500赛事数据页",
+        "status": "updated",
+        "lineupStatus": "500预计阵容",
+        "newsStatus": "近21天未检索到可靠新闻",
+        "fetchedAt": "2026-08-13T01:10:49+08:00",
+        "source": "500赛事数据页 + Bing News RSS",
         "sourceUrl": "https://odds.500.com/fenxi/shuju-1453759.shtml",
+        "newsQuery": "\"Club Atletico Platense\" vs \"Coquimbo Unido\" team news injuries lineups",
         "home": {
           "team": "普拉滕斯",
-          "englishName": "",
+          "englishName": "Club Atletico Platense",
           "formation": "",
-          "starters": [],
-          "bench": [],
+          "starters": [
+            "卢西亚诺·希门尼斯(前锋)",
+            "弗兰科·扎皮奥拉·亚马蒂诺(中场)",
+            "莱昂纳多·赫里迪亚(中场)",
+            "吉多·梅内罗(中场)",
+            "马丁·巴里奥斯(中场)",
+            "巴勃罗·费雷拉(中场)",
+            "托马斯·席尔瓦(后卫)",
+            "维克托·奎斯塔(后卫)",
+            "伊格纳西奥·巴斯克斯(后卫)",
+            "胡安·伊格纳西奥·萨博里多(后卫)",
+            "胡安·科扎尼(守门员)"
+          ],
+          "bench": [
+            "赫克托·博瓦迪利亚(前锋)",
+            "费利佩·布西奥(中场)",
+            "圣地亚戈·达尔马索(中场)",
+            "胡安·卡洛斯·高托(前锋)",
+            "奥古斯丁·拉各斯(后卫)",
+            "尼古拉斯·洛佩斯(前锋)",
+            "马特奥·门迪亚(后卫)",
+            "巴蒂斯塔·梅利尼(前锋)",
+            "圣地亚哥·亚历山大·奎罗斯(后卫)",
+            "尼古拉斯·苏马维尔(守门员)",
+            "加斯顿·托尼(前锋)",
+            "凯文·雷塔马尔(前锋)"
+          ],
           "injuries": [],
           "suspensions": [],
           "news": [],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
         },
         "away": {
           "team": "科金博联",
-          "englishName": "",
+          "englishName": "Coquimbo Unido",
           "formation": "",
-          "starters": [],
-          "bench": [],
+          "starters": [
+            "尼古拉斯·约翰森(前锋)",
+            "亚历杭德罗·亚佐卡尔(中场)",
+            "吉多·巴达拉(中场)",
+            "克里斯蒂安·扎瓦拉(中场)",
+            "塞巴斯蒂姆·加拉尼(中场)",
+            "亚历杭德罗·卡马乔(中场)",
+            "胡安·科内霍(后卫)",
+            "曼纽尔·费尔南德兹(后卫)",
+            "本杰明·加佐洛(后卫)",
+            "弗朗西斯科·萨利纳斯(后卫)",
+            "迭戈·桑切斯(守门员)"
+          ],
+          "bench": [
+            "巴勃罗·罗伯托·安德烈斯·罗德里格斯·萨尔加多(中场)",
+            "卢卡斯·普拉托(前锋)",
+            "法昆多·波恩(前锋)",
+            "埃尔维斯·埃尔南德斯(后卫)",
+            "冈萨罗·弗洛雷斯(守门员)",
+            "萨尔瓦多·科德罗(中场)",
+            "塞巴斯蒂安·卡夫雷拉(后卫)",
+            "本杰明·查迪亚(前锋)",
+            "卢卡斯·索扎(后卫)"
+          ],
           "injuries": [],
           "suspensions": [],
           "news": [],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
         },
         "news": [],
-        "impactSummary": "暂无可量化阵容影响",
-        "error": "实时情报获取失败：<urlopen error [Errno 111] Connection refused>"
+        "impactSummary": "主队阵容影响0%，客队阵容影响0%",
+        "error": ""
       },
       "intelligenceAdjustment": {
         "homeImpact": 0.0,
@@ -15279,7 +15447,7 @@
           "coldScores": "",
           "probabilityLine": "主胜48.3% · 平局30.9% · 客胜20.7%",
           "decisionMode": "bold-cold",
-          "analysis": "先把态度亮出来：普拉滕斯对科金博联选择平局作为最终立场。赔率第一顺位是主胜，但它没有拿到圆桌否决权。\n冷门主张得到2个核心席支持，支持方为概率模型Agent、比分结构Agent、赔率参考Agent；反对方为没有形成强反对席。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n平局不再只是“防一下”，而是从风险层升为最终主判。基础平局概率30.9%，但2个核心席认为热门优势不足以兑现。\n落到执行层，联赛历史画像271场与Poisson比分矩阵把两个首选比分收敛到0-0、1-0；预期总进球2.08，对应小2.5球倾向。最终口径为平局，防主胜，信心49/100，爆冷压力约66.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "analysis": "先把态度亮出来：普拉滕斯对科金博联选择平局作为最终立场。赔率第一顺位是主胜，但它没有拿到圆桌否决权。\n冷门主张得到2个核心席支持，支持方为概率模型Agent、比分结构Agent、赔率参考Agent；反对方为没有形成强反对席。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n平局不再只是“防一下”，而是从风险层升为最终主判。基础平局概率30.9%，但2个核心席认为热门优势不足以兑现。\n落到执行层，联赛历史画像271场与Poisson比分矩阵把两个首选比分收敛到0-0、1-0；预期总进球2.08，对应小2.5球倾向。最终口径为平局，防主胜，信心49/100，爆冷压力约66.0%。\n阵容层面，主队阵容影响0%，客队阵容影响0%；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
         "riskNotice": "本场主动选择平局作为冷门主判，原热门主胜只作反向防守。"
       },
@@ -15301,14 +15469,14 @@
         {
           "name": "阵容伤停Agent",
           "status": "已执行",
-          "signal": "暂无预计阵容",
+          "signal": "500预计阵容",
           "score": 100,
-          "view": "主队：暂无明确伤停名单；客队：暂无明确伤停名单。阵容为预计状态，临场名单公布后需复核。"
+          "view": "主队：预计首发11人，500当前未列出明确伤停或停赛；客队：预计首发11人，500当前未列出明确伤停或停赛。阵容为预计状态，临场名单公布后需复核。"
         },
         {
           "name": "实时新闻Agent",
           "status": "已执行",
-          "signal": "实时新闻待补充",
+          "signal": "近21天未检索到可靠新闻",
           "score": 48,
           "view": "近21天未检索到可验证的阵容新闻，不编造球员消息。"
         },
@@ -15372,7 +15540,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-11T15:34:03+08:00",
-        "updatedAt": "2026-08-12T23:12:54+08:00",
+        "updatedAt": "2026-08-13T01:10:55+08:00",
         "initialOdds": {
           "home": 1.74,
           "draw": 3.05,
@@ -15410,7 +15578,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-12T23:12:54+08:00",
+          "at": "2026-08-13T01:10:55+08:00",
           "stage": "latest",
           "odds": {
             "home": 1.88,
@@ -15677,39 +15845,149 @@
         "teamProbabilities": {}
       },
       "intelligence": {
-        "status": "limited",
-        "lineupStatus": "暂无预计阵容",
-        "newsStatus": "实时新闻待补充",
-        "fetchedAt": "2026-08-11T15:34:03+08:00",
-        "source": "500赛事数据页",
+        "status": "updated",
+        "lineupStatus": "500预计阵容",
+        "newsStatus": "近21天新闻3条",
+        "fetchedAt": "2026-08-13T01:10:49+08:00",
+        "source": "500赛事数据页 + Bing News RSS",
         "sourceUrl": "https://odds.500.com/fenxi/shuju-1453758.shtml",
+        "newsQuery": "\"Palmeiras\" vs \"Cerro Porteno\" team news injuries lineups",
         "home": {
           "team": "帕梅拉斯",
-          "englishName": "",
+          "englishName": "Palmeiras",
           "formation": "",
-          "starters": [],
-          "bench": [],
+          "starters": [
+            "拉蒙·索萨(前锋)",
+            "霍恩·阿里亚斯(中场)",
+            "毛里西奥·普拉多(中场)",
+            "华金·皮克雷(中场)",
+            "马龙·弗雷塔斯(中场)",
+            "安德烈亚斯·佩雷拉(中场)",
+            "阿兰·安德拉德·埃利亚斯(中场)",
+            "亚历山大·巴尔博扎(后卫)",
+            "穆里洛·塞凯拉·派姆(后卫)",
+            "埃米利亚诺·马丁内斯(后卫)",
+            "卡洛斯·米格尔(守门员)"
+          ],
+          "bench": [
+            "路易斯·贝内代蒂(后卫)",
+            "维托尔·罗克(前锋)",
+            "里克尔梅·菲利皮(前锋)",
+            "路易斯·帕谢科(中场)",
+            "卢卡斯·埃万热利斯塔(中场)",
+            "米格尔·西农切利·比隆(前锋)",
+            "拉森·托纳·费雷拉·多斯桑托斯(中场)",
+            "马塞洛·隆巴(守门员)",
+            "费利佩·安德森(中场)",
+            "阿图尔·加布里埃尔(后卫)",
+            "何塞·曼努埃尔·洛佩斯(前锋)",
+            "奥古斯丁·贾伊(后卫)"
+          ],
           "injuries": [],
           "suspensions": [],
-          "news": [],
+          "news": [
+            {
+              "title": "Preview: Palmeiras vs Cerro Porteno - prediction, team news, lineups",
+              "description": "Sports Mole previews Wednesday's Copa Libertadores clash between Palmeiras and Cerro Porteno, including predictions, team news and possible lineups.",
+              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca9194f634c27844142312ffc78bd&url=https%3a%2f%2fwww.sportsmole.co.uk%2ffootball%2fpalmeiras%2fpreview%2fpalmeiras-vs-cerro-porteno-prediction-team-news-lineups_602775.html&c=15983334497730534069&mkt=es-cl",
+              "publishedAt": "2026-08-11T10:30+08:00",
+              "source": "Sports Mole"
+            },
+            {
+              "title": "Watch Palmeiras vs Cerro Porteno Copa Libertadores soccer game LIVE: Online streams, TV channel, early teams news, start time",
+              "description": "Find out where to watch Palmeiras vs Cerro Porteño in the Copa Libertadores, including live stream options, TV channel details, kick-off time, team news, and head-to-head record.",
+              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca9194f634c27844142312ffc78bd&url=https%3a%2f%2fwww.goal.com%2fen-us%2fnews%2fwatch-palmeiras-v-cerro-porteno-live-stream-online-tv-channel%2fblt8c41d9e5a97c454c&c=14224850055994623942&mkt=es-cl",
+              "publishedAt": "2026-08-12T11:00+08:00",
+              "source": "GOAL"
+            },
+            {
+              "title": "PREVIEW | Palmeiras vs Cerro Porteño: team news, lineups, predictions (Libertadores 12/08)",
+              "description": "El Palmeiras, uno de los favoritos en la Copa Libertadores, inicia este miércoles en casa su eliminatoria de octavos de final ante el Cerro Porteño paraguayo con una preocupación: sus dificultades ...",
+              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca9194f634c27844142312ffc78bd&url=https%3a%2f%2fsports.yahoo.com%2farticles%2fpreview-palmeiras-vs-cerro-porte-221000076.html&c=1533253951400304995&mkt=es-cl",
+              "publishedAt": "2026-08-10T23:10+08:00",
+              "source": "Yahoo! Sports"
+            }
+          ],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
         },
         "away": {
           "team": "波特诺",
-          "englishName": "",
+          "englishName": "Cerro Porteno",
           "formation": "",
-          "starters": [],
-          "bench": [],
+          "starters": [
+            "巴勃罗·维嘉蒂(前锋)",
+            "马特奥·克利莫维奇(中场)",
+            "乔治·莫瑞尔(中场)",
+            "法布里西奥·多明格斯(中场)",
+            "塞西利奥·多明戈斯(中场)",
+            "皮里斯·达·莫塔(中场)",
+            "卡涅特(后卫)",
+            "马蒂亚斯·佩雷斯(后卫)",
+            "古斯塔沃·贝拉斯克斯(后卫)",
+            "伊万·拉米雷斯(后卫)",
+            "曼努埃尔·罗弗(守门员)"
+          ],
+          "bench": [
+            "罗伯托·费尔南德斯(守门员)",
+            "卡洛斯·鲁本·切纳·巴埃斯(中场)",
+            "塞萨尔·博巴迪拉(中场)",
+            "吉列尔莫贝尼特斯(后卫)",
+            "卡洛斯·弗兰科(前锋)",
+            "巴勃罗·加马拉(中场)",
+            "弗雷迪·阿瑞尔·诺格拉·罗隆(前锋)",
+            "卢卡斯·昆塔纳(后卫)",
+            "罗德里格斯(中场)",
+            "乔苏埃·塞尔文·莱昂(后卫)",
+            "伊格纳西奥·阿利塞达(中场)",
+            "乔纳森·托雷斯(前锋)"
+          ],
           "injuries": [],
           "suspensions": [],
-          "news": [],
+          "news": [
+            {
+              "title": "Preview: Palmeiras vs Cerro Porteno - prediction, team news, lineups",
+              "description": "Sports Mole previews Wednesday's Copa Libertadores clash between Palmeiras and Cerro Porteno, including predictions, team news and possible lineups.",
+              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca9194f634c27844142312ffc78bd&url=https%3a%2f%2fwww.sportsmole.co.uk%2ffootball%2fpalmeiras%2fpreview%2fpalmeiras-vs-cerro-porteno-prediction-team-news-lineups_602775.html&c=15983334497730534069&mkt=es-cl",
+              "publishedAt": "2026-08-11T10:30+08:00",
+              "source": "Sports Mole"
+            },
+            {
+              "title": "Watch Palmeiras vs Cerro Porteno Copa Libertadores soccer game LIVE: Online streams, TV channel, early teams news, start time",
+              "description": "Find out where to watch Palmeiras vs Cerro Porteño in the Copa Libertadores, including live stream options, TV channel details, kick-off time, team news, and head-to-head record.",
+              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca9194f634c27844142312ffc78bd&url=https%3a%2f%2fwww.goal.com%2fen-us%2fnews%2fwatch-palmeiras-v-cerro-porteno-live-stream-online-tv-channel%2fblt8c41d9e5a97c454c&c=14224850055994623942&mkt=es-cl",
+              "publishedAt": "2026-08-12T11:00+08:00",
+              "source": "GOAL"
+            }
+          ],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
         },
-        "news": [],
-        "impactSummary": "暂无可量化阵容影响",
-        "error": "实时情报获取失败：<urlopen error [Errno 111] Connection refused>"
+        "news": [
+          {
+            "title": "Preview: Palmeiras vs Cerro Porteno - prediction, team news, lineups",
+            "description": "Sports Mole previews Wednesday's Copa Libertadores clash between Palmeiras and Cerro Porteno, including predictions, team news and possible lineups.",
+            "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca9194f634c27844142312ffc78bd&url=https%3a%2f%2fwww.sportsmole.co.uk%2ffootball%2fpalmeiras%2fpreview%2fpalmeiras-vs-cerro-porteno-prediction-team-news-lineups_602775.html&c=15983334497730534069&mkt=es-cl",
+            "publishedAt": "2026-08-11T10:30+08:00",
+            "source": "Sports Mole"
+          },
+          {
+            "title": "Watch Palmeiras vs Cerro Porteno Copa Libertadores soccer game LIVE: Online streams, TV channel, early teams news, start time",
+            "description": "Find out where to watch Palmeiras vs Cerro Porteño in the Copa Libertadores, including live stream options, TV channel details, kick-off time, team news, and head-to-head record.",
+            "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca9194f634c27844142312ffc78bd&url=https%3a%2f%2fwww.goal.com%2fen-us%2fnews%2fwatch-palmeiras-v-cerro-porteno-live-stream-online-tv-channel%2fblt8c41d9e5a97c454c&c=14224850055994623942&mkt=es-cl",
+            "publishedAt": "2026-08-12T11:00+08:00",
+            "source": "GOAL"
+          },
+          {
+            "title": "PREVIEW | Palmeiras vs Cerro Porteño: team news, lineups, predictions (Libertadores 12/08)",
+            "description": "El Palmeiras, uno de los favoritos en la Copa Libertadores, inicia este miércoles en casa su eliminatoria de octavos de final ante el Cerro Porteño paraguayo con una preocupación: sus dificultades ...",
+            "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca9194f634c27844142312ffc78bd&url=https%3a%2f%2fsports.yahoo.com%2farticles%2fpreview-palmeiras-vs-cerro-porte-221000076.html&c=1533253951400304995&mkt=es-cl",
+            "publishedAt": "2026-08-10T23:10+08:00",
+            "source": "Yahoo! Sports"
+          }
+        ],
+        "impactSummary": "主队阵容影响0%，客队阵容影响0%",
+        "error": ""
       },
       "intelligenceAdjustment": {
         "homeImpact": 0.0,
@@ -15825,7 +16103,7 @@
           "coldScores": "",
           "probabilityLine": "主胜65.7% · 平局21.2% · 客胜13.1%",
           "decisionMode": "deep-cold",
-          "analysis": "先把态度亮出来：帕梅拉斯对波特诺选择客胜作为最终立场。赔率第一顺位是主胜，但它没有拿到圆桌否决权。\n冷门主张得到2个核心席支持，支持方为赛制波动Agent、热门过热Agent；反对方为基础概率Agent、赔率参考Agent。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n平局没有形成两席以上本地核心共识，反对方主要来自概率模型Agent、赔率参考Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像271场与Poisson比分矩阵把两个首选比分收敛到0-1、1-0；预期总进球2.11，对应小2.5球倾向。最终口径为客胜，防主胜，信心44/100，爆冷压力约72.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "analysis": "先把态度亮出来：帕梅拉斯对波特诺选择客胜作为最终立场。赔率第一顺位是主胜，但它没有拿到圆桌否决权。\n冷门主张得到2个核心席支持，支持方为赛制波动Agent、热门过热Agent；反对方为基础概率Agent、赔率参考Agent。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n平局没有形成两席以上本地核心共识，反对方主要来自概率模型Agent、赔率参考Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像271场与Poisson比分矩阵把两个首选比分收敛到0-1、1-0；预期总进球2.11，对应小2.5球倾向。最终口径为客胜，防主胜，信心44/100，爆冷压力约72.0%。\n阵容层面，主队阵容影响0%，客队阵容影响0%；临场还要盯住：Preview: Palmeiras vs Cerro Porteno - prediction, team news, lineups。"
         },
         "riskNotice": "本场主动选择客胜作为冷门主判，原热门主胜只作反向防守。"
       },
@@ -15847,16 +16125,16 @@
         {
           "name": "阵容伤停Agent",
           "status": "已执行",
-          "signal": "暂无预计阵容",
+          "signal": "500预计阵容",
           "score": 100,
-          "view": "主队：暂无明确伤停名单；客队：暂无明确伤停名单。阵容为预计状态，临场名单公布后需复核。"
+          "view": "主队：预计首发11人，500当前未列出明确伤停或停赛；客队：预计首发11人，500当前未列出明确伤停或停赛。阵容为预计状态，临场名单公布后需复核。"
         },
         {
           "name": "实时新闻Agent",
           "status": "已执行",
-          "signal": "实时新闻待补充",
-          "score": 48,
-          "view": "近21天未检索到可验证的阵容新闻，不编造球员消息。"
+          "signal": "近21天新闻3条",
+          "score": 78,
+          "view": "Preview: Palmeiras vs Cerro Porteno - prediction, team news, lineups；Watch Palmeiras vs Cerro Porteno Copa Libertadores soccer game LIVE: Online streams, TV channel, early teams news, start time"
         },
         {
           "name": "联赛画像Agent",
@@ -15918,7 +16196,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-11T15:34:03+08:00",
-        "updatedAt": "2026-08-12T23:12:54+08:00",
+        "updatedAt": "2026-08-13T01:10:55+08:00",
         "initialOdds": {
           "home": 1.19,
           "draw": 5.1,
@@ -15956,7 +16234,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-12T23:12:54+08:00",
+          "at": "2026-08-13T01:10:55+08:00",
           "stage": "latest",
           "odds": {
             "home": 1.22,
@@ -16194,13 +16472,14 @@
       "intelligence": {
         "status": "limited",
         "lineupStatus": "暂无预计阵容",
-        "newsStatus": "实时新闻待补充",
-        "fetchedAt": "2026-08-12T15:49:18+08:00",
-        "source": "500赛事数据页",
+        "newsStatus": "近21天未检索到可靠新闻",
+        "fetchedAt": "2026-08-13T01:10:49+08:00",
+        "source": "500赛事数据页 + Bing News RSS",
         "sourceUrl": "https://odds.500.com/fenxi/shuju-1467672.shtml",
+        "newsQuery": "\"Abha\" vs \"Al-Hazm\" team news injuries lineups",
         "home": {
           "team": "艾卜哈",
-          "englishName": "",
+          "englishName": "Abha",
           "formation": "",
           "starters": [],
           "bench": [],
@@ -16208,11 +16487,11 @@
           "suspensions": [],
           "news": [],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "暂无预计首发与明确伤停名单，结论已降权"
         },
         "away": {
           "team": "拉斯决心",
-          "englishName": "",
+          "englishName": "Al-Hazm",
           "formation": "",
           "starters": [],
           "bench": [],
@@ -16220,11 +16499,11 @@
           "suspensions": [],
           "news": [],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "暂无预计首发与明确伤停名单，结论已降权"
         },
         "news": [],
-        "impactSummary": "暂无可量化阵容影响",
-        "error": "实时情报获取失败：<urlopen error [Errno 111] Connection refused>"
+        "impactSummary": "主队阵容影响0%，客队阵容影响0%",
+        "error": ""
       },
       "intelligenceAdjustment": {
         "homeImpact": 0.0,
@@ -16337,7 +16616,7 @@
           "coldScores": "1-2",
           "probabilityLine": "主胜39.6% · 平局27.3% · 客胜33.1%",
           "decisionMode": "base",
-          "analysis": "这场最需要防止的是被单一信号带着走。多席本地Agent重新拆分强弱、节奏和风险后，仍认为主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n本地圆桌认为平局有一定讨论价值，但只有1个核心席位支持，未达到正式防平门槛。支持方为比分结构Agent、赔率参考Agent，没有强反对票，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像26227场与Poisson比分矩阵把两个首选比分收敛到1-0、0-1；预期总进球2.41，对应小2.5球倾向。最终口径为主胜，防客胜，信心59/100，爆冷压力约59.1%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "analysis": "这场最需要防止的是被单一信号带着走。多席本地Agent重新拆分强弱、节奏和风险后，仍认为主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n本地圆桌认为平局有一定讨论价值，但只有1个核心席位支持，未达到正式防平门槛。支持方为比分结构Agent、赔率参考Agent，没有强反对票，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像26227场与Poisson比分矩阵把两个首选比分收敛到1-0、0-1；预期总进球2.41，对应小2.5球倾向。最终口径为主胜，防客胜，信心59/100，爆冷压力约59.1%。\n阵容层面，主队阵容影响0%，客队阵容影响0%；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
         "riskNotice": "爆冷可能性中，当前执行防守方向为客胜。"
       },
@@ -16361,12 +16640,12 @@
           "status": "已执行",
           "signal": "暂无预计阵容",
           "score": 100,
-          "view": "主队：暂无明确伤停名单；客队：暂无明确伤停名单。阵容为预计状态，临场名单公布后需复核。"
+          "view": "主队：暂无预计首发与明确伤停名单，结论已降权；客队：暂无预计首发与明确伤停名单，结论已降权。阵容为预计状态，临场名单公布后需复核。"
         },
         {
           "name": "实时新闻Agent",
           "status": "已执行",
-          "signal": "实时新闻待补充",
+          "signal": "近21天未检索到可靠新闻",
           "score": 48,
           "view": "近21天未检索到可验证的阵容新闻，不编造球员消息。"
         },
@@ -16430,7 +16709,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-12T15:49:18+08:00",
-        "updatedAt": "2026-08-12T23:12:54+08:00",
+        "updatedAt": "2026-08-13T01:10:55+08:00",
         "initialOdds": {
           "home": 2.32,
           "draw": 3.15,
@@ -16474,7 +16753,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-12T23:12:54+08:00",
+          "at": "2026-08-13T01:10:55+08:00",
           "stage": "latest",
           "odds": {
             "home": 2.32,
@@ -16660,39 +16939,81 @@
         "teamProbabilities": {}
       },
       "intelligence": {
-        "status": "limited",
-        "lineupStatus": "暂无预计阵容",
-        "newsStatus": "实时新闻待补充",
-        "fetchedAt": "2026-08-12T15:49:18+08:00",
-        "source": "500赛事数据页",
+        "status": "updated",
+        "lineupStatus": "500预计阵容",
+        "newsStatus": "近21天未检索到可靠新闻",
+        "fetchedAt": "2026-08-13T01:10:54+08:00",
+        "source": "500赛事数据页 + Bing News RSS",
         "sourceUrl": "https://odds.500.com/fenxi/shuju-1467674.shtml",
+        "newsQuery": "\"Al-Shabab(KSA)\" vs \"Al Qadasiya\" team news injuries lineups",
         "home": {
           "team": "利雅得青年",
-          "englishName": "",
+          "englishName": "Al-Shabab(KSA)",
           "formation": "",
-          "starters": [],
-          "bench": [],
+          "starters": [
+            "蒂恩·耶德瓦伊(后卫)",
+            "扬尼克·卡拉斯科(前锋)",
+            "卡洛斯·儒尼奥尔(前锋)",
+            "乔什·布朗希尔(中场)",
+            "马马杜·蒂尔诺·巴里(后卫)",
+            "穆哈迈德·泰恩(前锋)",
+            "侯赛因·塞比亚尼(后卫)",
+            "哈曼·哈马米(前锋)",
+            "穆罕默德·马哈斯涅(守门员)",
+            "雅辛·阿德利(中场)",
+            "阿里·阿斯马里(中场)"
+          ],
+          "bench": [
+            "阿里·马基(后卫)",
+            "希沙姆·杜拜斯(前锋)",
+            "Hamad Al-Khorayef(未知)",
+            "穆特布·阿尔穆特拉克(后卫)",
+            "阿瓦德·纳什利(中场)",
+            "穆巴拉克·拉杰(后卫)",
+            "巴兹尔·优素福·萨亚利(中场)",
+            "穆罕默德·施维赫(后卫)"
+          ],
           "injuries": [],
           "suspensions": [],
           "news": [],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
         },
         "away": {
           "team": "胡巴尔卡德西亚",
-          "englishName": "",
+          "englishName": "Al Qadasiya",
           "formation": "",
-          "starters": [],
-          "bench": [],
+          "starters": [
+            "卡梅伦·普尔塔斯(中场)",
+            "尤利安·魏格尔(中场)",
+            "纳西坦·南德斯(中场)",
+            "奥塔维奥(中场)",
+            "纳乔·费尔南德斯(后卫)",
+            "索菲安·卡拉瓦尼(后卫)",
+            "海瑟姆·阿西里(前锋)",
+            "加斯顿·阿尔瓦雷斯(后卫)",
+            "亚西尔·沙赫拉尼(后卫)",
+            "图尔基·阿马尔(中场)",
+            "马沙里·桑约尔(守门员)"
+          ],
+          "bench": [
+            "亚历杭德罗·韦尔加斯(后卫)",
+            "易卜拉欣·莫汉纳西(中场)",
+            "加布里埃尔·卡瓦略(中场)",
+            "米格尔·卡瓦略·维亚纳(中场)",
+            "穆罕默德·哈马德·卡塔尼(中场)",
+            "阿卜杜拉·贾瓦赞(后卫)",
+            "亚伦(中场)"
+          ],
           "injuries": [],
           "suspensions": [],
           "news": [],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
         },
         "news": [],
-        "impactSummary": "暂无可量化阵容影响",
-        "error": "实时情报获取失败：<urlopen error [Errno 111] Connection refused>"
+        "impactSummary": "主队阵容影响0%，客队阵容影响0%",
+        "error": ""
       },
       "intelligenceAdjustment": {
         "homeImpact": 0.0,
@@ -16801,7 +17122,7 @@
           "coldScores": "",
           "probabilityLine": "主胜25.7% · 平局22.0% · 客胜52.3%",
           "decisionMode": "base",
-          "analysis": "这场需要把主线和风险线分开看：主线仍是客胜，同时承认比赛存在转折空间。客队的有效进攻和抗压结构更占优，主队的主场身份不足以单独扭转判断。\n平局没有形成两席以上本地核心共识，反对方主要来自概率模型Agent、赔率参考Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像26227场与Poisson比分矩阵把两个首选比分收敛到0-1、1-2；预期总进球2.41，对应2/3球临界。最终口径为客胜，信心74/100，爆冷压力约48.3%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "analysis": "这场需要把主线和风险线分开看：主线仍是客胜，同时承认比赛存在转折空间。客队的有效进攻和抗压结构更占优，主队的主场身份不足以单独扭转判断。\n平局没有形成两席以上本地核心共识，反对方主要来自概率模型Agent、赔率参考Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像26227场与Poisson比分矩阵把两个首选比分收敛到0-1、1-2；预期总进球2.41，对应2/3球临界。最终口径为客胜，信心74/100，爆冷压力约48.3%。\n阵容层面，主队阵容影响0%，客队阵容影响0%；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
         "riskNotice": "爆冷可能性低中，当前执行防守方向为客胜。"
       },
@@ -16823,14 +17144,14 @@
         {
           "name": "阵容伤停Agent",
           "status": "已执行",
-          "signal": "暂无预计阵容",
+          "signal": "500预计阵容",
           "score": 100,
-          "view": "主队：暂无明确伤停名单；客队：暂无明确伤停名单。阵容为预计状态，临场名单公布后需复核。"
+          "view": "主队：预计首发11人，500当前未列出明确伤停或停赛；客队：预计首发11人，500当前未列出明确伤停或停赛。阵容为预计状态，临场名单公布后需复核。"
         },
         {
           "name": "实时新闻Agent",
           "status": "已执行",
-          "signal": "实时新闻待补充",
+          "signal": "近21天未检索到可靠新闻",
           "score": 48,
           "view": "近21天未检索到可验证的阵容新闻，不编造球员消息。"
         },
@@ -16894,7 +17215,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-12T15:49:18+08:00",
-        "updatedAt": "2026-08-12T23:12:54+08:00",
+        "updatedAt": "2026-08-13T01:10:55+08:00",
         "initialOdds": {
           "home": 4.45,
           "draw": 4.2,
@@ -16932,7 +17253,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-12T23:12:54+08:00",
+          "at": "2026-08-13T01:10:55+08:00",
           "stage": "latest",
           "odds": {
             "home": 4.45,
@@ -17106,39 +17427,90 @@
         "teamProbabilities": {}
       },
       "intelligence": {
-        "status": "limited",
-        "lineupStatus": "暂无预计阵容",
-        "newsStatus": "实时新闻待补充",
-        "fetchedAt": "2026-08-12T15:49:18+08:00",
-        "source": "500赛事数据页",
+        "status": "updated",
+        "lineupStatus": "500预计阵容",
+        "newsStatus": "近21天未检索到可靠新闻",
+        "fetchedAt": "2026-08-13T01:10:55+08:00",
+        "source": "500赛事数据页 + Bing News RSS",
         "sourceUrl": "https://odds.500.com/fenxi/shuju-1453761.shtml",
+        "newsQuery": "\"Mirassol FC\" vs \"Liga Dep. Universitaria Quito\" team news injuries lineups",
         "home": {
           "team": "米拉索尔",
-          "englishName": "",
+          "englishName": "Mirassol FC",
           "formation": "",
-          "starters": [],
-          "bench": [],
+          "starters": [
+            "费尔南迪尼奥(前锋)",
+            "布鲁诺·桑托斯(前锋)",
+            "卡洛斯·爱德华多·德奥利维拉·阿尔维(中场)",
+            "德尼尔森·阿尔维斯·博尔热斯(中场)",
+            "古斯塔沃·卡佐纳迪(中场)",
+            "沃利森(中场)",
+            "雷纳尔多(后卫)",
+            "加布里埃尔·克内索维奇(后卫)",
+            "若昂·维克托·卡罗尔·桑塔纳(后卫)",
+            "伊莱拉·诺格拉·埃利亚斯(后卫)",
+            "卡洛斯·爱德华多·莱乔尔·托马泽拉(守门员)"
+          ],
+          "bench": [
+            "阿莱士·穆拉利亚(守门员)",
+            "安德烈·路易斯(前锋)",
+            "希科·金(中场)",
+            "古斯塔沃·亨利克·达席尔瓦(中场)",
+            "伊戈尔·福尔米加(后卫)",
+            "卢卡斯·达克鲁斯·奥利韦拉(后卫)",
+            "内图·莫拉(中场)",
+            "谢伦·卡利森·卡多佐(中场)",
+            "维克托·路易斯(后卫)",
+            "阿莱森·多斯·桑托斯·巴蒂斯塔(前锋)",
+            "埃德森·卡里奥卡(前锋)",
+            "威廉·埃斯特法尼·马沙多(后卫)"
+          ],
           "injuries": [],
           "suspensions": [],
           "news": [],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
         },
         "away": {
           "team": "基多体大",
-          "englishName": "",
+          "englishName": "Liga Dep. Universitaria Quito",
           "formation": "",
-          "starters": [],
-          "bench": [],
+          "starters": [
+            "迈克尔·埃斯特拉达(前锋)",
+            "詹纳·科罗佐(前锋)",
+            "塞巴斯蒂安·冈萨雷斯(中场)",
+            "罗德尼·雷德斯(中场)",
+            "费尔南多·科内约(中场)",
+            "何塞·卡拉巴里(后卫)",
+            "路易斯·塞戈维亚(后卫)",
+            "杰西·普雷特尔(后卫)",
+            "里卡多·阿德(后卫)",
+            "奎诺内斯(后卫)",
+            "贡萨洛·巴列(守门员)"
+          ],
+          "bench": [
+            "迪瓦森(前锋)",
+            "克里斯蒂安·亚历杭德罗·托巴尔·卢纳(中场)",
+            "伊万·赞布拉诺(中场)",
+            "吉安·佛朗哥·阿拉拉(后卫)",
+            "艾德森·埃德温·卡斯蒂略·阿约维(中场)",
+            "约瑟威廉·奎罗·梅尔卡多(后卫)",
+            "亚历山大·多明戈斯(守门员)",
+            "爱迪生·安德烈斯·戈麦斯·吉勒尔(中场)",
+            "理查德·米纳(后卫)",
+            "胡安·罗德里格斯(中场)",
+            "鲁迪·毛罗·米纳·马丁内斯(中场)",
+            "帕特里克·奥尔蒂斯(中场)"
+          ],
           "injuries": [],
           "suspensions": [],
           "news": [],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
         },
         "news": [],
-        "impactSummary": "暂无可量化阵容影响",
-        "error": "实时情报获取失败：<urlopen error [Errno 111] Connection refused>"
+        "impactSummary": "主队阵容影响0%，客队阵容影响0%",
+        "error": ""
       },
       "intelligenceAdjustment": {
         "homeImpact": 0.0,
@@ -17249,7 +17621,7 @@
           "coldScores": "",
           "probabilityLine": "主胜56.7% · 平局25.1% · 客胜18.1%",
           "decisionMode": "base",
-          "analysis": "圆桌最后把主胜放在第一顺位，这是各席证据交叉后的选择，不是照抄任何一家公司的推荐。\n本地圆桌认为平局有一定讨论价值，但只有1个核心席位支持，未达到正式防平门槛。支持方为概率模型Agent，反对方为强弱差Agent，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像271场与Poisson比分矩阵把两个首选比分收敛到1-0、2-0；预期总进球2.08，对应小2.5球倾向。最终口径为主胜，信心79/100，爆冷压力约43.7%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "analysis": "圆桌最后把主胜放在第一顺位，这是各席证据交叉后的选择，不是照抄任何一家公司的推荐。\n本地圆桌认为平局有一定讨论价值，但只有1个核心席位支持，未达到正式防平门槛。支持方为概率模型Agent，反对方为强弱差Agent，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像271场与Poisson比分矩阵把两个首选比分收敛到1-0、2-0；预期总进球2.08，对应小2.5球倾向。最终口径为主胜，信心79/100，爆冷压力约43.7%。\n阵容层面，主队阵容影响0%，客队阵容影响0%；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
         "riskNotice": "爆冷可能性低中，当前执行防守方向为主胜。"
       },
@@ -17271,14 +17643,14 @@
         {
           "name": "阵容伤停Agent",
           "status": "已执行",
-          "signal": "暂无预计阵容",
+          "signal": "500预计阵容",
           "score": 100,
-          "view": "主队：暂无明确伤停名单；客队：暂无明确伤停名单。阵容为预计状态，临场名单公布后需复核。"
+          "view": "主队：预计首发11人，500当前未列出明确伤停或停赛；客队：预计首发11人，500当前未列出明确伤停或停赛。阵容为预计状态，临场名单公布后需复核。"
         },
         {
           "name": "实时新闻Agent",
           "status": "已执行",
-          "signal": "实时新闻待补充",
+          "signal": "近21天未检索到可靠新闻",
           "score": 48,
           "view": "近21天未检索到可验证的阵容新闻，不编造球员消息。"
         },
@@ -17342,7 +17714,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-12T15:49:18+08:00",
-        "updatedAt": "2026-08-12T23:12:54+08:00",
+        "updatedAt": "2026-08-13T01:10:55+08:00",
         "initialOdds": {
           "home": 1.49,
           "draw": 3.6,
@@ -17380,7 +17752,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-12T23:12:54+08:00",
+          "at": "2026-08-13T01:10:55+08:00",
           "stage": "latest",
           "odds": {
             "home": 1.49,
@@ -17558,39 +17930,90 @@
         }
       },
       "intelligence": {
-        "status": "limited",
-        "lineupStatus": "暂无预计阵容",
-        "newsStatus": "实时新闻待补充",
-        "fetchedAt": "2026-08-12T15:49:18+08:00",
-        "source": "500赛事数据页",
+        "status": "updated",
+        "lineupStatus": "500预计阵容",
+        "newsStatus": "近21天未检索到可靠新闻",
+        "fetchedAt": "2026-08-13T01:10:55+08:00",
+        "source": "500赛事数据页 + Bing News RSS",
         "sourceUrl": "https://odds.500.com/fenxi/shuju-1453762.shtml",
+        "newsQuery": "\"Rosario Central\" vs \"Corinthians Paulista (SP)\" team news injuries lineups",
         "home": {
           "team": "罗萨里奥",
-          "englishName": "",
+          "englishName": "Rosario Central",
           "formation": "",
-          "starters": [],
-          "bench": [],
+          "starters": [
+            "恩佐·科佩蒂(前锋)",
+            "朱利安·费尔南德斯(中场)",
+            "安赫尔·迪马利亚(中场)",
+            "乔瓦尼·伊斯梅尔·坎蒂萨诺(中场)",
+            "维森特·皮萨罗(中场)",
+            "弗兰克·埃巴拉(中场)",
+            "亚历克西斯·索托(后卫)",
+            "加斯顿·阿维拉(后卫)",
+            "伊格纳西奥·奥万多(后卫)",
+            "埃利亚斯·维隆(后卫)",
+            "杰里亚斯·莱德斯马(守门员)"
+          ],
+          "bench": [
+            "阿尔瓦罗·圭奇(后卫)",
+            "法昆多·马洛(后卫)",
+            "费德里科·纳瓦罗(中场)",
+            "法布里西奥·奥维耶多(前锋)",
+            "吉列尔莫·费尔南德斯(中场)",
+            "塞巴斯蒂安·扎拉乔(后卫)",
+            "阿克塞尔·维尔纳(守门员)",
+            "奥古斯丁·桑德斯(后卫)",
+            "阿兰·罗德里格斯(中场)",
+            "马塞洛·卡布雷拉(前锋)",
+            "托马斯·巴达洛尼(前锋)",
+            "哈明通·坎帕斯(中场)"
+          ],
           "injuries": [],
           "suspensions": [],
           "news": [],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
         },
         "away": {
           "team": "科林蒂安",
-          "englishName": "",
+          "englishName": "Corinthians Paulista (SP)",
           "formation": "",
-          "starters": [],
-          "bench": [],
+          "starters": [
+            "佩德罗·劳尔(前锋)",
+            "布雷诺·比东(中场)",
+            "罗德里戈·加罗(中场)",
+            "凯奥·塞萨尔(中场)",
+            "拉尼埃勒(中场)",
+            "阿兰(中场)",
+            "马特乌斯·比杜(后卫)",
+            "古斯塔沃·恩里克(后卫)",
+            "加布里埃尔·保利斯塔(后卫)",
+            "马特乌齐尼奥(后卫)",
+            "乌戈·索萨(守门员)"
+          ],
+          "bench": [
+            "杰西·林加德(中场)",
+            "佩德罗·米兰斯(后卫)",
+            "马特乌斯·佩雷拉(中场)",
+            "乔卡(后卫)",
+            "乌戈(后卫)",
+            "古伊·内冈(前锋)",
+            "迭吉尼奥(中场)",
+            "查尔斯(中场)",
+            "安德尔·卡里略(中场)",
+            "安德烈.拉马略(后卫)",
+            "考埃(守门员)",
+            "法布里齐奥·安吉莱里(后卫)"
+          ],
           "injuries": [],
           "suspensions": [],
           "news": [],
           "impactScore": 0.0,
-          "summary": "暂无明确伤停名单"
+          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
         },
         "news": [],
-        "impactSummary": "暂无可量化阵容影响",
-        "error": "实时情报获取失败：<urlopen error [Errno 111] Connection refused>"
+        "impactSummary": "主队阵容影响0%，客队阵容影响0%",
+        "error": ""
       },
       "intelligenceAdjustment": {
         "homeImpact": 0.0,
@@ -17700,7 +18123,7 @@
           "coldScores": "",
           "probabilityLine": "主胜45.1% · 平局31.7% · 客胜23.3%",
           "decisionMode": "bold-cold",
-          "analysis": "先把态度亮出来：罗萨里奥对科林蒂安选择平局作为最终立场。赔率第一顺位是主胜，但它没有拿到圆桌否决权。\n冷门主张得到2个核心席支持，支持方为概率模型Agent、比分结构Agent、赔率参考Agent；反对方为没有形成强反对席。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n平局不再只是“防一下”，而是从风险层升为最终主判。基础平局概率31.7%，但2个核心席认为热门优势不足以兑现。\n落到执行层，联赛历史画像271场与Poisson比分矩阵把两个首选比分收敛到0-0、1-0；预期总进球2.08，对应小2.5球倾向。最终口径为平局，防主胜，信心54/100，爆冷压力约66.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+          "analysis": "先把态度亮出来：罗萨里奥对科林蒂安选择平局作为最终立场。赔率第一顺位是主胜，但它没有拿到圆桌否决权。\n冷门主张得到2个核心席支持，支持方为概率模型Agent、比分结构Agent、赔率参考Agent；反对方为没有形成强反对席。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n平局不再只是“防一下”，而是从风险层升为最终主判。基础平局概率31.7%，但2个核心席认为热门优势不足以兑现。\n落到执行层，联赛历史画像271场与Poisson比分矩阵把两个首选比分收敛到0-0、1-0；预期总进球2.08，对应小2.5球倾向。最终口径为平局，防主胜，信心54/100，爆冷压力约66.0%。\n阵容层面，主队阵容影响0%，客队阵容影响0%；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
         },
         "riskNotice": "本场主动选择平局作为冷门主判，原热门主胜只作反向防守。"
       },
@@ -17722,14 +18145,14 @@
         {
           "name": "阵容伤停Agent",
           "status": "已执行",
-          "signal": "暂无预计阵容",
+          "signal": "500预计阵容",
           "score": 100,
-          "view": "主队：暂无明确伤停名单；客队：暂无明确伤停名单。阵容为预计状态，临场名单公布后需复核。"
+          "view": "主队：预计首发11人，500当前未列出明确伤停或停赛；客队：预计首发11人，500当前未列出明确伤停或停赛。阵容为预计状态，临场名单公布后需复核。"
         },
         {
           "name": "实时新闻Agent",
           "status": "已执行",
-          "signal": "实时新闻待补充",
+          "signal": "近21天未检索到可靠新闻",
           "score": 48,
           "view": "近21天未检索到可验证的阵容新闻，不编造球员消息。"
         },
@@ -17793,7 +18216,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-12T15:49:18+08:00",
-        "updatedAt": "2026-08-12T23:12:54+08:00",
+        "updatedAt": "2026-08-13T01:10:55+08:00",
         "initialOdds": {
           "home": 2.02,
           "draw": 2.7,
@@ -17831,7 +18254,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-12T23:12:54+08:00",
+          "at": "2026-08-13T01:10:55+08:00",
           "stage": "latest",
           "odds": {
             "home": 2.02,
