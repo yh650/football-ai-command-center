@@ -2,9 +2,9 @@
   "meta": {
     "product": "AI足球赛事研判指挥舱 HTML授权版",
     "modelName": "Local AI 5.5",
-    "generatedAt": "2026-08-13T01:10:58+08:00",
+    "generatedAt": "2026-08-13T03:17:59+08:00",
     "source": "500彩票网竞彩日常更新 + Interwetten五年历史画像",
-    "matchCount": 7,
+    "matchCount": 6,
     "baseHistorySample": 21138,
     "baseFinishedSample": 21032,
     "historySample": 26334,
@@ -13,7 +13,10 @@
     "dailyUpdate": {
       "status": "success",
       "historyRows": 5196,
-      "warnings": []
+      "warnings": [
+        "6场实时情报使用保留或降级数据：利雅得青年vs胡巴尔卡德西亚、帕梅拉斯vs波特诺、艾卜哈vs拉斯决心、普拉滕斯vs科金博联",
+        "500完整赛事目录更新失败，已保留上一版：<urlopen error [Errno 111] Connection refused>"
+      ]
     },
     "compliance": "仅提供体育数据分析、赛前研究与内容创作参考；不涉及赌博，不提供下注服务，不承诺结果。"
   },
@@ -14429,749 +14432,6 @@
   },
   "matches": [
     {
-      "id": "500-1413295",
-      "date": "2026-08-13 03:00",
-      "round": "周三001",
-      "league": "欧超杯",
-      "home": "巴黎圣曼",
-      "away": "维拉",
-      "sourceType": "500-jc",
-      "fixtureId": "1413295",
-      "homeTeamId": "647",
-      "awayTeamId": "555",
-      "detailUrl": "https://odds.500.com/fenxi/shuju-1413295.shtml",
-      "homeRank": null,
-      "awayRank": null,
-      "handicap": -1.0,
-      "odds": {
-        "current": {
-          "home": 1.6,
-          "draw": 3.48,
-          "away": 4.6
-        },
-        "initial": {
-          "home": 1.6,
-          "draw": 3.58,
-          "away": 4.45
-        },
-        "shape": "1.6/3.48/4.6",
-        "movement": "主胜不变 · 平局降0.10 · 客胜升0.15",
-        "movementCombo": "相对初始：主胜不变 · 平局降0.10 · 客胜升0.15；较上次：主胜不变 · 平局不变 · 客胜不变",
-        "favorite": "主胜",
-        "favoriteOdds": 1.6,
-        "favoriteChange": "不变",
-        "gap": 2.9999999999999996,
-        "gapLabel": "强弱分层",
-        "mode": "明显变盘",
-        "dropSide": "平局",
-        "dropBucket": "降0.10",
-        "previous": {
-          "home": 1.6,
-          "draw": 3.48,
-          "away": 4.6
-        },
-        "deltaFromInitial": {
-          "home": 0.0,
-          "draw": -0.1,
-          "away": 0.15
-        },
-        "deltaFromPrevious": {
-          "home": 0.0,
-          "draw": 0.0,
-          "away": 0.0
-        },
-        "movementMagnitude": 0.15
-      },
-      "probabilities": {
-        "home": 0.4676187843121766,
-        "draw": 0.40153244598917803,
-        "away": 0.13084876969864528
-      },
-      "leagueProfile": {
-        "league": "欧超杯",
-        "sample": 6,
-        "recentSample": 1,
-        "homeRate": 0.2857142857142857,
-        "drawRate": 0.7142857142857143,
-        "awayRate": 0.0,
-        "topOutcome": "平局",
-        "topRate": 0.7142857142857143,
-        "favoriteHitRate": 0.2857142857142857,
-        "kellyHitRate": 0.2,
-        "over25Rate": 1.0,
-        "reliable": true,
-        "source": "Interwetten五年基线 + 500竞彩每日增量"
-      },
-      "modelBlend": {
-        "marketWeight": 0.68,
-        "leagueWeight": 0.31999999999999995,
-        "teamWeight": 0.0,
-        "teamCoverage": "无球队画像",
-        "teamProbabilities": {}
-      },
-      "intelligence": {
-        "status": "updated",
-        "lineupStatus": "500预计阵容",
-        "newsStatus": "近21天新闻4条",
-        "fetchedAt": "2026-08-13T01:10:50+08:00",
-        "source": "500赛事数据页 + Bing News RSS",
-        "sourceUrl": "https://odds.500.com/fenxi/shuju-1413295.shtml",
-        "newsQuery": "\"Paris Saint Germain\" vs \"Aston Villa\" team news injuries lineups",
-        "home": {
-          "team": "巴黎圣曼",
-          "englishName": "Paris Saint Germain",
-          "formation": "",
-          "starters": [
-            "科维查·克瓦拉茨赫利亚(前锋)",
-            "亚当·阿亚里(前锋)",
-            "易卜拉欣·姆巴耶(前锋)",
-            "德罗·费尔南德斯(中场)",
-            "卢卡斯·贝拉尔多(中场)",
-            "森尼·马尤鲁(中场)",
-            "阿克塞尔·库卡巴(后卫)",
-            "威廉·帕乔(后卫)",
-            "伊利亚·扎巴尔尼(后卫)",
-            "戴维·博利(后卫)",
-            "马特维·萨福诺夫(守门员)"
-          ],
-          "bench": [
-            "维蒂尼亚(中场)",
-            "保罗·布尔丹(中场)",
-            "拉亚(中场)",
-            "卢卡·舍瓦利耶(守门员)",
-            "亚利桑德罗·隆戈尼(守门员)",
-            "迪米特里·卢西亚(后卫)",
-            "马尔基尼奥斯(后卫)",
-            "马马杜·梅特(前锋)",
-            "努诺·门德斯(后卫)",
-            "昆汀·恩詹图(前锋)",
-            "若昂·内维斯(中场)",
-            "范妮·德拉梅(中场)",
-            "尤内斯·伊德尔(中场)"
-          ],
-          "injuries": [],
-          "suspensions": [],
-          "news": [
-            {
-              "title": "PSG vs Aston Villa: UEFA Super Cup – prediction, lineups, teams",
-              "description": "The traditional curtain raiser for Europe's football league season pits Paris Saint-Germain against Aston Villa.",
-              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.aljazeera.com%2fsports%2f2026%2f8%2f11%2fpsg-vs-aston-villa-uefa-super-cup-teams-start-lineups&c=472964614604795651&mkt=es-cl",
-              "publishedAt": "2026-08-11T17:55+08:00",
-              "source": "Al Jazeera"
-            },
-            {
-              "title": "Paris Saint-Germain vs Aston Villa: Where to watch, line-ups, stats and preview for UEFA Super Cup",
-              "description": "PSG arrive in Austria as favourites after another hugely successful campaign. The French champions defended their Champions League crown by overcoming Arsenal on penalties in last season’s final and ...",
-              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.101greatgoals.com%2fmatch-previews%2fparis-saint-germain-vs-aston-villa-where-to-watch-line-ups-stats-preview-uefa-super-cup%2f&c=14227082142849021106&mkt=es-cl",
-              "publishedAt": "2026-08-12T08:46+08:00",
-              "source": "101 Great Goals"
-            },
-            {
-              "title": "PSG vs. Aston Villa Lineups & Confirmed Team News for UEFA Super Cup Final",
-              "description": "PSG vs. Aston Villa is the 2026 UEFA Super Cup Final and it will be played today, August 12, 2026 at the Red Bull Arena in Wals-Siezenheim, Austria. The Suepr Cup is between the current Champions ...",
-              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fathlonsports.com%2fsoccer%2fpsg-vs-aston-villa-lineups-confirmed-team-news-for-uefa-super-cup-final&c=3431120637503206358&mkt=es-cl",
-              "publishedAt": "2026-08-12T17:01+08:00",
-              "source": "Athlon Sports"
-            }
-          ],
-          "impactScore": 0.0,
-          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
-        },
-        "away": {
-          "team": "维拉",
-          "englishName": "Aston Villa",
-          "formation": "",
-          "starters": [
-            "布莱恩·马德约(前锋)",
-            "埃文·盖桑(前锋)",
-            "埃米利亚诺·布恩迪亚(中场)",
-            "若昂·戈麦斯(中场)",
-            "布巴卡尔·卡马拉(中场)",
-            "乔治·海明斯(中场)",
-            "伊恩·马特森(后卫)",
-            "保·托雷斯(后卫)",
-            "维克托·林德洛夫(后卫)",
-            "马蒂·卡什(后卫)",
-            "马尔科·比佐特(守门员)"
-          ],
-          "bench": [
-            "西奥多·卡罗尔(后卫)",
-            "特里斯顿·罗(后卫)",
-            "科斯塔·内德尔科维奇(后卫)",
-            "泰隆·明斯(后卫)",
-            "卢卡·林奇(中场)",
-            "布拉德利·伯罗斯(中场)",
-            "拉马尔·博加德(中场)",
-            "欧文·阿塞莫塔(守门员)",
-            "詹姆斯·赖特(守门员)",
-            "塔米·亚伯拉罕(前锋)"
-          ],
-          "injuries": [],
-          "suspensions": [],
-          "news": [
-            {
-              "title": "PSG vs Aston Villa: UEFA Super Cup – prediction, lineups, teams",
-              "description": "The traditional curtain raiser for Europe's football league season pits Paris Saint-Germain against Aston Villa.",
-              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.aljazeera.com%2fsports%2f2026%2f8%2f11%2fpsg-vs-aston-villa-uefa-super-cup-teams-start-lineups&c=472964614604795651&mkt=es-cl",
-              "publishedAt": "2026-08-11T17:55+08:00",
-              "source": "Al Jazeera"
-            },
-            {
-              "title": "Paris Saint-Germain vs Aston Villa: Where to watch, line-ups, stats and preview for UEFA Super Cup",
-              "description": "PSG arrive in Austria as favourites after another hugely successful campaign. The French champions defended their Champions League crown by overcoming Arsenal on penalties in last season’s final and ...",
-              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.101greatgoals.com%2fmatch-previews%2fparis-saint-germain-vs-aston-villa-where-to-watch-line-ups-stats-preview-uefa-super-cup%2f&c=14227082142849021106&mkt=es-cl",
-              "publishedAt": "2026-08-12T08:46+08:00",
-              "source": "101 Great Goals"
-            },
-            {
-              "title": "PSG vs. Aston Villa Lineups & Confirmed Team News for UEFA Super Cup Final",
-              "description": "PSG vs. Aston Villa is the 2026 UEFA Super Cup Final and it will be played today, August 12, 2026 at the Red Bull Arena in Wals-Siezenheim, Austria. The Suepr Cup is between the current Champions ...",
-              "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fathlonsports.com%2fsoccer%2fpsg-vs-aston-villa-lineups-confirmed-team-news-for-uefa-super-cup-final&c=3431120637503206358&mkt=es-cl",
-              "publishedAt": "2026-08-12T17:01+08:00",
-              "source": "Athlon Sports"
-            }
-          ],
-          "impactScore": 0.0,
-          "summary": "预计首发11人，500当前未列出明确伤停或停赛"
-        },
-        "news": [
-          {
-            "title": "PSG vs Aston Villa: UEFA Super Cup – prediction, lineups, teams",
-            "description": "The traditional curtain raiser for Europe's football league season pits Paris Saint-Germain against Aston Villa.",
-            "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.aljazeera.com%2fsports%2f2026%2f8%2f11%2fpsg-vs-aston-villa-uefa-super-cup-teams-start-lineups&c=472964614604795651&mkt=es-cl",
-            "publishedAt": "2026-08-11T17:55+08:00",
-            "source": "Al Jazeera"
-          },
-          {
-            "title": "Paris Saint-Germain vs Aston Villa: Where to watch, line-ups, stats and preview for UEFA Super Cup",
-            "description": "PSG arrive in Austria as favourites after another hugely successful campaign. The French champions defended their Champions League crown by overcoming Arsenal on penalties in last season’s final and ...",
-            "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.101greatgoals.com%2fmatch-previews%2fparis-saint-germain-vs-aston-villa-where-to-watch-line-ups-stats-preview-uefa-super-cup%2f&c=14227082142849021106&mkt=es-cl",
-            "publishedAt": "2026-08-12T08:46+08:00",
-            "source": "101 Great Goals"
-          },
-          {
-            "title": "PSG vs. Aston Villa Lineups & Confirmed Team News for UEFA Super Cup Final",
-            "description": "PSG vs. Aston Villa is the 2026 UEFA Super Cup Final and it will be played today, August 12, 2026 at the Red Bull Arena in Wals-Siezenheim, Austria. The Suepr Cup is between the current Champions ...",
-            "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fathlonsports.com%2fsoccer%2fpsg-vs-aston-villa-lineups-confirmed-team-news-for-uefa-super-cup-final&c=3431120637503206358&mkt=es-cl",
-            "publishedAt": "2026-08-12T17:01+08:00",
-            "source": "Athlon Sports"
-          },
-          {
-            "title": "Preview: Paris Saint-Germain vs Aston Villa - prediction, team news, lineups",
-            "description": "Sports Mole previews Wednesday's UEFA Super Cup clash between Paris Saint-Germain and Aston Villa, including predictions, team news and possible lineups.",
-            "url": "http://www.bing.com/news/apiclick.aspx?ref=FexRss&aid=&tid=6a7ca919479046c5bca2cc30f52de9b2&url=https%3a%2f%2fwww.sportsmole.co.uk%2ffootball%2fpsg%2fpreview%2fpsg-vs-aston-villa-prediction-team-news-lineups_602691.html&c=13880248488325832696&mkt=es-cl",
-            "publishedAt": "2026-08-10T16:47+08:00",
-            "source": "Sports Mole"
-          }
-        ],
-        "impactSummary": "主队阵容影响0%，客队阵容影响0%",
-        "error": ""
-      },
-      "intelligenceAdjustment": {
-        "homeImpact": 0.0,
-        "awayImpact": 0.0,
-        "directionalShift": 0.0,
-        "drawUncertainty": 0.0,
-        "summary": "当前伤停没有形成足以改变主方向的量化差值"
-      },
-      "grid": {
-        "signal": "500竞彩基线",
-        "roi": null,
-        "sample": 6,
-        "bucket": "JCToday/Live"
-      },
-      "upset": {
-        "score": 0.6002230419842806,
-        "level": "中",
-        "direction": "平局",
-        "selectedAsPrimary": false,
-        "counterDirection": "主胜",
-        "trap": "热门赔率1.60；基础方向领先6.6%；联赛热门失手率71.4%",
-        "reasons": [
-          "综合非主方向概率53.2%",
-          "第二方向平局40.2%",
-          "联赛样本6场"
-        ],
-        "roundtable": {
-          "bold": false,
-          "level": "none",
-          "verdict": "维持基础主线",
-          "pickKey": "home",
-          "marketPrimaryKey": "home",
-          "candidateKey": "away",
-          "coreSupports": 0,
-          "supportAgents": [
-            "联赛反热门Agent",
-            "赛制波动Agent"
-          ],
-          "opposeAgents": [
-            "概率分歧Agent",
-            "比分反转Agent"
-          ],
-          "consensusScore": 0.45,
-          "confidence": 50,
-          "reasons": [
-            "基础概率13.1%",
-            "与热门差距33.7%"
-          ],
-          "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
-        }
-      },
-      "antiDraw": {
-        "score": 41,
-        "verdict": "平局观察",
-        "action": "平局只进入风险提示",
-        "reasons": [
-          "模型平局概率40.2%",
-          "联赛平局基准71.4%",
-          "主方向领先6.6%",
-          "尚未达到两席核心Agent共同支持的正式防平门槛"
-        ],
-        "roundtable": {
-          "consensusScore": 0.95,
-          "coreSupports": 1,
-          "supportAgents": [
-            "概率模型Agent",
-            "联赛画像Agent"
-          ],
-          "opposeAgents": [
-            "比分结构Agent"
-          ],
-          "bookmakerRole": "赔率公司仅作参考票，不能单独触发防平"
-        }
-      },
-      "conclusion": {
-        "action": "观察复核",
-        "primary": "主胜",
-        "cover": "主胜，防平局",
-        "confidence": 59,
-        "valueGate": "观察：等待临场确认",
-        "recommendationTier": "观察",
-        "portfolioEligible": false,
-        "decisionMode": "base",
-        "marketPrimary": "主胜",
-        "bestScores": [
-          {
-            "score": "2-1",
-            "probability": 0.0987,
-            "script": "开放局脚本"
-          },
-          {
-            "score": "2-2",
-            "probability": 0.0449,
-            "script": "防冷脚本"
-          }
-        ],
-        "coldScores": [
-          {
-            "score": "3-3",
-            "probability": 0.0097,
-            "script": "大球爆冷脚本"
-          },
-          {
-            "score": "4-4",
-            "probability": 0.0012,
-            "script": "大球爆冷脚本"
-          }
-        ],
-        "overUnder": "大2.5球倾向",
-        "openGame": true,
-        "defendCold": "建议保留：防平局",
-        "finalText": "500竞彩赔率、联赛画像与球队样本综合倾向为主胜，信心指数59/100；平局防守等级为平局观察，执行口径为主胜，防平局；两个最得意比分为2-1、2-2，大2.5球倾向。 大球或比赛失控时，爆冷比分留意3-3、4-4。",
-        "customerSummary": {
-          "headline": "方向偏主胜，平局票数未过门槛",
-          "primary": "主胜",
-          "secondary": "平局",
-          "cover": "主胜，防平局",
-          "confidence": 59,
-          "overUnder": "大2.5球倾向",
-          "mainScores": "2-1、2-2",
-          "coldScores": "3-3、4-4",
-          "probabilityLine": "主胜46.8% · 平局40.2% · 客胜13.1%",
-          "decisionMode": "base",
-          "analysis": "巴黎圣曼对维拉属于典型拉扯局，难点不是找赔率最低的一方，而是分辨哪种比赛脚本更容易落地。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n本地圆桌认为平局有一定讨论价值，但只有1个核心席位支持，未达到正式防平门槛。支持方为概率模型Agent、联赛画像Agent，反对方为比分结构Agent，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像6场与Poisson比分矩阵把两个首选比分收敛到2-1、2-2；预期总进球3.05，对应大2.5球倾向。最终口径为主胜，防平局，信心59/100，爆冷压力约60.0%。\n阵容层面，主队阵容影响0%，客队阵容影响0%；临场还要盯住：PSG vs Aston Villa: UEFA Super Cup – prediction, lineups, teams。"
-        },
-        "riskNotice": "爆冷可能性中，当前执行防守方向为平局。"
-      },
-      "agents": [
-        {
-          "name": "数据底座Agent",
-          "status": "已执行",
-          "signal": "500竞彩校验",
-          "score": 92,
-          "view": "已读取500竞彩编号周三001，主平客欧指完整。"
-        },
-        {
-          "name": "近期状态Agent",
-          "status": "已执行",
-          "signal": "球队近一年画像",
-          "score": 54,
-          "view": "主客排名-- / --；历史胜平负与进球均值已经进入概率层。"
-        },
-        {
-          "name": "阵容伤停Agent",
-          "status": "已执行",
-          "signal": "500预计阵容",
-          "score": 100,
-          "view": "主队：预计首发11人，500当前未列出明确伤停或停赛；客队：预计首发11人，500当前未列出明确伤停或停赛。阵容为预计状态，临场名单公布后需复核。"
-        },
-        {
-          "name": "实时新闻Agent",
-          "status": "已执行",
-          "signal": "近21天新闻4条",
-          "score": 78,
-          "view": "PSG vs Aston Villa: UEFA Super Cup – prediction, lineups, teams；Paris Saint-Germain vs Aston Villa: Where to watch, line-ups, stats and preview for UEFA Super Cup"
-        },
-        {
-          "name": "联赛画像Agent",
-          "status": "已执行",
-          "signal": "平局",
-          "score": 84,
-          "view": "欧超杯累计画像6场，近期增量1场。"
-        },
-        {
-          "name": "Interwetten赔率Agent",
-          "status": "已执行",
-          "signal": "参考席",
-          "score": 64,
-          "view": "即时赔率1.6/3.48/4.6，只提供一张参考票，不单独决定防平或爆冷方向。"
-        },
-        {
-          "name": "爆冷防线Agent",
-          "status": "已执行",
-          "signal": "中",
-          "score": 60,
-          "view": "爆冷评分60.0%，第二方向为平局。"
-        },
-        {
-          "name": "冷门主张Agent",
-          "status": "已执行",
-          "signal": "维持基础主线",
-          "score": 50,
-          "view": "核心支持0席；支持：联赛反热门Agent、赛制波动Agent；反对：概率分歧Agent、比分反转Agent。未达到推翻热门门槛。"
-        },
-        {
-          "name": "本地防平圆桌Agent",
-          "status": "已执行",
-          "signal": "平局观察",
-          "score": 68,
-          "view": "核心支持1席；支持：概率模型Agent、联赛画像Agent；反对：比分结构Agent。赔率公司只作参考。"
-        },
-        {
-          "name": "比分脚本Agent",
-          "status": "已执行",
-          "signal": "2-1 / 2-2；冷门 3-3 / 4-4",
-          "score": 59,
-          "view": "常规比分与大球爆冷比分分层输出，由方向概率、进球基线、阵容影响和Poisson矩阵联合筛选。"
-        },
-        {
-          "name": "圆桌仲裁Agent",
-          "status": "已执行",
-          "signal": "主胜，防平局",
-          "score": 59,
-          "view": "多Agent完成统一仲裁，基础热门主胜，最终主方向主胜。"
-        },
-        {
-          "name": "变盘锁定Agent",
-          "status": "已执行",
-          "signal": "稳定：主胜",
-          "score": 86,
-          "view": "最新赔率复核后仍维持主胜，方向未发生改判。"
-        }
-      ],
-      "analysisTracking": {
-        "status": "steady",
-        "firstSeenAt": "2026-08-11T15:34:03+08:00",
-        "updatedAt": "2026-08-13T01:10:55+08:00",
-        "initialOdds": {
-          "home": 1.6,
-          "draw": 3.58,
-          "away": 4.45
-        },
-        "initial": {
-          "at": "2026-08-11T15:34:03+08:00",
-          "stage": "initial",
-          "odds": {
-            "home": 1.6,
-            "draw": 3.58,
-            "away": 4.45
-          },
-          "primary": "主胜",
-          "candidatePrimary": "主胜",
-          "cover": "主胜，防平局",
-          "confidence": 59,
-          "decisionMode": "base",
-          "bestScores": [
-            {
-              "score": "2-1",
-              "probability": 0.0988,
-              "script": "开放局脚本"
-            },
-            {
-              "score": "2-2",
-              "probability": 0.0452,
-              "script": "防冷脚本"
-            }
-          ],
-          "coldScores": [
-            {
-              "score": "3-3",
-              "probability": 0.0098,
-              "script": "大球爆冷脚本"
-            },
-            {
-              "score": "4-4",
-              "probability": 0.0012,
-              "script": "大球爆冷脚本"
-            }
-          ],
-          "overUnder": "大2.5球倾向",
-          "upsetScore": 0.5990153812551811,
-          "accepted": true,
-          "reason": "首次载入赛事，已保存初始赔率与初始研判。"
-        },
-        "latest": {
-          "at": "2026-08-13T01:10:55+08:00",
-          "stage": "latest",
-          "odds": {
-            "home": 1.6,
-            "draw": 3.48,
-            "away": 4.6
-          },
-          "primary": "主胜",
-          "candidatePrimary": "主胜",
-          "cover": "主胜，防平局",
-          "confidence": 59,
-          "decisionMode": "base",
-          "bestScores": [
-            {
-              "score": "2-1",
-              "probability": 0.0987,
-              "script": "开放局脚本"
-            },
-            {
-              "score": "2-2",
-              "probability": 0.0449,
-              "script": "防冷脚本"
-            }
-          ],
-          "coldScores": [
-            {
-              "score": "3-3",
-              "probability": 0.0097,
-              "script": "大球爆冷脚本"
-            },
-            {
-              "score": "4-4",
-              "probability": 0.0012,
-              "script": "大球爆冷脚本"
-            }
-          ],
-          "overUnder": "大2.5球倾向",
-          "upsetScore": 0.6002230419842806,
-          "accepted": true,
-          "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
-        },
-        "locked": false,
-        "lockedAt": "",
-        "lockedSnapshot": null,
-        "decisionAnchor": {
-          "at": "2026-08-11T15:34:03+08:00",
-          "primary": "主胜",
-          "odds": {
-            "home": 1.6,
-            "draw": 3.58,
-            "away": 4.45
-          }
-        },
-        "change": {
-          "meaningful": true,
-          "recommendationChanged": false,
-          "accepted": true,
-          "oldPrimary": "主胜",
-          "newPrimary": "主胜",
-          "supportCount": 0,
-          "supportAgents": [],
-          "maxOddsMove": 0.15,
-          "maxImpliedMove": 0.007,
-          "oddsThreshold": 0.1,
-          "impliedThreshold": 0.025,
-          "requiredCoreSupports": 2,
-          "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
-        },
-        "snapshots": [
-          {
-            "at": "2026-08-11T15:34:03+08:00",
-            "stage": "initial",
-            "odds": {
-              "home": 1.6,
-              "draw": 3.58,
-              "away": 4.45
-            },
-            "primary": "主胜",
-            "candidatePrimary": "主胜",
-            "cover": "主胜，防平局",
-            "confidence": 59,
-            "decisionMode": "base",
-            "bestScores": [
-              {
-                "score": "2-1",
-                "probability": 0.0988,
-                "script": "开放局脚本"
-              },
-              {
-                "score": "2-2",
-                "probability": 0.0452,
-                "script": "防冷脚本"
-              }
-            ],
-            "coldScores": [
-              {
-                "score": "3-3",
-                "probability": 0.0098,
-                "script": "大球爆冷脚本"
-              },
-              {
-                "score": "4-4",
-                "probability": 0.0012,
-                "script": "大球爆冷脚本"
-              }
-            ],
-            "overUnder": "大2.5球倾向",
-            "upsetScore": 0.5990153812551811,
-            "accepted": true,
-            "reason": "首次载入赛事，已保存初始赔率与初始研判。"
-          },
-          {
-            "at": "2026-08-12T10:41:57+08:00",
-            "stage": "latest",
-            "odds": {
-              "home": 1.57,
-              "draw": 3.7,
-              "away": 4.55
-            },
-            "primary": "主胜",
-            "candidatePrimary": "主胜",
-            "cover": "主胜，防平局",
-            "confidence": 60,
-            "decisionMode": "base",
-            "bestScores": [
-              {
-                "score": "2-1",
-                "probability": 0.0985,
-                "script": "开放局脚本"
-              },
-              {
-                "score": "2-2",
-                "probability": 0.0444,
-                "script": "防冷脚本"
-              }
-            ],
-            "coldScores": [
-              {
-                "score": "3-3",
-                "probability": 0.0096,
-                "script": "大球爆冷脚本"
-              },
-              {
-                "score": "4-4",
-                "probability": 0.0012,
-                "script": "大球爆冷脚本"
-              }
-            ],
-            "overUnder": "大2.5球倾向",
-            "upsetScore": 0.5921977397038546,
-            "accepted": true,
-            "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
-          },
-          {
-            "at": "2026-08-12T15:49:18+08:00",
-            "stage": "latest",
-            "odds": {
-              "home": 1.56,
-              "draw": 3.6,
-              "away": 4.75
-            },
-            "primary": "主胜",
-            "candidatePrimary": "主胜",
-            "cover": "主胜，防平局",
-            "confidence": 60,
-            "decisionMode": "base",
-            "bestScores": [
-              {
-                "score": "2-1",
-                "probability": 0.0984,
-                "script": "开放局脚本"
-              },
-              {
-                "score": "2-2",
-                "probability": 0.0438,
-                "script": "防冷脚本"
-              }
-            ],
-            "coldScores": [
-              {
-                "score": "3-3",
-                "probability": 0.0094,
-                "script": "大球爆冷脚本"
-              },
-              {
-                "score": "4-4",
-                "probability": 0.0011,
-                "script": "大球爆冷脚本"
-              }
-            ],
-            "overUnder": "大2.5球倾向",
-            "upsetScore": 0.5919204256408798,
-            "accepted": true,
-            "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
-          },
-          {
-            "at": "2026-08-12T23:12:54+08:00",
-            "stage": "latest",
-            "odds": {
-              "home": 1.6,
-              "draw": 3.48,
-              "away": 4.6
-            },
-            "primary": "主胜",
-            "candidatePrimary": "主胜",
-            "cover": "主胜，防平局",
-            "confidence": 59,
-            "decisionMode": "base",
-            "bestScores": [
-              {
-                "score": "2-1",
-                "probability": 0.0987,
-                "script": "开放局脚本"
-              },
-              {
-                "score": "2-2",
-                "probability": 0.0449,
-                "script": "防冷脚本"
-              }
-            ],
-            "coldScores": [
-              {
-                "score": "3-3",
-                "probability": 0.0097,
-                "script": "大球爆冷脚本"
-              },
-              {
-                "score": "4-4",
-                "probability": 0.0012,
-                "script": "大球爆冷脚本"
-              }
-            ],
-            "overUnder": "大2.5球倾向",
-            "upsetScore": 0.6002230419842806,
-            "accepted": true,
-            "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
-          }
-        ]
-      }
-    },
-    {
       "id": "500-1453759",
       "date": "2026-08-13 06:00",
       "round": "周三002",
@@ -15540,7 +14800,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-11T15:34:03+08:00",
-        "updatedAt": "2026-08-13T01:10:55+08:00",
+        "updatedAt": "2026-08-13T03:17:58+08:00",
         "initialOdds": {
           "home": 1.74,
           "draw": 3.05,
@@ -15578,7 +14838,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-13T01:10:55+08:00",
+          "at": "2026-08-13T03:17:58+08:00",
           "stage": "latest",
           "odds": {
             "home": 1.88,
@@ -16196,7 +15456,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-11T15:34:03+08:00",
-        "updatedAt": "2026-08-13T01:10:55+08:00",
+        "updatedAt": "2026-08-13T03:17:58+08:00",
         "initialOdds": {
           "home": 1.19,
           "draw": 5.1,
@@ -16234,7 +15494,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-13T01:10:55+08:00",
+          "at": "2026-08-13T03:17:58+08:00",
           "stage": "latest",
           "odds": {
             "home": 1.22,
@@ -16709,7 +15969,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-12T15:49:18+08:00",
-        "updatedAt": "2026-08-13T01:10:55+08:00",
+        "updatedAt": "2026-08-13T03:17:58+08:00",
         "initialOdds": {
           "home": 2.32,
           "draw": 3.15,
@@ -16753,7 +16013,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-13T01:10:55+08:00",
+          "at": "2026-08-13T03:17:58+08:00",
           "stage": "latest",
           "odds": {
             "home": 2.32,
@@ -17215,7 +16475,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-12T15:49:18+08:00",
-        "updatedAt": "2026-08-13T01:10:55+08:00",
+        "updatedAt": "2026-08-13T03:17:58+08:00",
         "initialOdds": {
           "home": 4.45,
           "draw": 4.2,
@@ -17253,7 +16513,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-13T01:10:55+08:00",
+          "at": "2026-08-13T03:17:58+08:00",
           "stage": "latest",
           "odds": {
             "home": 4.45,
@@ -17714,7 +16974,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-12T15:49:18+08:00",
-        "updatedAt": "2026-08-13T01:10:55+08:00",
+        "updatedAt": "2026-08-13T03:17:58+08:00",
         "initialOdds": {
           "home": 1.49,
           "draw": 3.6,
@@ -17752,7 +17012,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-13T01:10:55+08:00",
+          "at": "2026-08-13T03:17:58+08:00",
           "stage": "latest",
           "odds": {
             "home": 1.49,
@@ -18216,7 +17476,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-08-12T15:49:18+08:00",
-        "updatedAt": "2026-08-13T01:10:55+08:00",
+        "updatedAt": "2026-08-13T03:17:58+08:00",
         "initialOdds": {
           "home": 2.02,
           "draw": 2.7,
@@ -18254,7 +17514,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-08-13T01:10:55+08:00",
+          "at": "2026-08-13T03:17:58+08:00",
           "stage": "latest",
           "odds": {
             "home": 2.02,
