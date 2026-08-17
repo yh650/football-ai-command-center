@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T00:44:00+08:00",
+  "updatedAt": "2026-08-18T02:55:35+08:00",
   "matches": [
     {
       "id": "500-1362457",
@@ -99,7 +99,7 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-08-18T00:44:00+08:00",
+        "at": "2026-08-18T02:55:35+08:00",
         "stage": "latest",
         "odds": {
           "home": 1.41,
@@ -207,7 +207,7 @@
       "oddsMovement": "相对初始：主胜降0.04 · 平局升0.15 · 客胜升0.30；较上次：主胜不变 · 平局不变 · 客胜不变",
       "changeReason": "最新赔率复核后仍维持主胜，方向未发生改判。",
       "createdAt": "2026-08-15T14:55:48+08:00",
-      "updatedAt": "2026-08-18T00:44:00+08:00",
+      "updatedAt": "2026-08-18T02:55:35+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -285,7 +285,7 @@
         "decisionMode": "base",
         "analysis": "先把结论摆出来：卡萨皮亚对本菲卡并不是一眼能定性的比赛，几个方向贴得很近。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n本地圆桌认为平局有一定讨论价值，但只有1个核心席位支持，未达到正式防平门槛。支持方为比分结构Agent，没有强反对票，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像997场与Poisson比分矩阵把两个首选比分收敛到1-0、0-1；预期总进球2.46，对应小2.5球倾向。最终口径为主胜，防客胜，信心64/100，爆冷压力约64.5%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
       },
-      "trackingStatus": "steady",
+      "trackingStatus": "locked",
       "initialAnalysis": {
         "at": "2026-08-15T14:55:48+08:00",
         "stage": "initial",
@@ -324,8 +324,8 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-08-18T00:44:00+08:00",
-        "stage": "latest",
+        "at": "2026-08-18T02:55:35+08:00",
+        "stage": "locked",
         "odds": {
           "home": 2.16,
           "draw": 3.7,
@@ -358,9 +358,45 @@
         "overUnder": "小2.5球倾向",
         "upsetScore": 0.6451332558628506,
         "accepted": true,
-        "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
+        "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
       },
-      "lockedAnalysis": null,
+      "lockedAnalysis": {
+        "at": "2026-08-18T02:55:35+08:00",
+        "stage": "locked",
+        "odds": {
+          "home": 2.16,
+          "draw": 3.7,
+          "away": 2.53
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜，防客胜",
+        "confidence": 64,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "1-0",
+            "probability": 0.1237,
+            "script": "主方向脚本"
+          },
+          {
+            "score": "0-1",
+            "probability": 0.0867,
+            "script": "防冷脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0635,
+            "script": "爆冷脚本"
+          }
+        ],
+        "overUnder": "小2.5球倾向",
+        "upsetScore": 0.6451332558628506,
+        "accepted": true,
+        "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
+      },
       "analysisTimeline": [
         {
           "at": "2026-08-15T14:55:48+08:00",
@@ -435,6 +471,43 @@
           "upsetScore": 0.6451332558628506,
           "accepted": true,
           "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
+        },
+        {
+          "at": "2026-08-18T02:55:35+08:00",
+          "stage": "locked",
+          "odds": {
+            "home": 2.16,
+            "draw": 3.7,
+            "away": 2.53
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜，防客胜",
+          "confidence": 64,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "1-0",
+              "probability": 0.1237,
+              "script": "主方向脚本"
+            },
+            {
+              "score": "0-1",
+              "probability": 0.0867,
+              "script": "防冷脚本"
+            }
+          ],
+          "coldScores": [
+            {
+              "score": "1-2",
+              "probability": 0.0635,
+              "script": "爆冷脚本"
+            }
+          ],
+          "overUnder": "小2.5球倾向",
+          "upsetScore": 0.6451332558628506,
+          "accepted": true,
+          "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
         }
       ],
       "oddsInitial": {
@@ -448,9 +521,9 @@
         "away": 2.53
       },
       "oddsMovement": "相对初始：主胜升0.02 · 平局降0.20 · 客胜升0.06；较上次：主胜不变 · 平局不变 · 客胜不变",
-      "changeReason": "最新赔率复核后仍维持主胜，方向未发生改判。",
+      "changeReason": "最新赔率复核后仍维持主胜，方向未发生改判。 已进入开赛前90分钟临场窗口，最终结论锁定为主胜。",
       "createdAt": "2026-08-15T14:55:48+08:00",
-      "updatedAt": "2026-08-18T00:44:00+08:00",
+      "updatedAt": "2026-08-18T02:55:35+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -527,7 +600,7 @@
         "decisionMode": "base",
         "analysis": "这场最需要防止的是被单一信号带着走。多席本地Agent重新拆分强弱、节奏和风险后，仍认为主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n本地圆桌认为平局有一定讨论价值，但只有1个核心席位支持，未达到正式防平门槛。支持方为比分结构Agent、赔率参考Agent，没有强反对票，所以只保留观察，不机械塞进最终选择。Interwetten与500的平赔仍只是一张参考票。\n落到执行层，联赛历史画像1357场与Poisson比分矩阵把两个首选比分收敛到1-0、0-1；预期总进球2.40，对应小2.5球倾向。最终口径为主胜，防客胜，信心57/100，爆冷压力约61.4%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
       },
-      "trackingStatus": "steady",
+      "trackingStatus": "locked",
       "initialAnalysis": {
         "at": "2026-08-15T14:55:48+08:00",
         "stage": "initial",
@@ -566,8 +639,8 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-08-18T00:44:00+08:00",
-        "stage": "latest",
+        "at": "2026-08-18T02:55:35+08:00",
+        "stage": "locked",
         "odds": {
           "home": 2.37,
           "draw": 3.14,
@@ -600,9 +673,45 @@
         "overUnder": "小2.5球倾向",
         "upsetScore": 0.6139037435201182,
         "accepted": true,
-        "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
+        "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
       },
-      "lockedAnalysis": null,
+      "lockedAnalysis": {
+        "at": "2026-08-18T02:55:35+08:00",
+        "stage": "locked",
+        "odds": {
+          "home": 2.37,
+          "draw": 3.14,
+          "away": 2.57
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜，防客胜",
+        "confidence": 57,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "1-0",
+            "probability": 0.1293,
+            "script": "主方向脚本"
+          },
+          {
+            "score": "0-1",
+            "probability": 0.0878,
+            "script": "防冷脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0612,
+            "script": "爆冷脚本"
+          }
+        ],
+        "overUnder": "小2.5球倾向",
+        "upsetScore": 0.6139037435201182,
+        "accepted": true,
+        "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
+      },
       "analysisTimeline": [
         {
           "at": "2026-08-15T14:55:48+08:00",
@@ -714,6 +823,43 @@
           "upsetScore": 0.6139037435201182,
           "accepted": true,
           "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
+        },
+        {
+          "at": "2026-08-18T02:55:35+08:00",
+          "stage": "locked",
+          "odds": {
+            "home": 2.37,
+            "draw": 3.14,
+            "away": 2.57
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜，防客胜",
+          "confidence": 57,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "1-0",
+              "probability": 0.1293,
+              "script": "主方向脚本"
+            },
+            {
+              "score": "0-1",
+              "probability": 0.0878,
+              "script": "防冷脚本"
+            }
+          ],
+          "coldScores": [
+            {
+              "score": "1-2",
+              "probability": 0.0612,
+              "script": "爆冷脚本"
+            }
+          ],
+          "overUnder": "小2.5球倾向",
+          "upsetScore": 0.6139037435201182,
+          "accepted": true,
+          "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
         }
       ],
       "oddsInitial": {
@@ -727,9 +873,9 @@
         "away": 2.57
       },
       "oddsMovement": "相对初始：主胜升0.10 · 平局降0.16 · 客胜降0.02；较上次：主胜不变 · 平局不变 · 客胜不变",
-      "changeReason": "最新赔率复核后仍维持主胜，方向未发生改判。",
+      "changeReason": "最新赔率复核后仍维持主胜，方向未发生改判。 已进入开赛前90分钟临场窗口，最终结论锁定为主胜。",
       "createdAt": "2026-08-15T14:55:48+08:00",
-      "updatedAt": "2026-08-18T00:44:00+08:00",
+      "updatedAt": "2026-08-18T02:55:35+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -802,7 +948,7 @@
         "decisionMode": "bold-cold",
         "analysis": "先把态度亮出来：拉科对埃尔切选择平局作为最终立场。赔率第一顺位是主胜，但它没有拿到圆桌否决权。\n冷门主张得到2个核心席支持，支持方为概率模型Agent、比分结构Agent、赔率参考Agent；反对方为没有形成强反对席。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n平局不再只是“防一下”，而是从风险层升为最终主判。基础平局概率29.3%，但2个核心席认为热门优势不足以兑现。\n落到执行层，联赛历史画像1692场与Poisson比分矩阵把两个首选比分收敛到1-1、1-0；预期总进球2.33，对应小2.5球倾向。最终口径为平局，防主胜，信心57/100，爆冷压力约66.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
       },
-      "trackingStatus": "steady",
+      "trackingStatus": "locked",
       "initialAnalysis": {
         "at": "2026-08-15T14:55:48+08:00",
         "stage": "initial",
@@ -835,8 +981,8 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-08-18T00:44:00+08:00",
-        "stage": "latest",
+        "at": "2026-08-18T02:55:35+08:00",
+        "stage": "locked",
         "odds": {
           "home": 1.98,
           "draw": 2.9,
@@ -863,9 +1009,39 @@
         "overUnder": "小2.5球倾向",
         "upsetScore": 0.66,
         "accepted": true,
-        "reason": "最新赔率复核后仍维持平局，方向未发生改判。"
+        "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为平局。"
       },
-      "lockedAnalysis": null,
+      "lockedAnalysis": {
+        "at": "2026-08-18T02:55:35+08:00",
+        "stage": "locked",
+        "odds": {
+          "home": 1.98,
+          "draw": 2.9,
+          "away": 3.6
+        },
+        "primary": "平局",
+        "candidatePrimary": "平局",
+        "cover": "平局，防主胜",
+        "confidence": 57,
+        "decisionMode": "bold-cold",
+        "bestScores": [
+          {
+            "score": "1-1",
+            "probability": 0.1109,
+            "script": "主方向脚本"
+          },
+          {
+            "score": "1-0",
+            "probability": 0.1583,
+            "script": "防冷脚本"
+          }
+        ],
+        "coldScores": [],
+        "overUnder": "小2.5球倾向",
+        "upsetScore": 0.66,
+        "accepted": true,
+        "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为平局。"
+      },
       "analysisTimeline": [
         {
           "at": "2026-08-15T14:55:48+08:00",
@@ -990,6 +1166,37 @@
           "upsetScore": 0.66,
           "accepted": true,
           "reason": "最新赔率复核后仍维持平局，方向未发生改判。"
+        },
+        {
+          "at": "2026-08-18T02:55:35+08:00",
+          "stage": "locked",
+          "odds": {
+            "home": 1.98,
+            "draw": 2.9,
+            "away": 3.6
+          },
+          "primary": "平局",
+          "candidatePrimary": "平局",
+          "cover": "平局，防主胜",
+          "confidence": 57,
+          "decisionMode": "bold-cold",
+          "bestScores": [
+            {
+              "score": "1-1",
+              "probability": 0.1109,
+              "script": "主方向脚本"
+            },
+            {
+              "score": "1-0",
+              "probability": 0.1583,
+              "script": "防冷脚本"
+            }
+          ],
+          "coldScores": [],
+          "overUnder": "小2.5球倾向",
+          "upsetScore": 0.66,
+          "accepted": true,
+          "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为平局。"
         }
       ],
       "oddsInitial": {
@@ -1003,9 +1210,9 @@
         "away": 3.6
       },
       "oddsMovement": "相对初始：主胜降0.18 · 平局降0.05 · 客胜升0.55；较上次：主胜不变 · 平局不变 · 客胜不变",
-      "changeReason": "最新赔率复核后仍维持平局，方向未发生改判。",
+      "changeReason": "最新赔率复核后仍维持平局，方向未发生改判。 已进入开赛前90分钟临场窗口，最终结论锁定为平局。",
       "createdAt": "2026-08-15T14:55:48+08:00",
-      "updatedAt": "2026-08-18T00:44:00+08:00",
+      "updatedAt": "2026-08-18T02:55:35+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
