@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-14T20:40:03+08:00",
+  "updatedAt": "2026-09-15T03:19:53+08:00",
   "matches": [
     {
       "id": "500-1438102",
@@ -18,18 +18,18 @@
       "bestScores": [
         {
           "score": "2-0",
-          "probability": 0.1816,
+          "probability": 0.1818,
           "script": "主方向脚本"
         },
         {
           "score": "1-0",
-          "probability": 0.1754,
+          "probability": 0.1757,
           "script": "主方向脚本"
         }
       ],
       "coldScores": [],
       "overUnder": "小2.5球倾向",
-      "upsetScore": 0.36704051143556476,
+      "upsetScore": 0.3673800625399195,
       "upsetRoundtable": {
         "bold": false,
         "level": "none",
@@ -63,9 +63,9 @@
         "coldScores": "",
         "probabilityLine": "主胜65.1% · 平局19.9% · 客胜15.0%",
         "decisionMode": "base",
-        "analysis": "布拉加对埃斯托里的主线比较清楚，主胜不是因为赔率更低才被选中，而是强弱、节奏和比分结构给出了同向证据。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n平局没有形成两席以上本地核心共识，反对方主要来自概率模型Agent、赔率参考Agent、强弱差Agent、排名差Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像1015场与Poisson比分矩阵把两个首选比分收敛到2-0、1-0；预期总进球2.47，对应小2.5球倾向。最终口径为主胜，信心90/100，爆冷压力约36.7%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+        "analysis": "布拉加对埃斯托里的主线比较清楚，主胜不是因为赔率更低才被选中，而是强弱、节奏和比分结构给出了同向证据。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n平局没有形成两席以上本地核心共识，反对方主要来自概率模型Agent、赔率参考Agent、强弱差Agent、排名差Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像1014场与Poisson比分矩阵把两个首选比分收敛到2-0、1-0；预期总进球2.47，对应小2.5球倾向。最终口径为主胜，信心90/100，爆冷压力约36.7%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
       },
-      "trackingStatus": "steady",
+      "trackingStatus": "locked",
       "initialAnalysis": {
         "at": "2026-09-12T12:30:15+08:00",
         "stage": "initial",
@@ -98,8 +98,8 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-09-14T20:40:03+08:00",
-        "stage": "latest",
+        "at": "2026-09-15T03:19:53+08:00",
+        "stage": "locked",
         "odds": {
           "home": 1.24,
           "draw": 4.9,
@@ -113,22 +113,52 @@
         "bestScores": [
           {
             "score": "2-0",
-            "probability": 0.1816,
+            "probability": 0.1818,
             "script": "主方向脚本"
           },
           {
             "score": "1-0",
-            "probability": 0.1754,
+            "probability": 0.1757,
             "script": "主方向脚本"
           }
         ],
         "coldScores": [],
         "overUnder": "小2.5球倾向",
-        "upsetScore": 0.36704051143556476,
+        "upsetScore": 0.3673800625399195,
         "accepted": true,
-        "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
+        "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
       },
-      "lockedAnalysis": null,
+      "lockedAnalysis": {
+        "at": "2026-09-15T03:19:53+08:00",
+        "stage": "locked",
+        "odds": {
+          "home": 1.24,
+          "draw": 4.9,
+          "away": 8.4
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 90,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "2-0",
+            "probability": 0.1818,
+            "script": "主方向脚本"
+          },
+          {
+            "score": "1-0",
+            "probability": 0.1757,
+            "script": "主方向脚本"
+          }
+        ],
+        "coldScores": [],
+        "overUnder": "小2.5球倾向",
+        "upsetScore": 0.3673800625399195,
+        "accepted": true,
+        "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
+      },
       "analysisTimeline": [
         {
           "at": "2026-09-12T12:30:15+08:00",
@@ -222,6 +252,37 @@
           "upsetScore": 0.36704051143556476,
           "accepted": true,
           "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
+        },
+        {
+          "at": "2026-09-15T03:19:53+08:00",
+          "stage": "locked",
+          "odds": {
+            "home": 1.24,
+            "draw": 4.9,
+            "away": 8.4
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜",
+          "confidence": 90,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "2-0",
+              "probability": 0.1818,
+              "script": "主方向脚本"
+            },
+            {
+              "score": "1-0",
+              "probability": 0.1757,
+              "script": "主方向脚本"
+            }
+          ],
+          "coldScores": [],
+          "overUnder": "小2.5球倾向",
+          "upsetScore": 0.3673800625399195,
+          "accepted": true,
+          "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
         }
       ],
       "oddsInitial": {
@@ -234,10 +295,10 @@
         "draw": 4.9,
         "away": 8.4
       },
-      "oddsMovement": "相对初始：主胜降0.11 · 平局升0.60 · 客胜升2.00；较上次：主胜降0.08 · 平局升0.55 · 客胜升1.35",
-      "changeReason": "最新赔率复核后仍维持主胜，方向未发生改判。",
+      "oddsMovement": "相对初始：主胜降0.11 · 平局升0.60 · 客胜升2.00；较上次：主胜不变 · 平局不变 · 客胜不变",
+      "changeReason": "最新赔率复核后仍维持主胜，方向未发生改判。 已进入开赛前90分钟临场窗口，最终结论锁定为主胜。",
       "createdAt": "2026-09-12T12:30:15+08:00",
-      "updatedAt": "2026-09-14T20:40:03+08:00",
+      "updatedAt": "2026-09-15T03:19:53+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -2878,12 +2939,13 @@
       "changeReason": "首次抓取已进入临场窗口，当前可用研判直接锁定。",
       "createdAt": "2026-09-14T20:40:03+08:00",
       "updatedAt": "2026-09-14T20:40:03+08:00",
-      "finalScore": "",
-      "actualOutcome": "",
-      "primaryHit": null,
-      "executionHit": null,
-      "directionHit": null,
-      "hitType": null
+      "finalScore": "5-1",
+      "actualOutcome": "主胜",
+      "primaryHit": true,
+      "executionHit": true,
+      "directionHit": true,
+      "hitType": "primary",
+      "finishedAt": "2026-09-14 18:00"
     },
     {
       "id": "500-1358675",
