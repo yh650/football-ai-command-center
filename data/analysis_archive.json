@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28T02:20:47+08:00",
+  "updatedAt": "2026-09-28T07:00:55+08:00",
   "matches": [
     {
       "id": "500-1358600",
@@ -68,7 +68,7 @@
         "decisionMode": "base",
         "analysis": "哥伦布对迈阿密国际当前更偏向客胜，但优势还没有大到可以把另一条比赛路线删掉。客队的有效进攻和抗压结构更占优，主队的主场身份不足以单独扭转判断。\n平局没有形成两席以上本地核心共识，反对方主要来自赔率参考Agent、排名差Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像1147场与Poisson比分矩阵把两个首选比分收敛到0-1、1-0；预期总进球2.48，对应小2.5球倾向。最终口径为客胜，防主胜，信心70/100，爆冷压力约56.4%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
       },
-      "trackingStatus": "steady",
+      "trackingStatus": "locked",
       "initialAnalysis": {
         "at": "2026-09-26T12:53:09+08:00",
         "stage": "initial",
@@ -102,7 +102,7 @@
       },
       "latestAnalysis": {
         "at": "2026-09-28T02:20:46+08:00",
-        "stage": "latest",
+        "stage": "locked",
         "odds": {
           "home": 2.74,
           "draw": 3.98,
@@ -129,9 +129,39 @@
         "overUnder": "小2.5球倾向",
         "upsetScore": 0.564409479656193,
         "accepted": true,
-        "reason": "最新赔率复核后仍维持客胜，方向未发生改判。"
+        "reason": "比赛已开始，系统按赛前最后一次可用研判锁定，拒绝使用赛中赔率改写观点。"
       },
-      "lockedAnalysis": null,
+      "lockedAnalysis": {
+        "at": "2026-09-28T02:20:46+08:00",
+        "stage": "locked",
+        "odds": {
+          "home": 2.74,
+          "draw": 3.98,
+          "away": 1.95
+        },
+        "primary": "客胜",
+        "candidatePrimary": "客胜",
+        "cover": "客胜，防主胜",
+        "confidence": 70,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "0-1",
+            "probability": 0.1022,
+            "script": "主方向脚本"
+          },
+          {
+            "score": "1-0",
+            "probability": 0.1049,
+            "script": "防冷脚本"
+          }
+        ],
+        "coldScores": [],
+        "overUnder": "小2.5球倾向",
+        "upsetScore": 0.564409479656193,
+        "accepted": true,
+        "reason": "比赛已开始，系统按赛前最后一次可用研判锁定，拒绝使用赛中赔率改写观点。"
+      },
       "analysisTimeline": [
         {
           "at": "2026-09-26T12:53:09+08:00",
@@ -194,6 +224,37 @@
           "upsetScore": 0.5646541373706153,
           "accepted": true,
           "reason": "最新赔率复核后仍维持客胜，方向未发生改判。"
+        },
+        {
+          "at": "2026-09-28T02:20:46+08:00",
+          "stage": "locked",
+          "odds": {
+            "home": 2.74,
+            "draw": 3.98,
+            "away": 1.95
+          },
+          "primary": "客胜",
+          "candidatePrimary": "客胜",
+          "cover": "客胜，防主胜",
+          "confidence": 70,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "0-1",
+              "probability": 0.1022,
+              "script": "主方向脚本"
+            },
+            {
+              "score": "1-0",
+              "probability": 0.1049,
+              "script": "防冷脚本"
+            }
+          ],
+          "coldScores": [],
+          "overUnder": "小2.5球倾向",
+          "upsetScore": 0.564409479656193,
+          "accepted": true,
+          "reason": "比赛已开始，系统按赛前最后一次可用研判锁定，拒绝使用赛中赔率改写观点。"
         }
       ],
       "oddsInitial": {
@@ -207,9 +268,9 @@
         "away": 1.95
       },
       "oddsMovement": "相对初始：主胜升0.06 · 平局升0.03 · 客胜降0.04；较上次：主胜不变 · 平局不变 · 客胜不变",
-      "changeReason": "最新赔率复核后仍维持客胜，方向未发生改判。",
+      "changeReason": "比赛已开始，系统按赛前最后一次可用研判锁定，拒绝使用赛中赔率改写观点。",
       "createdAt": "2026-09-26T12:53:09+08:00",
-      "updatedAt": "2026-09-28T02:20:47+08:00",
+      "updatedAt": "2026-09-28T07:00:55+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
