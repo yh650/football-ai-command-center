@@ -2,7 +2,7 @@
   "meta": {
     "product": "AI足球赛事研判指挥舱 HTML授权版",
     "modelName": "Local AI 5.5",
-    "generatedAt": "2026-09-30T03:23:52+08:00",
+    "generatedAt": "2026-09-30T07:41:28+08:00",
     "source": "500彩票网竞彩日常更新 + Interwetten五年历史画像",
     "matchCount": 3,
     "baseHistorySample": 21138,
@@ -15110,15 +15110,15 @@
         {
           "name": "变盘锁定Agent",
           "status": "已执行",
-          "signal": "稳定：主胜",
-          "score": 86,
-          "view": "最新赔率复核后仍维持主胜，方向未发生改判。"
+          "signal": "临场锁定：主胜",
+          "score": 100,
+          "view": "最新赔率复核后仍维持主胜，方向未发生改判。 已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
         }
       ],
       "analysisTracking": {
-        "status": "steady",
+        "status": "locked",
         "firstSeenAt": "2026-09-29T13:39:57+08:00",
-        "updatedAt": "2026-09-30T03:23:52+08:00",
+        "updatedAt": "2026-09-30T07:41:28+08:00",
         "initialOdds": {
           "home": 1.33,
           "draw": 4.5,
@@ -15167,8 +15167,8 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-09-30T03:23:52+08:00",
-          "stage": "latest",
+          "at": "2026-09-30T07:41:28+08:00",
+          "stage": "locked",
           "odds": {
             "home": 1.29,
             "draw": 4.65,
@@ -15206,11 +15206,52 @@
           "overUnder": "大2.5球倾向",
           "upsetScore": 0.39666468866338883,
           "accepted": true,
-          "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
+          "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
         },
-        "locked": false,
-        "lockedAt": "",
-        "lockedSnapshot": null,
+        "locked": true,
+        "lockedAt": "2026-09-30T07:41:28+08:00",
+        "lockedSnapshot": {
+          "at": "2026-09-30T07:41:28+08:00",
+          "stage": "locked",
+          "odds": {
+            "home": 1.29,
+            "draw": 4.65,
+            "away": 7.2
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜",
+          "confidence": 90,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "2-1",
+              "probability": 0.0946,
+              "script": "开放局脚本"
+            },
+            {
+              "score": "3-0",
+              "probability": 0.0911,
+              "script": "开放局脚本"
+            }
+          ],
+          "coldScores": [
+            {
+              "score": "1-2",
+              "probability": 0.0327,
+              "script": "大球爆冷脚本"
+            },
+            {
+              "score": "2-3",
+              "probability": 0.0081,
+              "script": "大球爆冷脚本"
+            }
+          ],
+          "overUnder": "大2.5球倾向",
+          "upsetScore": 0.39666468866338883,
+          "accepted": true,
+          "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
+        },
         "decisionAnchor": {
           "at": "2026-09-29T13:39:57+08:00",
           "primary": "主胜",
@@ -15233,7 +15274,7 @@
           "oddsThreshold": 0.1,
           "impliedThreshold": 0.025,
           "requiredCoreSupports": 2,
-          "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
+          "reason": "最新赔率复核后仍维持主胜，方向未发生改判。 已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
         },
         "snapshots": [
           {
@@ -15319,6 +15360,48 @@
             "upsetScore": 0.39666468866338883,
             "accepted": true,
             "reason": "最新赔率复核后仍维持主胜，方向未发生改判。"
+          },
+          {
+            "at": "2026-09-30T07:41:28+08:00",
+            "stage": "locked",
+            "odds": {
+              "home": 1.29,
+              "draw": 4.65,
+              "away": 7.2
+            },
+            "primary": "主胜",
+            "candidatePrimary": "主胜",
+            "cover": "主胜",
+            "confidence": 90,
+            "decisionMode": "base",
+            "bestScores": [
+              {
+                "score": "2-1",
+                "probability": 0.0946,
+                "script": "开放局脚本"
+              },
+              {
+                "score": "3-0",
+                "probability": 0.0911,
+                "script": "开放局脚本"
+              }
+            ],
+            "coldScores": [
+              {
+                "score": "1-2",
+                "probability": 0.0327,
+                "script": "大球爆冷脚本"
+              },
+              {
+                "score": "2-3",
+                "probability": 0.0081,
+                "script": "大球爆冷脚本"
+              }
+            ],
+            "overUnder": "大2.5球倾向",
+            "upsetScore": 0.39666468866338883,
+            "accepted": true,
+            "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为主胜。"
           }
         ]
       }
@@ -15640,7 +15723,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-09-29T13:39:57+08:00",
-        "updatedAt": "2026-09-30T03:23:52+08:00",
+        "updatedAt": "2026-09-30T07:41:28+08:00",
         "initialOdds": {
           "home": 1.22,
           "draw": 4.7,
@@ -15678,7 +15761,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-09-30T03:23:52+08:00",
+          "at": "2026-09-30T07:41:28+08:00",
           "stage": "latest",
           "odds": {
             "home": 1.21,
@@ -16118,7 +16201,7 @@
       "analysisTracking": {
         "status": "steady",
         "firstSeenAt": "2026-09-29T13:39:57+08:00",
-        "updatedAt": "2026-09-30T03:23:52+08:00",
+        "updatedAt": "2026-09-30T07:41:28+08:00",
         "initialOdds": {
           "home": 4.45,
           "draw": 3.35,
@@ -16156,7 +16239,7 @@
           "reason": "首次载入赛事，已保存初始赔率与初始研判。"
         },
         "latest": {
-          "at": "2026-09-30T03:23:52+08:00",
+          "at": "2026-09-30T07:41:28+08:00",
           "stage": "latest",
           "odds": {
             "home": 4.7,
