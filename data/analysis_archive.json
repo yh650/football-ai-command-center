@@ -1,6 +1,1815 @@
 {
-  "updatedAt": "2026-10-12T23:16:15+08:00",
+  "updatedAt": "2026-10-13T06:55:57+08:00",
   "matches": [
+    {
+      "id": "500-1479978",
+      "date": "2026-10-14 03:00",
+      "round": "周二005",
+      "league": "欧冠",
+      "home": "国际米兰",
+      "away": "布鲁日",
+      "predictedPrimary": "主胜",
+      "marketPrimary": "主胜",
+      "decisionMode": "base",
+      "cover": "主胜",
+      "confidence": 87,
+      "recommendationTier": "重点",
+      "portfolioEligible": true,
+      "bestScores": [
+        {
+          "score": "3-0",
+          "probability": 0.1375,
+          "script": "开放局脚本"
+        },
+        {
+          "score": "4-0",
+          "probability": 0.0755,
+          "script": "开放局脚本"
+        }
+      ],
+      "coldScores": [
+        {
+          "score": "2-2",
+          "probability": 0.0119,
+          "script": "大球爆冷脚本"
+        },
+        {
+          "score": "3-3",
+          "probability": 0.001,
+          "script": "大球爆冷脚本"
+        }
+      ],
+      "overUnder": "大2.5球倾向",
+      "upsetScore": 0.31984208215079446,
+      "upsetRoundtable": {
+        "bold": false,
+        "level": "none",
+        "verdict": "维持基础主线",
+        "pickKey": "home",
+        "marketPrimaryKey": "home",
+        "candidateKey": "away",
+        "coreSupports": 0,
+        "supportAgents": [],
+        "opposeAgents": [
+          "概率分歧Agent",
+          "球队反向Agent",
+          "比分反转Agent"
+        ],
+        "consensusScore": -1.0,
+        "confidence": 48,
+        "reasons": [
+          "基础概率13.8%",
+          "与热门差距56.3%"
+        ],
+        "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+      },
+      "customerSummary": {
+        "headline": "圆桌明确选择主胜，不机械附加平局",
+        "primary": "主胜",
+        "secondary": "主胜",
+        "cover": "主胜",
+        "confidence": 87,
+        "overUnder": "大2.5球倾向",
+        "mainScores": "3-0、4-0",
+        "coldScores": "2-2、3-3",
+        "probabilityLine": "主胜70.0% · 平局16.2% · 客胜13.8%",
+        "decisionMode": "base",
+        "analysis": "这场可以把态度说得明确一些：圆桌更信任主胜。优势已经形成，但仍要区分“更可能发生”和“不会出意外”。\n平局没有形成两席以上本地核心共识，反对方主要来自概率模型Agent、联赛画像Agent、赔率参考Agent、强弱差Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像946场与Poisson比分矩阵把两个首选比分收敛到3-0、4-0；预期总进球2.55，对应大2.5球倾向。最终口径为主胜，信心87/100，爆冷压力约32.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+      },
+      "trackingStatus": "initial",
+      "initialAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 1.18,
+          "draw": 5.6,
+          "away": 9.75
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 87,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "3-0",
+            "probability": 0.1375,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "4-0",
+            "probability": 0.0755,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "2-2",
+            "probability": 0.0119,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "3-3",
+            "probability": 0.001,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.31984208215079446,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "latestAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 1.18,
+          "draw": 5.6,
+          "away": 9.75
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 87,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "3-0",
+            "probability": 0.1375,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "4-0",
+            "probability": 0.0755,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "2-2",
+            "probability": 0.0119,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "3-3",
+            "probability": 0.001,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.31984208215079446,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "lockedAnalysis": null,
+      "analysisTimeline": [
+        {
+          "at": "2026-10-13T06:55:56+08:00",
+          "stage": "initial",
+          "odds": {
+            "home": 1.18,
+            "draw": 5.6,
+            "away": 9.75
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜",
+          "confidence": 87,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "3-0",
+              "probability": 0.1375,
+              "script": "开放局脚本"
+            },
+            {
+              "score": "4-0",
+              "probability": 0.0755,
+              "script": "开放局脚本"
+            }
+          ],
+          "coldScores": [
+            {
+              "score": "2-2",
+              "probability": 0.0119,
+              "script": "大球爆冷脚本"
+            },
+            {
+              "score": "3-3",
+              "probability": 0.001,
+              "script": "大球爆冷脚本"
+            }
+          ],
+          "overUnder": "大2.5球倾向",
+          "upsetScore": 0.31984208215079446,
+          "accepted": true,
+          "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+        }
+      ],
+      "oddsInitial": {
+        "home": 1.18,
+        "draw": 5.6,
+        "away": 9.75
+      },
+      "oddsLatest": {
+        "home": 1.18,
+        "draw": 5.6,
+        "away": 9.75
+      },
+      "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
+      "changeReason": "首次载入赛事，已保存初始赔率与初始研判。",
+      "createdAt": "2026-10-13T06:55:57+08:00",
+      "updatedAt": "2026-10-13T06:55:57+08:00",
+      "finalScore": "",
+      "actualOutcome": "",
+      "primaryHit": null,
+      "executionHit": null,
+      "directionHit": null,
+      "hitType": null
+    },
+    {
+      "id": "500-1479873",
+      "date": "2026-10-14 03:00",
+      "round": "周二006",
+      "league": "欧冠",
+      "home": "阿森纳",
+      "away": "里尔",
+      "predictedPrimary": "主胜",
+      "marketPrimary": "主胜",
+      "decisionMode": "base",
+      "cover": "主胜",
+      "confidence": 90,
+      "recommendationTier": "重点",
+      "portfolioEligible": true,
+      "bestScores": [
+        {
+          "score": "3-0",
+          "probability": 0.1425,
+          "script": "开放局脚本"
+        },
+        {
+          "score": "4-0",
+          "probability": 0.0788,
+          "script": "开放局脚本"
+        }
+      ],
+      "coldScores": [
+        {
+          "score": "2-2",
+          "probability": 0.0103,
+          "script": "大球爆冷脚本"
+        },
+        {
+          "score": "3-3",
+          "probability": 0.0008,
+          "script": "大球爆冷脚本"
+        }
+      ],
+      "overUnder": "大2.5球倾向",
+      "upsetScore": 0.3076539343320658,
+      "upsetRoundtable": {
+        "bold": false,
+        "level": "none",
+        "verdict": "维持基础主线",
+        "pickKey": "home",
+        "marketPrimaryKey": "home",
+        "candidateKey": "away",
+        "coreSupports": 0,
+        "supportAgents": [],
+        "opposeAgents": [
+          "概率分歧Agent",
+          "球队反向Agent",
+          "比分反转Agent"
+        ],
+        "consensusScore": -1.0,
+        "confidence": 48,
+        "reasons": [
+          "基础概率13.4%",
+          "与热门差距58.0%"
+        ],
+        "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+      },
+      "customerSummary": {
+        "headline": "圆桌明确选择主胜，不机械附加平局",
+        "primary": "主胜",
+        "secondary": "主胜",
+        "cover": "主胜",
+        "confidence": 90,
+        "overUnder": "大2.5球倾向",
+        "mainScores": "3-0、4-0",
+        "coldScores": "2-2、3-3",
+        "probabilityLine": "主胜71.4% · 平局15.2% · 客胜13.4%",
+        "decisionMode": "base",
+        "analysis": "这场可以把态度说得明确一些：圆桌更信任主胜。优势已经形成，但仍要区分“更可能发生”和“不会出意外”。\n平局没有形成两席以上本地核心共识，反对方主要来自概率模型Agent、球队状态Agent、联赛画像Agent、赔率参考Agent、强弱差Agent、排名差Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像946场与Poisson比分矩阵把两个首选比分收敛到3-0、4-0；预期总进球2.54，对应大2.5球倾向。最终口径为主胜，信心90/100，爆冷压力约30.8%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+      },
+      "trackingStatus": "initial",
+      "initialAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 1.16,
+          "draw": 5.7,
+          "away": 11.0
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 90,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "3-0",
+            "probability": 0.1425,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "4-0",
+            "probability": 0.0788,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "2-2",
+            "probability": 0.0103,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "3-3",
+            "probability": 0.0008,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.3076539343320658,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "latestAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 1.16,
+          "draw": 5.7,
+          "away": 11.0
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 90,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "3-0",
+            "probability": 0.1425,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "4-0",
+            "probability": 0.0788,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "2-2",
+            "probability": 0.0103,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "3-3",
+            "probability": 0.0008,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.3076539343320658,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "lockedAnalysis": null,
+      "analysisTimeline": [
+        {
+          "at": "2026-10-13T06:55:56+08:00",
+          "stage": "initial",
+          "odds": {
+            "home": 1.16,
+            "draw": 5.7,
+            "away": 11.0
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜",
+          "confidence": 90,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "3-0",
+              "probability": 0.1425,
+              "script": "开放局脚本"
+            },
+            {
+              "score": "4-0",
+              "probability": 0.0788,
+              "script": "开放局脚本"
+            }
+          ],
+          "coldScores": [
+            {
+              "score": "2-2",
+              "probability": 0.0103,
+              "script": "大球爆冷脚本"
+            },
+            {
+              "score": "3-3",
+              "probability": 0.0008,
+              "script": "大球爆冷脚本"
+            }
+          ],
+          "overUnder": "大2.5球倾向",
+          "upsetScore": 0.3076539343320658,
+          "accepted": true,
+          "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+        }
+      ],
+      "oddsInitial": {
+        "home": 1.16,
+        "draw": 5.7,
+        "away": 11.0
+      },
+      "oddsLatest": {
+        "home": 1.16,
+        "draw": 5.7,
+        "away": 11.0
+      },
+      "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
+      "changeReason": "首次载入赛事，已保存初始赔率与初始研判。",
+      "createdAt": "2026-10-13T06:55:57+08:00",
+      "updatedAt": "2026-10-13T06:55:57+08:00",
+      "finalScore": "",
+      "actualOutcome": "",
+      "primaryHit": null,
+      "executionHit": null,
+      "directionHit": null,
+      "hitType": null
+    },
+    {
+      "id": "500-1480124",
+      "date": "2026-10-14 03:00",
+      "round": "周二007",
+      "league": "欧冠",
+      "home": "比利亚雷",
+      "away": "那不勒斯",
+      "predictedPrimary": "主胜",
+      "marketPrimary": "主胜",
+      "decisionMode": "base",
+      "cover": "主胜",
+      "confidence": 72,
+      "recommendationTier": "谨慎",
+      "portfolioEligible": false,
+      "bestScores": [
+        {
+          "score": "2-1",
+          "probability": 0.0952,
+          "script": "开放局脚本"
+        },
+        {
+          "score": "3-0",
+          "probability": 0.0548,
+          "script": "开放局脚本"
+        }
+      ],
+      "coldScores": [
+        {
+          "score": "1-2",
+          "probability": 0.0551,
+          "script": "大球爆冷脚本"
+        },
+        {
+          "score": "1-3",
+          "probability": 0.0172,
+          "script": "大球爆冷脚本"
+        }
+      ],
+      "overUnder": "大2.5球倾向",
+      "upsetScore": 0.5369768421062976,
+      "upsetRoundtable": {
+        "bold": false,
+        "level": "none",
+        "verdict": "维持基础主线",
+        "pickKey": "home",
+        "marketPrimaryKey": "home",
+        "candidateKey": "away",
+        "coreSupports": 1,
+        "supportAgents": [
+          "概率分歧Agent"
+        ],
+        "opposeAgents": [
+          "比分反转Agent"
+        ],
+        "consensusScore": 0.55,
+        "confidence": 53,
+        "reasons": [
+          "基础概率31.1%",
+          "与热门差距13.3%"
+        ],
+        "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+      },
+      "customerSummary": {
+        "headline": "圆桌偏向主胜，保留临场复核",
+        "primary": "主胜",
+        "secondary": "主胜",
+        "cover": "主胜",
+        "confidence": 72,
+        "overUnder": "大2.5球倾向",
+        "mainScores": "2-1、3-0",
+        "coldScores": "1-2、1-3",
+        "probabilityLine": "主胜44.4% · 平局24.5% · 客胜31.1%",
+        "decisionMode": "base",
+        "analysis": "比利亚雷对那不勒斯当前更偏向主胜，但优势还没有大到可以把另一条比赛路线删掉。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n平局没有形成两席以上本地核心共识，反对方主要来自联赛画像Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像946场与Poisson比分矩阵把两个首选比分收敛到2-1、3-0；预期总进球2.55，对应大2.5球倾向。最终口径为主胜，信心72/100，爆冷压力约53.7%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+      },
+      "trackingStatus": "initial",
+      "initialAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 2.04,
+          "draw": 3.4,
+          "away": 2.9
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 72,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "2-1",
+            "probability": 0.0952,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "3-0",
+            "probability": 0.0548,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0551,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "1-3",
+            "probability": 0.0172,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.5369768421062976,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "latestAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 2.04,
+          "draw": 3.4,
+          "away": 2.9
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 72,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "2-1",
+            "probability": 0.0952,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "3-0",
+            "probability": 0.0548,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0551,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "1-3",
+            "probability": 0.0172,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.5369768421062976,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "lockedAnalysis": null,
+      "analysisTimeline": [
+        {
+          "at": "2026-10-13T06:55:56+08:00",
+          "stage": "initial",
+          "odds": {
+            "home": 2.04,
+            "draw": 3.4,
+            "away": 2.9
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜",
+          "confidence": 72,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "2-1",
+              "probability": 0.0952,
+              "script": "开放局脚本"
+            },
+            {
+              "score": "3-0",
+              "probability": 0.0548,
+              "script": "开放局脚本"
+            }
+          ],
+          "coldScores": [
+            {
+              "score": "1-2",
+              "probability": 0.0551,
+              "script": "大球爆冷脚本"
+            },
+            {
+              "score": "1-3",
+              "probability": 0.0172,
+              "script": "大球爆冷脚本"
+            }
+          ],
+          "overUnder": "大2.5球倾向",
+          "upsetScore": 0.5369768421062976,
+          "accepted": true,
+          "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+        }
+      ],
+      "oddsInitial": {
+        "home": 2.04,
+        "draw": 3.4,
+        "away": 2.9
+      },
+      "oddsLatest": {
+        "home": 2.04,
+        "draw": 3.4,
+        "away": 2.9
+      },
+      "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
+      "changeReason": "首次载入赛事，已保存初始赔率与初始研判。",
+      "createdAt": "2026-10-13T06:55:57+08:00",
+      "updatedAt": "2026-10-13T06:55:57+08:00",
+      "finalScore": "",
+      "actualOutcome": "",
+      "primaryHit": null,
+      "executionHit": null,
+      "directionHit": null,
+      "hitType": null
+    },
+    {
+      "id": "500-1480113",
+      "date": "2026-10-14 03:00",
+      "round": "周二008",
+      "league": "欧冠",
+      "home": "维京",
+      "away": "拜仁",
+      "predictedPrimary": "主胜",
+      "marketPrimary": "主胜",
+      "decisionMode": "base",
+      "cover": "主胜",
+      "confidence": 69,
+      "recommendationTier": "谨慎",
+      "portfolioEligible": false,
+      "bestScores": [
+        {
+          "score": "2-1",
+          "probability": 0.096,
+          "script": "开放局脚本"
+        },
+        {
+          "score": "3-1",
+          "probability": 0.0563,
+          "script": "开放局脚本"
+        }
+      ],
+      "coldScores": [
+        {
+          "score": "1-2",
+          "probability": 0.0665,
+          "script": "大球爆冷脚本"
+        },
+        {
+          "score": "1-3",
+          "probability": 0.0271,
+          "script": "大球爆冷脚本"
+        }
+      ],
+      "overUnder": "大2.5球倾向",
+      "upsetScore": 0.5433153955427675,
+      "upsetRoundtable": {
+        "bold": false,
+        "level": "none",
+        "verdict": "维持基础主线",
+        "pickKey": "home",
+        "marketPrimaryKey": "home",
+        "candidateKey": "away",
+        "coreSupports": 1,
+        "supportAgents": [
+          "概率分歧Agent"
+        ],
+        "opposeAgents": [],
+        "consensusScore": 1.0,
+        "confidence": 55,
+        "reasons": [
+          "基础概率37.3%",
+          "与热门差距8.2%"
+        ],
+        "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+      },
+      "customerSummary": {
+        "headline": "圆桌偏向主胜，保留临场复核",
+        "primary": "主胜",
+        "secondary": "主胜",
+        "cover": "主胜",
+        "confidence": 69,
+        "overUnder": "大2.5球倾向",
+        "mainScores": "2-1、3-1",
+        "coldScores": "1-2、1-3",
+        "probabilityLine": "主胜45.4% · 平局17.3% · 客胜37.3%",
+        "decisionMode": "base",
+        "analysis": "维京对拜仁当前更偏向主胜，但优势还没有大到可以把另一条比赛路线删掉。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n平局没有形成两席以上本地核心共识，反对方主要来自概率模型Agent、球队状态Agent、联赛画像Agent、赔率参考Agent、排名差Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像946场与Poisson比分矩阵把两个首选比分收敛到2-1、3-1；预期总进球2.98，对应大2.5球倾向。最终口径为主胜，信心69/100，爆冷压力约54.3%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+      },
+      "trackingStatus": "initial",
+      "initialAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 2.0,
+          "draw": 5.0,
+          "away": 2.33
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 69,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "2-1",
+            "probability": 0.096,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "3-1",
+            "probability": 0.0563,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0665,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "1-3",
+            "probability": 0.0271,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.5433153955427675,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "latestAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 2.0,
+          "draw": 5.0,
+          "away": 2.33
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 69,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "2-1",
+            "probability": 0.096,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "3-1",
+            "probability": 0.0563,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0665,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "1-3",
+            "probability": 0.0271,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.5433153955427675,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "lockedAnalysis": null,
+      "analysisTimeline": [
+        {
+          "at": "2026-10-13T06:55:56+08:00",
+          "stage": "initial",
+          "odds": {
+            "home": 2.0,
+            "draw": 5.0,
+            "away": 2.33
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜",
+          "confidence": 69,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "2-1",
+              "probability": 0.096,
+              "script": "开放局脚本"
+            },
+            {
+              "score": "3-1",
+              "probability": 0.0563,
+              "script": "开放局脚本"
+            }
+          ],
+          "coldScores": [
+            {
+              "score": "1-2",
+              "probability": 0.0665,
+              "script": "大球爆冷脚本"
+            },
+            {
+              "score": "1-3",
+              "probability": 0.0271,
+              "script": "大球爆冷脚本"
+            }
+          ],
+          "overUnder": "大2.5球倾向",
+          "upsetScore": 0.5433153955427675,
+          "accepted": true,
+          "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+        }
+      ],
+      "oddsInitial": {
+        "home": 2.0,
+        "draw": 5.0,
+        "away": 2.33
+      },
+      "oddsLatest": {
+        "home": 2.0,
+        "draw": 5.0,
+        "away": 2.33
+      },
+      "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
+      "changeReason": "首次载入赛事，已保存初始赔率与初始研判。",
+      "createdAt": "2026-10-13T06:55:57+08:00",
+      "updatedAt": "2026-10-13T06:55:57+08:00",
+      "finalScore": "",
+      "actualOutcome": "",
+      "primaryHit": null,
+      "executionHit": null,
+      "directionHit": null,
+      "hitType": null
+    },
+    {
+      "id": "500-1480054",
+      "date": "2026-10-14 03:00",
+      "round": "周二009",
+      "league": "欧冠",
+      "home": "莱红牛",
+      "away": "埃因霍温",
+      "predictedPrimary": "主胜",
+      "marketPrimary": "主胜",
+      "decisionMode": "base",
+      "cover": "主胜",
+      "confidence": 81,
+      "recommendationTier": "重点",
+      "portfolioEligible": true,
+      "bestScores": [
+        {
+          "score": "2-1",
+          "probability": 0.0954,
+          "script": "开放局脚本"
+        },
+        {
+          "score": "3-0",
+          "probability": 0.0721,
+          "script": "开放局脚本"
+        }
+      ],
+      "coldScores": [
+        {
+          "score": "1-2",
+          "probability": 0.0421,
+          "script": "大球爆冷脚本"
+        },
+        {
+          "score": "1-3",
+          "probability": 0.011,
+          "script": "大球爆冷脚本"
+        }
+      ],
+      "overUnder": "大2.5球倾向",
+      "upsetScore": 0.4717874658170892,
+      "upsetRoundtable": {
+        "bold": false,
+        "level": "none",
+        "verdict": "维持基础主线",
+        "pickKey": "home",
+        "marketPrimaryKey": "home",
+        "candidateKey": "away",
+        "coreSupports": 1,
+        "supportAgents": [
+          "球队反向Agent"
+        ],
+        "opposeAgents": [
+          "概率分歧Agent",
+          "比分反转Agent"
+        ],
+        "consensusScore": 0.6,
+        "confidence": 53,
+        "reasons": [
+          "基础概率27.7%",
+          "与热门差距24.7%",
+          "仅客队画像给反向结果68.4%"
+        ],
+        "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+      },
+      "customerSummary": {
+        "headline": "第一顺位是主胜，风险线另行处理",
+        "primary": "主胜",
+        "secondary": "主胜",
+        "cover": "主胜",
+        "confidence": 81,
+        "overUnder": "大2.5球倾向",
+        "mainScores": "2-1、3-0",
+        "coldScores": "1-2、1-3",
+        "probabilityLine": "主胜52.4% · 平局19.9% · 客胜27.7%",
+        "decisionMode": "base",
+        "analysis": "圆桌最后把主胜放在第一顺位，这是各席证据交叉后的选择，不是照抄任何一家公司的推荐。\n平局没有形成两席以上本地核心共识，反对方主要来自概率模型Agent、联赛画像Agent、赔率参考Agent、排名差Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像946场与Poisson比分矩阵把两个首选比分收敛到2-1、3-0；预期总进球2.55，对应大2.5球倾向。最终口径为主胜，信心81/100，爆冷压力约47.2%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+      },
+      "trackingStatus": "initial",
+      "initialAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 1.6,
+          "draw": 4.25,
+          "away": 3.73
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 81,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "2-1",
+            "probability": 0.0954,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "3-0",
+            "probability": 0.0721,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0421,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "1-3",
+            "probability": 0.011,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.4717874658170892,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "latestAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 1.6,
+          "draw": 4.25,
+          "away": 3.73
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 81,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "2-1",
+            "probability": 0.0954,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "3-0",
+            "probability": 0.0721,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0421,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "1-3",
+            "probability": 0.011,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.4717874658170892,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "lockedAnalysis": null,
+      "analysisTimeline": [
+        {
+          "at": "2026-10-13T06:55:56+08:00",
+          "stage": "initial",
+          "odds": {
+            "home": 1.6,
+            "draw": 4.25,
+            "away": 3.73
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜",
+          "confidence": 81,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "2-1",
+              "probability": 0.0954,
+              "script": "开放局脚本"
+            },
+            {
+              "score": "3-0",
+              "probability": 0.0721,
+              "script": "开放局脚本"
+            }
+          ],
+          "coldScores": [
+            {
+              "score": "1-2",
+              "probability": 0.0421,
+              "script": "大球爆冷脚本"
+            },
+            {
+              "score": "1-3",
+              "probability": 0.011,
+              "script": "大球爆冷脚本"
+            }
+          ],
+          "overUnder": "大2.5球倾向",
+          "upsetScore": 0.4717874658170892,
+          "accepted": true,
+          "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+        }
+      ],
+      "oddsInitial": {
+        "home": 1.6,
+        "draw": 4.25,
+        "away": 3.73
+      },
+      "oddsLatest": {
+        "home": 1.6,
+        "draw": 4.25,
+        "away": 3.73
+      },
+      "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
+      "changeReason": "首次载入赛事，已保存初始赔率与初始研判。",
+      "createdAt": "2026-10-13T06:55:57+08:00",
+      "updatedAt": "2026-10-13T06:55:57+08:00",
+      "finalScore": "",
+      "actualOutcome": "",
+      "primaryHit": null,
+      "executionHit": null,
+      "directionHit": null,
+      "hitType": null
+    },
+    {
+      "id": "500-1479968",
+      "date": "2026-10-14 03:00",
+      "round": "周二010",
+      "league": "欧冠",
+      "home": "加拉塔萨",
+      "away": "巴萨",
+      "predictedPrimary": "客胜",
+      "marketPrimary": "客胜",
+      "decisionMode": "base",
+      "cover": "客胜",
+      "confidence": 90,
+      "recommendationTier": "重点",
+      "portfolioEligible": true,
+      "bestScores": [
+        {
+          "score": "1-2",
+          "probability": 0.0957,
+          "script": "开放局脚本"
+        },
+        {
+          "score": "0-3",
+          "probability": 0.069,
+          "script": "开放局脚本"
+        }
+      ],
+      "coldScores": [
+        {
+          "score": "2-1",
+          "probability": 0.0443,
+          "script": "大球爆冷脚本"
+        },
+        {
+          "score": "3-1",
+          "probability": 0.0119,
+          "script": "大球爆冷脚本"
+        }
+      ],
+      "overUnder": "大2.5球倾向",
+      "upsetScore": 0.35584183211273235,
+      "upsetRoundtable": {
+        "bold": false,
+        "level": "none",
+        "verdict": "维持基础主线",
+        "pickKey": "away",
+        "marketPrimaryKey": "away",
+        "candidateKey": "home",
+        "coreSupports": 0,
+        "supportAgents": [],
+        "opposeAgents": [
+          "概率分歧Agent",
+          "球队反向Agent",
+          "比分反转Agent"
+        ],
+        "consensusScore": -1.0,
+        "confidence": 48,
+        "reasons": [
+          "基础概率19.4%",
+          "与热门差距46.6%"
+        ],
+        "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+      },
+      "customerSummary": {
+        "headline": "主线清晰指向客胜，防平证据不足",
+        "primary": "客胜",
+        "secondary": "客胜",
+        "cover": "客胜",
+        "confidence": 90,
+        "overUnder": "大2.5球倾向",
+        "mainScores": "1-2、0-3",
+        "coldScores": "2-1、3-1",
+        "probabilityLine": "主胜19.4% · 平局14.6% · 客胜66.0%",
+        "decisionMode": "base",
+        "analysis": "数据底座把客胜推到明显领先位置，本地Agent随后又复核了第二风险。落到比赛内容上，客队的有效进攻和抗压结构更占优，主队的主场身份不足以单独扭转判断。\n平局没有形成两席以上本地核心共识，反对方主要来自概率模型Agent、联赛画像Agent、赔率参考Agent、强弱差Agent、排名差Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像946场与Poisson比分矩阵把两个首选比分收敛到1-2、0-3；预期总进球2.55，对应大2.5球倾向。最终口径为客胜，信心90/100，爆冷压力约35.6%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+      },
+      "trackingStatus": "initial",
+      "initialAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 7.7,
+          "draw": 6.3,
+          "away": 1.19
+        },
+        "primary": "客胜",
+        "candidatePrimary": "客胜",
+        "cover": "客胜",
+        "confidence": 90,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0957,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "0-3",
+            "probability": 0.069,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "2-1",
+            "probability": 0.0443,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "3-1",
+            "probability": 0.0119,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.35584183211273235,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "latestAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 7.7,
+          "draw": 6.3,
+          "away": 1.19
+        },
+        "primary": "客胜",
+        "candidatePrimary": "客胜",
+        "cover": "客胜",
+        "confidence": 90,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0957,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "0-3",
+            "probability": 0.069,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "2-1",
+            "probability": 0.0443,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "3-1",
+            "probability": 0.0119,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.35584183211273235,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "lockedAnalysis": null,
+      "analysisTimeline": [
+        {
+          "at": "2026-10-13T06:55:56+08:00",
+          "stage": "initial",
+          "odds": {
+            "home": 7.7,
+            "draw": 6.3,
+            "away": 1.19
+          },
+          "primary": "客胜",
+          "candidatePrimary": "客胜",
+          "cover": "客胜",
+          "confidence": 90,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "1-2",
+              "probability": 0.0957,
+              "script": "开放局脚本"
+            },
+            {
+              "score": "0-3",
+              "probability": 0.069,
+              "script": "开放局脚本"
+            }
+          ],
+          "coldScores": [
+            {
+              "score": "2-1",
+              "probability": 0.0443,
+              "script": "大球爆冷脚本"
+            },
+            {
+              "score": "3-1",
+              "probability": 0.0119,
+              "script": "大球爆冷脚本"
+            }
+          ],
+          "overUnder": "大2.5球倾向",
+          "upsetScore": 0.35584183211273235,
+          "accepted": true,
+          "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+        }
+      ],
+      "oddsInitial": {
+        "home": 7.7,
+        "draw": 6.3,
+        "away": 1.19
+      },
+      "oddsLatest": {
+        "home": 7.7,
+        "draw": 6.3,
+        "away": 1.19
+      },
+      "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
+      "changeReason": "首次载入赛事，已保存初始赔率与初始研判。",
+      "createdAt": "2026-10-13T06:55:57+08:00",
+      "updatedAt": "2026-10-13T06:55:57+08:00",
+      "finalScore": "",
+      "actualOutcome": "",
+      "primaryHit": null,
+      "executionHit": null,
+      "directionHit": null,
+      "hitType": null
+    },
+    {
+      "id": "500-1479888",
+      "date": "2026-10-14 03:00",
+      "round": "周二011",
+      "league": "欧冠",
+      "home": "马竞",
+      "away": "曼联",
+      "predictedPrimary": "主胜",
+      "marketPrimary": "主胜",
+      "decisionMode": "base",
+      "cover": "主胜",
+      "confidence": 80,
+      "recommendationTier": "重点",
+      "portfolioEligible": true,
+      "bestScores": [
+        {
+          "score": "2-1",
+          "probability": 0.0987,
+          "script": "开放局脚本"
+        },
+        {
+          "score": "3-0",
+          "probability": 0.0672,
+          "script": "开放局脚本"
+        }
+      ],
+      "coldScores": [
+        {
+          "score": "1-2",
+          "probability": 0.0483,
+          "script": "大球爆冷脚本"
+        },
+        {
+          "score": "1-3",
+          "probability": 0.0147,
+          "script": "大球爆冷脚本"
+        }
+      ],
+      "overUnder": "大2.5球倾向",
+      "upsetScore": 0.48808613079255125,
+      "upsetRoundtable": {
+        "bold": false,
+        "level": "none",
+        "verdict": "维持基础主线",
+        "pickKey": "home",
+        "marketPrimaryKey": "home",
+        "candidateKey": "away",
+        "coreSupports": 1,
+        "supportAgents": [
+          "概率分歧Agent"
+        ],
+        "opposeAgents": [
+          "球队反向Agent",
+          "比分反转Agent"
+        ],
+        "consensusScore": -0.35,
+        "confidence": 48,
+        "reasons": [
+          "基础概率26.4%",
+          "与热门差距23.4%"
+        ],
+        "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+      },
+      "customerSummary": {
+        "headline": "综合证据更支持主胜，仍需临场确认",
+        "primary": "主胜",
+        "secondary": "主胜",
+        "cover": "主胜",
+        "confidence": 80,
+        "overUnder": "大2.5球倾向",
+        "mainScores": "2-1、3-0",
+        "coldScores": "1-2、1-3",
+        "probabilityLine": "主胜49.8% · 平局23.9% · 客胜26.4%",
+        "decisionMode": "base",
+        "analysis": "这场需要把主线和风险线分开看：主线仍是主胜，同时承认比赛存在转折空间。主队更有条件掌握推进节奏，真正要验证的是领先后能否持续压住客队反击。\n平局没有形成两席以上本地核心共识，反对方主要来自联赛画像Agent、排名差Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像946场与Poisson比分矩阵把两个首选比分收敛到2-1、3-0；预期总进球2.78，对应大2.5球倾向。最终口径为主胜，信心80/100，爆冷压力约48.8%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+      },
+      "trackingStatus": "initial",
+      "initialAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 1.78,
+          "draw": 3.7,
+          "away": 3.37
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 80,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "2-1",
+            "probability": 0.0987,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "3-0",
+            "probability": 0.0672,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0483,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "1-3",
+            "probability": 0.0147,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.48808613079255125,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "latestAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 1.78,
+          "draw": 3.7,
+          "away": 3.37
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 80,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "2-1",
+            "probability": 0.0987,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "3-0",
+            "probability": 0.0672,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0483,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "1-3",
+            "probability": 0.0147,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.48808613079255125,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "lockedAnalysis": null,
+      "analysisTimeline": [
+        {
+          "at": "2026-10-13T06:55:56+08:00",
+          "stage": "initial",
+          "odds": {
+            "home": 1.78,
+            "draw": 3.7,
+            "away": 3.37
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜",
+          "confidence": 80,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "2-1",
+              "probability": 0.0987,
+              "script": "开放局脚本"
+            },
+            {
+              "score": "3-0",
+              "probability": 0.0672,
+              "script": "开放局脚本"
+            }
+          ],
+          "coldScores": [
+            {
+              "score": "1-2",
+              "probability": 0.0483,
+              "script": "大球爆冷脚本"
+            },
+            {
+              "score": "1-3",
+              "probability": 0.0147,
+              "script": "大球爆冷脚本"
+            }
+          ],
+          "overUnder": "大2.5球倾向",
+          "upsetScore": 0.48808613079255125,
+          "accepted": true,
+          "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+        }
+      ],
+      "oddsInitial": {
+        "home": 1.78,
+        "draw": 3.7,
+        "away": 3.37
+      },
+      "oddsLatest": {
+        "home": 1.78,
+        "draw": 3.7,
+        "away": 3.37
+      },
+      "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
+      "changeReason": "首次载入赛事，已保存初始赔率与初始研判。",
+      "createdAt": "2026-10-13T06:55:57+08:00",
+      "updatedAt": "2026-10-13T06:55:57+08:00",
+      "finalScore": "",
+      "actualOutcome": "",
+      "primaryHit": null,
+      "executionHit": null,
+      "directionHit": null,
+      "hitType": null
+    },
+    {
+      "id": "500-1479994",
+      "date": "2026-10-14 00:45",
+      "round": "周二004",
+      "league": "欧冠",
+      "home": "朗斯",
+      "away": "里斯本",
+      "predictedPrimary": "主胜",
+      "marketPrimary": "主胜",
+      "decisionMode": "base",
+      "cover": "主胜",
+      "confidence": 70,
+      "recommendationTier": "谨慎",
+      "portfolioEligible": false,
+      "bestScores": [
+        {
+          "score": "2-1",
+          "probability": 0.0944,
+          "script": "开放局脚本"
+        },
+        {
+          "score": "3-0",
+          "probability": 0.0508,
+          "script": "开放局脚本"
+        }
+      ],
+      "coldScores": [
+        {
+          "score": "1-2",
+          "probability": 0.0585,
+          "script": "大球爆冷脚本"
+        },
+        {
+          "score": "1-3",
+          "probability": 0.019,
+          "script": "大球爆冷脚本"
+        }
+      ],
+      "overUnder": "大2.5球倾向",
+      "upsetScore": 0.549583180410079,
+      "upsetRoundtable": {
+        "bold": false,
+        "level": "none",
+        "verdict": "维持基础主线",
+        "pickKey": "home",
+        "marketPrimaryKey": "home",
+        "candidateKey": "away",
+        "coreSupports": 1,
+        "supportAgents": [
+          "概率分歧Agent"
+        ],
+        "opposeAgents": [
+          "球队反向Agent"
+        ],
+        "consensusScore": 0.45,
+        "confidence": 52,
+        "reasons": [
+          "基础概率32.9%",
+          "与热门差距10.4%"
+        ],
+        "bookmakerRole": "赔率公司只能提供热门基线，不能否决独立冷门共识"
+      },
+      "customerSummary": {
+        "headline": "第一顺位是主胜，风险线另行处理",
+        "primary": "主胜",
+        "secondary": "主胜",
+        "cover": "主胜",
+        "confidence": 70,
+        "overUnder": "大2.5球倾向",
+        "mainScores": "2-1、3-0",
+        "coldScores": "1-2、1-3",
+        "probabilityLine": "主胜43.2% · 平局23.9% · 客胜32.9%",
+        "decisionMode": "base",
+        "analysis": "圆桌最后把主胜放在第一顺位，这是各席证据交叉后的选择，不是照抄任何一家公司的推荐。\n平局没有形成两席以上本地核心共识，反对方主要来自联赛画像Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像946场与Poisson比分矩阵把两个首选比分收敛到2-1、3-0；预期总进球2.55，对应大2.5球倾向。最终口径为主胜，信心70/100，爆冷压力约55.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
+      },
+      "trackingStatus": "initial",
+      "initialAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 2.27,
+          "draw": 3.42,
+          "away": 2.52
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 70,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "2-1",
+            "probability": 0.0944,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "3-0",
+            "probability": 0.0508,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0585,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "1-3",
+            "probability": 0.019,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.549583180410079,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "latestAnalysis": {
+        "at": "2026-10-13T06:55:56+08:00",
+        "stage": "initial",
+        "odds": {
+          "home": 2.27,
+          "draw": 3.42,
+          "away": 2.52
+        },
+        "primary": "主胜",
+        "candidatePrimary": "主胜",
+        "cover": "主胜",
+        "confidence": 70,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "2-1",
+            "probability": 0.0944,
+            "script": "开放局脚本"
+          },
+          {
+            "score": "3-0",
+            "probability": 0.0508,
+            "script": "开放局脚本"
+          }
+        ],
+        "coldScores": [
+          {
+            "score": "1-2",
+            "probability": 0.0585,
+            "script": "大球爆冷脚本"
+          },
+          {
+            "score": "1-3",
+            "probability": 0.019,
+            "script": "大球爆冷脚本"
+          }
+        ],
+        "overUnder": "大2.5球倾向",
+        "upsetScore": 0.549583180410079,
+        "accepted": true,
+        "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+      },
+      "lockedAnalysis": null,
+      "analysisTimeline": [
+        {
+          "at": "2026-10-13T06:55:56+08:00",
+          "stage": "initial",
+          "odds": {
+            "home": 2.27,
+            "draw": 3.42,
+            "away": 2.52
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜",
+          "confidence": 70,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "2-1",
+              "probability": 0.0944,
+              "script": "开放局脚本"
+            },
+            {
+              "score": "3-0",
+              "probability": 0.0508,
+              "script": "开放局脚本"
+            }
+          ],
+          "coldScores": [
+            {
+              "score": "1-2",
+              "probability": 0.0585,
+              "script": "大球爆冷脚本"
+            },
+            {
+              "score": "1-3",
+              "probability": 0.019,
+              "script": "大球爆冷脚本"
+            }
+          ],
+          "overUnder": "大2.5球倾向",
+          "upsetScore": 0.549583180410079,
+          "accepted": true,
+          "reason": "首次载入赛事，已保存初始赔率与初始研判。"
+        }
+      ],
+      "oddsInitial": {
+        "home": 2.27,
+        "draw": 3.42,
+        "away": 2.52
+      },
+      "oddsLatest": {
+        "home": 2.27,
+        "draw": 3.42,
+        "away": 2.52
+      },
+      "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
+      "changeReason": "首次载入赛事，已保存初始赔率与初始研判。",
+      "createdAt": "2026-10-13T06:55:57+08:00",
+      "updatedAt": "2026-10-13T06:55:57+08:00",
+      "finalScore": "",
+      "actualOutcome": "",
+      "primaryHit": null,
+      "executionHit": null,
+      "directionHit": null,
+      "hitType": null
+    },
     {
       "id": "500-1438141",
       "date": "2026-10-13 03:15",
