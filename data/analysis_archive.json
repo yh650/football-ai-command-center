@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T02:53:56+08:00",
+  "updatedAt": "2026-11-02T07:33:33+08:00",
   "matches": [
     {
       "id": "500-1362566",
@@ -66,7 +66,7 @@
         "decisionMode": "bold-cold",
         "analysis": "先把态度亮出来：布拉干蒂诺RB对桑托斯选择平局作为最终立场。赔率第一顺位是主胜，但它没有拿到圆桌否决权。\n冷门主张得到2个核心席支持，支持方为球队状态Agent、比分结构Agent、联赛画像Agent；反对方为没有形成强反对席。圆桌接受这是一笔高波动判断，因此错了也保留完整复盘轨迹，不把观点退回低赔正路。\n平局不再只是“防一下”，而是从风险层升为最终主判。基础平局概率27.0%，但2个核心席认为热门优势不足以兑现。\n落到执行层，联赛历史画像369场与Poisson比分矩阵把两个首选比分收敛到1-1、1-0；预期总进球2.48，对应小2.5球倾向。最终口径为平局，防主胜，信心58/100，爆冷压力约66.0%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
       },
-      "trackingStatus": "steady",
+      "trackingStatus": "held",
       "initialAnalysis": {
         "at": "2026-10-31T13:33:31+08:00",
         "stage": "initial",
@@ -99,7 +99,7 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-11-02T02:53:56+08:00",
+        "at": "2026-11-02T07:33:33+08:00",
         "stage": "latest",
         "odds": {
           "home": 1.83,
@@ -107,7 +107,7 @@
           "away": 3.25
         },
         "primary": "平局",
-        "candidatePrimary": "平局",
+        "candidatePrimary": "主胜",
         "cover": "平局，防主胜",
         "confidence": 58,
         "decisionMode": "bold-cold",
@@ -127,7 +127,7 @@
         "overUnder": "小2.5球倾向",
         "upsetScore": 0.66,
         "accepted": true,
-        "reason": "最新赔率复核后仍维持平局，方向未发生改判。"
+        "reason": "候选主判由平局变为主胜，但变盘未达门槛（最大SP变化0.00，归一化概率变化0.0%），因此维持原判。"
       },
       "lockedAnalysis": null,
       "analysisTimeline": [
@@ -223,6 +223,37 @@
           "upsetScore": 0.66,
           "accepted": true,
           "reason": "最新赔率复核后仍维持平局，方向未发生改判。"
+        },
+        {
+          "at": "2026-11-02T07:33:33+08:00",
+          "stage": "review",
+          "odds": {
+            "home": 1.83,
+            "draw": 3.5,
+            "away": 3.25
+          },
+          "primary": "主胜",
+          "candidatePrimary": "主胜",
+          "cover": "主胜，防平局",
+          "confidence": 74,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "1-0",
+              "probability": 0.1381,
+              "script": "主方向脚本"
+            },
+            {
+              "score": "1-1",
+              "probability": 0.1144,
+              "script": "防冷脚本"
+            }
+          ],
+          "coldScores": [],
+          "overUnder": "小2.5球倾向",
+          "upsetScore": 0.5430147296588261,
+          "accepted": false,
+          "reason": "候选主判由平局变为主胜，但变盘未达门槛（最大SP变化0.00，归一化概率变化0.0%），因此维持原判。"
         }
       ],
       "oddsInitial": {
@@ -236,9 +267,9 @@
         "away": 3.25
       },
       "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
-      "changeReason": "最新赔率复核后仍维持平局，方向未发生改判。",
+      "changeReason": "候选主判由平局变为主胜，但变盘未达门槛（最大SP变化0.00，归一化概率变化0.0%），因此维持原判。",
       "createdAt": "2026-10-31T13:33:32+08:00",
-      "updatedAt": "2026-11-02T02:53:56+08:00",
+      "updatedAt": "2026-11-02T07:33:33+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -343,7 +374,7 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-11-02T02:53:56+08:00",
+        "at": "2026-11-02T07:33:33+08:00",
         "stage": "latest",
         "odds": {
           "home": 2.08,
@@ -420,7 +451,7 @@
       "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
       "changeReason": "最新赔率复核后仍维持主胜，方向未发生改判。",
       "createdAt": "2026-10-31T13:33:32+08:00",
-      "updatedAt": "2026-11-02T02:53:56+08:00",
+      "updatedAt": "2026-11-02T07:33:33+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -523,7 +554,7 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-11-02T02:53:56+08:00",
+        "at": "2026-11-02T07:33:33+08:00",
         "stage": "latest",
         "odds": {
           "home": 2.09,
@@ -600,7 +631,7 @@
       "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
       "changeReason": "最新赔率复核后仍维持主胜，方向未发生改判。",
       "createdAt": "2026-10-31T13:33:32+08:00",
-      "updatedAt": "2026-11-02T02:53:56+08:00",
+      "updatedAt": "2026-11-02T07:33:33+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -706,7 +737,7 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-11-02T02:53:56+08:00",
+        "at": "2026-11-02T07:33:33+08:00",
         "stage": "latest",
         "odds": {
           "home": 2.05,
@@ -783,7 +814,7 @@
       "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
       "changeReason": "最新赔率复核后仍维持平局，方向未发生改判。",
       "createdAt": "2026-10-31T13:33:32+08:00",
-      "updatedAt": "2026-11-02T02:53:56+08:00",
+      "updatedAt": "2026-11-02T07:33:33+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -888,7 +919,7 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-11-02T02:53:56+08:00",
+        "at": "2026-11-02T07:33:33+08:00",
         "stage": "latest",
         "odds": {
           "home": 1.37,
@@ -996,7 +1027,7 @@
       "oddsMovement": "相对初始：主胜降0.03 · 平局升0.11 · 客胜升0.25；较上次：主胜不变 · 平局不变 · 客胜不变",
       "changeReason": "最新赔率复核后仍维持主胜，方向未发生改判。",
       "createdAt": "2026-10-31T13:33:32+08:00",
-      "updatedAt": "2026-11-02T02:53:56+08:00",
+      "updatedAt": "2026-11-02T07:33:33+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -1103,7 +1134,7 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-11-02T02:53:56+08:00",
+        "at": "2026-11-02T07:33:33+08:00",
         "stage": "latest",
         "odds": {
           "home": 2.24,
@@ -1180,7 +1211,7 @@
       "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
       "changeReason": "最新赔率复核后仍维持平局，方向未发生改判。",
       "createdAt": "2026-10-31T13:33:32+08:00",
-      "updatedAt": "2026-11-02T02:53:56+08:00",
+      "updatedAt": "2026-11-02T07:33:33+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -1286,7 +1317,7 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-11-02T02:53:56+08:00",
+        "at": "2026-11-02T07:33:33+08:00",
         "stage": "latest",
         "odds": {
           "home": 1.65,
@@ -1363,7 +1394,7 @@
       "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
       "changeReason": "最新赔率复核后仍维持平局，方向未发生改判。",
       "createdAt": "2026-10-31T13:33:32+08:00",
-      "updatedAt": "2026-11-02T02:53:56+08:00",
+      "updatedAt": "2026-11-02T07:33:33+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -1482,7 +1513,7 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-11-02T02:53:56+08:00",
+        "at": "2026-11-02T07:33:33+08:00",
         "stage": "latest",
         "odds": {
           "home": 2.52,
@@ -1571,7 +1602,7 @@
       "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
       "changeReason": "最新赔率复核后仍维持主胜，方向未发生改判。",
       "createdAt": "2026-10-31T13:33:32+08:00",
-      "updatedAt": "2026-11-02T02:53:56+08:00",
+      "updatedAt": "2026-11-02T07:33:33+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -1675,7 +1706,7 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-11-02T02:53:56+08:00",
+        "at": "2026-11-02T07:33:33+08:00",
         "stage": "latest",
         "odds": {
           "home": 1.33,
@@ -1752,7 +1783,7 @@
       "oddsMovement": "相对初始：主胜不变 · 平局不变 · 客胜不变；较上次：主胜不变 · 平局不变 · 客胜不变",
       "changeReason": "最新赔率复核后仍维持主胜，方向未发生改判。",
       "createdAt": "2026-10-31T13:33:32+08:00",
-      "updatedAt": "2026-11-02T02:53:56+08:00",
+      "updatedAt": "2026-11-02T07:33:33+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
@@ -1827,7 +1858,7 @@
         "decisionMode": "base",
         "analysis": "这场需要把主线和风险线分开看：主线仍是客胜，同时承认比赛存在转折空间。客队的有效进攻和抗压结构更占优，主队的主场身份不足以单独扭转判断。\n平局没有形成两席以上本地核心共识，反对方主要来自赔率参考Agent。Interwetten与500的平赔只记作参考票，不会单独把结论改成防平。\n落到执行层，联赛历史画像1142场与Poisson比分矩阵把两个首选比分收敛到0-1、1-0；预期总进球2.50，对应小2.5球倾向。最终口径为客胜，防主胜，信心72/100，爆冷压力约55.4%。\n阵容层面，暂无可量化阵容影响；当前没有足够可靠的新增伤停消息，系统不虚构球员结论。"
       },
-      "trackingStatus": "steady",
+      "trackingStatus": "locked",
       "initialAnalysis": {
         "at": "2026-10-31T13:33:31+08:00",
         "stage": "initial",
@@ -1860,8 +1891,8 @@
         "reason": "首次载入赛事，已保存初始赔率与初始研判。"
       },
       "latestAnalysis": {
-        "at": "2026-11-02T02:53:56+08:00",
-        "stage": "latest",
+        "at": "2026-11-02T07:33:33+08:00",
+        "stage": "locked",
         "odds": {
           "home": 2.87,
           "draw": 4.0,
@@ -1888,9 +1919,39 @@
         "overUnder": "小2.5球倾向",
         "upsetScore": 0.5536105911266019,
         "accepted": true,
-        "reason": "最新赔率复核后仍维持客胜，方向未发生改判。"
+        "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为客胜。"
       },
-      "lockedAnalysis": null,
+      "lockedAnalysis": {
+        "at": "2026-11-02T07:33:33+08:00",
+        "stage": "locked",
+        "odds": {
+          "home": 2.87,
+          "draw": 4.0,
+          "away": 1.85
+        },
+        "primary": "客胜",
+        "candidatePrimary": "客胜",
+        "cover": "客胜，防主胜",
+        "confidence": 72,
+        "decisionMode": "base",
+        "bestScores": [
+          {
+            "score": "0-1",
+            "probability": 0.104,
+            "script": "主方向脚本"
+          },
+          {
+            "score": "1-0",
+            "probability": 0.1015,
+            "script": "防冷脚本"
+          }
+        ],
+        "coldScores": [],
+        "overUnder": "小2.5球倾向",
+        "upsetScore": 0.5536105911266019,
+        "accepted": true,
+        "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为客胜。"
+      },
       "analysisTimeline": [
         {
           "at": "2026-10-31T13:33:31+08:00",
@@ -1984,6 +2045,37 @@
           "upsetScore": 0.5536105911266019,
           "accepted": true,
           "reason": "最新赔率复核后仍维持客胜，方向未发生改判。"
+        },
+        {
+          "at": "2026-11-02T07:33:33+08:00",
+          "stage": "locked",
+          "odds": {
+            "home": 2.87,
+            "draw": 4.0,
+            "away": 1.85
+          },
+          "primary": "客胜",
+          "candidatePrimary": "客胜",
+          "cover": "客胜，防主胜",
+          "confidence": 72,
+          "decisionMode": "base",
+          "bestScores": [
+            {
+              "score": "0-1",
+              "probability": 0.104,
+              "script": "主方向脚本"
+            },
+            {
+              "score": "1-0",
+              "probability": 0.1015,
+              "script": "防冷脚本"
+            }
+          ],
+          "coldScores": [],
+          "overUnder": "小2.5球倾向",
+          "upsetScore": 0.5536105911266019,
+          "accepted": true,
+          "reason": "已进入开赛前90分钟临场窗口，最终结论锁定为客胜。"
         }
       ],
       "oddsInitial": {
@@ -1996,10 +2088,10 @@
         "draw": 4.0,
         "away": 1.85
       },
-      "oddsMovement": "相对初始：主胜升0.15 · 平局升0.14 · 客胜降0.10；较上次：主胜升0.07 · 平局升0.08 · 客胜降0.05",
-      "changeReason": "最新赔率复核后仍维持客胜，方向未发生改判。",
+      "oddsMovement": "相对初始：主胜升0.15 · 平局升0.14 · 客胜降0.10；较上次：主胜不变 · 平局不变 · 客胜不变",
+      "changeReason": "最新赔率复核后仍维持客胜，方向未发生改判。 已进入开赛前90分钟临场窗口，最终结论锁定为客胜。",
       "createdAt": "2026-10-31T13:33:32+08:00",
-      "updatedAt": "2026-11-02T02:53:56+08:00",
+      "updatedAt": "2026-11-02T07:33:33+08:00",
       "finalScore": "",
       "actualOutcome": "",
       "primaryHit": null,
